@@ -26,7 +26,7 @@ app .config(['$routeProvider',
 app.controller("mainController", function($scope,$http,$filter,$q)
 {
 
-  $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
+  
 
 
 // angular.element(document).ready(function () {
@@ -142,7 +142,7 @@ $scope.showPosition = function (position)
   }
   $(".maps").hide();
   $(".items-show").hide();
-  $scope.offerValue();
+  // $scope.offerValue();
   $scope.$apply();
 
 

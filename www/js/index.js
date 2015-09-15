@@ -21,7 +21,7 @@
     // Application Constructor
     initialize: function() {
 
-     this.bindEvents();
+       this.bindEvents();
    },
     // Bind Event Listeners
     //
@@ -29,15 +29,15 @@
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
+  },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
-    
-    },
+      
+  },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
        // alert(device.uuid);
@@ -69,18 +69,18 @@
        console.log('Received Event: ' + id);
        
        
-     }
-   };
+   }
+};
 
-   app.initialize();
-   function Insertdata(email)
-   {
+app.initialize();
+function Insertdata(email)
+{
 
 
     var email_id= email;
     var deviceid= $(".device-id").html();
-
+    alert("df");
 
     
     calls();
-  }
+}
