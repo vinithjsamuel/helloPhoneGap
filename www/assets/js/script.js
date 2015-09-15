@@ -2,7 +2,7 @@
 
 var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();
 var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;
-$("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
+
 var app = angular.module("geo", ['ngRoute',"ui.map", "ui.event"])
 app .config(['$routeProvider',
   function($routeProvider) {
@@ -32,15 +32,15 @@ app.controller("mainController", function($scope,$http,$filter,$q)
 
   // });
 
-// $("body").swipe( {
-//         //Generic swipe handler for all directions
-//         swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
-//           $( "#cd-menu-trigger" ).trigger( "click" );
-//         }
-//       });
-angular.element(document).ready(function () {
-  calls();
-});
+$("body").swipe( {
+        //Generic swipe handler for all directions
+        swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
+          $( "#cd-menu-trigger" ).trigger( "click" );
+        }
+      });
+// angular.element(document).ready(function () {
+//   calls();
+// });
 
 $scope.model = { myMap: undefined };
 $scope.lat = "0";
@@ -105,7 +105,7 @@ pinCircle = new google.maps.Circle(approxCircle);
 $scope.showPosition = function (position)
 {
 
-  alert("fdsf");
+
   $scope.$apply();
   var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   $scope.model.myMap.setCenter(latlng);
@@ -134,46 +134,50 @@ $scope.showPosition = function (position)
 
     var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
     var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
-    // var encoded=data[i].title;
-    // data[i].title=encoded.replace(/&amp;/g, '&');
+    var encoded=data[i].title;
+    data[i].title=encoded.replace(/&amp;/g, '&');
     
-    // var urls="http://getguzzle.com/app-test/cost/"+ data[i].title
-
-    // $http.get(urls)
-    // .success(function (response) {
-    //   if(response.length>0)
-    //   {
-    //     var total_cost=0;
-    //     datas=response;
-    //     var results=datas;
-    //     for (i = 0; i < results.length; i++) {
-
-    //       total_cost=Number(total_cost)+Number(results[i].cost);
-
-    //     }
-
-    //     $(".total-value-"+results[0].outlet).html(total_cost);
-    //   }
-    // });
-
-datas[i].distance=dist; 
 
 
-$scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng 
-}));
+    datas[i].distance=dist; 
 
+
+    $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng 
+    }));
+
+
+
+
+  }
+  
+  $(".items-show").hide();
+  $scope.$apply();
 
 
 
 }
-$(".maps").hide();
-$(".items-show").hide();
-$scope.$apply();
+$scope.offerValue();
+
+$scope.offerValue = function () 
+{
+  var urls="http://getguzzle.com/app-test/cost"
+
+  $http.get(urls)
+  .success(function (response) {
+
+    console.log(response)
+    var total_cost=0;
+    datas=response;
+    var results=datas;
+    for (i = 0; i < response.length; i++) {
+     
+      total_cost=Number(total_cost)+Number(results[i].cost);
+      $(".total-value-"+results[i].outlet).html(total_cost);
 
 
-
+    }
+  });
 }
-
 $scope.showError = function (error) 
 {
   switch (error.code)
@@ -544,142 +548,142 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         dist = rounded.toFixed(1);
 
         return dist
-       
+
        //names.distance=dist;
 
 
-      }
+     }
 
 
-      function setBodyClass(getUrl)
-      {
+     function setBodyClass(getUrl)
+     {
 
-        homeflag=0;
-        
-        $.pjax({
-          url: getUrl,
-          container: '#pages',
-          timeout: 10000
-        });  
-      }
-      var uniqueItems = function (data, key) {
+      homeflag=0;
+
+      $.pjax({
+        url: getUrl,
+        container: '#pages',
+        timeout: 10000
+      });  
+    }
+    var uniqueItems = function (data, key) {
 
 
 
-        for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.length; i++) {
 
-          var value = data[i][key];
+        var value = data[i][key];
 
-          if (number.indexOf(value) == -1) {
-            number.push(value);
-
-          }
+        if (number.indexOf(value) == -1) {
+          number.push(value);
 
         }
-        return number;
 
-      };
+      }
+      return number;
 
-      app.filter('groupBy',
-        function () {
+    };
 
-          return function (collection, key) {
+    app.filter('groupBy',
+      function () {
 
-            if (collection === null) return;
+        return function (collection, key) {
 
-            return uniqueItems(collection, key);
-          };
+          if (collection === null) return;
 
-        });
+          return uniqueItems(collection, key);
+        };
 
-
-
-      app.controller("othercontroller", function($scope) {
-       $(".main").show();
-       $(".result").hide();
-       $('body').removeClass("page-detail");
-       $('body').addClass("page-list");
-
-     });
-
-      app.controller("profileController", function($scope,$http) {
-        $(".main").hide();
-        $('body').removeClass("page-map");
-        $('body').removeClass("page-list");
-        $('body').addClass("page-detail");
-
-
-        var user=$(".login").html();
-        var logins="http://getguzzle.com/app-test/login/"+user;
-        $http.get(logins)
-        .success(function (response) {
-
-          var datas=response;
-          $scope.namer=datas[0].names;
-          $scope.gender=['male ', 'female'];
-          $scope.mobile=datas[0].mobile;
-          $scope.city=datas[0].city;
-          $scope.country=datas[0].country;
-          $scope.nationality=datas[0].nationality;
-
-          $scope.alcohol = ['Yes', 'No']; 
-          $scope.profiles = {
-            alcohol: datas[0].alcohol,
-            gender: datas[0].gender
-          };
+      });
 
 
 
-        });
+    app.controller("othercontroller", function($scope) {
+     $(".main").show();
+     $(".result").hide();
+     $('body').removeClass("page-detail");
+     $('body').addClass("page-list");
+
+   });
+
+    app.controller("profileController", function($scope,$http) {
+      $(".main").hide();
+      $('body').removeClass("page-map");
+      $('body').removeClass("page-list");
+      $('body').addClass("page-detail");
+
+
+      var user=$(".login").html();
+      var logins="http://getguzzle.com/app-test/login/"+user;
+      $http.get(logins)
+      .success(function (response) {
+
+        var datas=response;
+        $scope.namer=datas[0].names;
+        $scope.gender=['male ', 'female'];
+        $scope.mobile=datas[0].mobile;
+        $scope.city=datas[0].city;
+        $scope.country=datas[0].country;
+        $scope.nationality=datas[0].nationality;
+
+        $scope.alcohol = ['Yes', 'No']; 
+        $scope.profiles = {
+          alcohol: datas[0].alcohol,
+          gender: datas[0].gender
+        };
 
 
 
-        $scope.update=function()
-        {
+      });
 
-          $(".sucess").hide();
-          $(".error").hide();
-          var entry_id=$(".entry").html();
-          var url="http://getguzzle.com/app-test/update/"+ entry_id;
-          var name=$(".screen-name").val();
-          var mobile=$(".mobile").val();
-          var city=$(".city").val();
-          var country=$(".country").val();
-          var nationality=$(".nationality").val();
-          var alcohols=$("input[name=alcohol]:checked").val();
-          var gender=$("input[name=cf_gender]:checked").val();
 
-          var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
-          $.ajax({
-            type       : "POST",
-            url        :  url,
-            crossDomain: true,
-            data:{json: JSON.stringify(data)},
-            dataType   : 'json',
-            success    : function(response,status) {
 
-              if(response.status==true)
-              {
+      $scope.update=function()
+      {
 
-                $(".sucess").show();
+        $(".sucess").hide();
+        $(".error").hide();
+        var entry_id=$(".entry").html();
+        var url="http://getguzzle.com/app-test/update/"+ entry_id;
+        var name=$(".screen-name").val();
+        var mobile=$(".mobile").val();
+        var city=$(".city").val();
+        var country=$(".country").val();
+        var nationality=$(".nationality").val();
+        var alcohols=$("input[name=alcohol]:checked").val();
+        var gender=$("input[name=cf_gender]:checked").val();
 
-              }
-              else
-              {
-                $(".error").show();
-              }
+        var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+        $.ajax({
+          type       : "POST",
+          url        :  url,
+          crossDomain: true,
+          data:{json: JSON.stringify(data)},
+          dataType   : 'json',
+          success    : function(response,status) {
 
-            },
-            error      : function() {
+            if(response.status==true)
+            {
+
+              $(".sucess").show();
+
+            }
+            else
+            {
+              $(".error").show();
+            }
+
+          },
+          error      : function() {
             //console.error("error");
             $(".error").show();
           }
         });     
 
 
-        }
+      }
 
-      });
+    });
 //vouche
 //voucher code
 
