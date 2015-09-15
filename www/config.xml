@@ -2,9 +2,9 @@
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-    xmlns:gap = "http://phonegap.com/ns/1.0"
-    id        = "com.getguzzle.guzzle"
-    version   = "1.0.0">
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.getguzzle.guzzle"
+        version   = "1.0.0">
 
     <name>Guzzle</name>
 
@@ -14,7 +14,7 @@
 
     <author href="http://phonegap.com" email="support@phonegap.com">
       BUT
-  </author>
+    </author>
 
     <!--
         If you do not want any permissions to be added to your app, add the
@@ -102,10 +102,7 @@
         Otherwise, you can specify specific domains:
     -->
     <access origin="*"/> <!-- allow local pages -->
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
+    
     <!--
 
     <!--
