@@ -2,19 +2,19 @@
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.phonegap.hello-world"
-        version   = "1.0.0">
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.getguzzle.guzzle"
+    version   = "1.0.0">
 
-    <name>Hello World</name>
+    <name>Guzzle</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
-        PhoneGap Team
-    </author>
+      BUT
+  </author>
 
     <!--
         If you do not want any permissions to be added to your app, add the
@@ -102,6 +102,12 @@
         Otherwise, you can specify specific domains:
     -->
     <access origin="*"/> <!-- allow local pages -->
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <!--
+
     <!--
         <access origin="http://phonegap.com" />                    - allow any secure requests to http://phonegap.com/
         <access origin="http://phonegap.com" subdomains="true" />  - same as above, but including subdomains, such as http://build.phonegap.com/

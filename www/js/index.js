@@ -36,6 +36,7 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
+    
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -79,7 +80,7 @@
     var email_id= email;
     var deviceid= $(".device-id").html();
 
-    
+
     
     calls();
   }

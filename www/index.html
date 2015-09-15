@@ -79,9 +79,7 @@
 
 </head>
 
-<body ng-app="geo" class="page-list">
-
- <div id="preloader">
+<div id="preloader">
 
   <div id="status">
     <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" /><br>
@@ -91,6 +89,8 @@
 
   </div>
 </div>
+<body ng-app="geo" class="page-list">
+
 
 
 <div ng-controller="mainController" class="parent-map">
@@ -319,6 +319,7 @@
   <script type="text/javascript" src="assets/js/libs/jquery.min.js"></script>
   <script src="assets/js/libs//bootstrap.min.js"></script>
   <script type="text/javascript" src="assets/js/libs//slick.min.js"></script>
+  <script src="assets/js/jquery.touchSwipe.min.js"></script>
   <script src="assets/js/libs/angular.min.js"></script>
   <script src="assets/js/event.js"></script>
   <script src="assets/js/ui-map.min.js"></script>
@@ -332,16 +333,16 @@
   <script src="assets/js/libs/sideMenu.js"></script>
   <script src="assets/js/plugins.js"></script>
   <script src="assets/js/main.js"></script>
-   <script src="assets/js/jquery.touchSwipe.min.js"></script>
- 
-  <script src="assets/js/angular-route.js"></script>
+  
 
+  <script src="assets/js/angular-route.js"></script>
+  <script src="assets/js/script.js"></script>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="DeviceAccounts.js"></script>
-   <script src="assets/js/script.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   
-  
+
+
 </div><!-- end js -->
 </body>
 
@@ -351,6 +352,10 @@ var e = $('.dummy');
 for (var i = 0; i < 2; i++) {
   e.clone().insertAfter(e);
 }
+
+
+
+
 
 </script>
 </html>

@@ -26,18 +26,9 @@ app .config(['$routeProvider',
 app.controller("mainController", function($scope,$http,$filter,$q)
 {
 
-  // $("body").swipe(function(){
+  $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
 
-  //   $( "#cd-menu-trigger" ).trigger( "click" );
 
-  // });
-
-$("body").swipe( {
-        //Generic swipe handler for all directions
-        swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
-          $( "#cd-menu-trigger" ).trigger( "click" );
-        }
-      });
 // angular.element(document).ready(function () {
 //   calls();
 // });
@@ -149,35 +140,16 @@ $scope.showPosition = function (position)
 
 
   }
-  
+  $(".maps").hide();
   $(".items-show").hide();
+  $scope.offerValue();
   $scope.$apply();
 
 
 
 }
-$scope.offerValue();
-
-$scope.offerValue = function () 
-{
-  var urls="http://getguzzle.com/app-test/cost"
-
-  $http.get(urls)
-  .success(function (response) {
-
-    console.log(response)
-    var total_cost=0;
-    datas=response;
-    var results=datas;
-    for (i = 0; i < response.length; i++) {
-     
-      total_cost=Number(total_cost)+Number(results[i].cost);
-      $(".total-value-"+results[i].outlet).html(total_cost);
 
 
-    }
-  });
-}
 $scope.showError = function (error) 
 {
   switch (error.code)
@@ -307,8 +279,30 @@ $scope.showError = function (error)
         }).error(function(){
 
         });
-        $("main").show();
 
+
+
+        $scope.offerValue = function () 
+        {
+          var urls="http://getguzzle.com/app-test/cost"
+
+          $http.get(urls)
+          .success(function (response) {
+
+            console.log(response)
+            var total_cost=0;
+            datas=response;
+            var results=datas;
+            for (i = 0; i < response.length; i++) {
+
+              total_cost=Number(total_cost)+Number(results[i].cost);
+              $(".total-value-"+results[i].outlet).html(total_cost);
+
+
+            }
+          });
+        }
+         $scope.offerValue();
 
 
 
@@ -337,13 +331,16 @@ $scope.showError = function (error)
           for (i = 0; i < price.length; i++) {
            total_prices=Number(total_prices)+Number(price[i].price);
          }
-         
+
          $(".price").html(total_prices);
 
 
        });
 
        };
+
+
+
        $scope.updateInvite = function (numbers) {
          $http.get(numbers)
          .success(function (response) {
@@ -440,6 +437,8 @@ $scope.showError = function (error)
 
         flag=1;
       }
+
+
 
       $scope.Mapsfn = function() {
 
