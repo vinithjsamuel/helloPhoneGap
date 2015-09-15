@@ -42,20 +42,20 @@
     receivedEvent: function(id) {
        // alert(device.uuid);
        $(".device-id").html(device.uuid);
-       window.plugins.DeviceAccounts.getEmail(function(accounts){
-  // accounts is an array with objects containing name and type attributes
+//        window.plugins.DeviceAccounts.getEmail(function(accounts){
+//   // accounts is an array with objects containing name and type attributes
 
 
-  //alert(accounts.length);
-  $(".user-name").html(accounts);
+//   //alert(accounts.length);
+//   $(".user-name").html(accounts);
   
-  Insertdata(accounts);
-      //alert('account registered on this device:'+accounts);
+//   Insertdata(accounts);
+//       //alert('account registered on this device:'+accounts);
 
-  //alert('account registered on this device:', accounts);
-}, function(error){
-  alert('Fail to retrieve accounts, details on exception:', error);
-});
+//   //alert('account registered on this device:', accounts);
+// }, function(error){
+//   alert('Fail to retrieve accounts, details on exception:', error);
+// });
 
 
 
@@ -79,7 +79,7 @@ function Insertdata(email)
 
     var email_id= email;
     var deviceid= $(".device-id").html();
-    alert("df");
+    
 
     
     calls();
