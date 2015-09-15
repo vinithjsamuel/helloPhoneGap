@@ -16,36 +16,70 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ var email;
  var app = {
     // Application Constructor
     initialize: function() {
-        this.bindEvents();
-    },
+
+     this.bindEvents();
+   },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+      document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
+    // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-        alert("ghfg");
+      app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+       // alert(device.uuid);
+       $(".device-id").html(device.uuid);
+       window.plugins.DeviceAccounts.getEmail(function(accounts){
+  // accounts is an array with objects containing name and type attributes
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
-        
-    }
-};
+  //alert(accounts.length);
+  $(".user-name").html(accounts);
+  
+  Insertdata(accounts);
+      //alert('account registered on this device:'+accounts);
+
+  //alert('account registered on this device:', accounts);
+}, function(error){
+  alert('Fail to retrieve accounts, details on exception:', error);
+});
+
+
+
+       var parentElement = document.getElementById(id);
+       var listeningElement = parentElement.querySelector('.listening');
+       var receivedElement = parentElement.querySelector('.received');
+
+       listeningElement.setAttribute('style', 'display:none;');
+       receivedElement.setAttribute('style', 'display:block;');
+
+       console.log('Received Event: ' + id);
+       
+       
+     }
+   };
+
+   app.initialize();
+   function Insertdata(email)
+   {
+
+
+    var email_id= email;
+    var deviceid= $(".device-id").html();
+
+    
+    
+    calls();
+  }

@@ -1,0 +1,65 @@
+/*@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);*/ /*---- 'Droid Arabic Naskh' ----*/
+/*@import url(http://cdn.jsdelivr.net/darfonts/0.1/sstwo-eleg-ssunq-box/stylesheet.css); /*---- 'ge_ss_twomedium' ----*/
+/*@import url(http://cdn.jsdelivr.net/darfonts/0.1/sstwo-eleg-ssunq-box/stylesheet.css); /*---- 'ge_ss_twomedium' ----*/
+@import url(http://cdn.jsdelivr.net/darfonts/0.1/dinone-dintwo-sstext-ssthree/stylesheet.css); /*---- 'ge_dinar_tworegular' ----*/
+
+
+@font-face {
+    font-family: 'museo-300';
+    src: url('../fonts/en/museo-300.eot');
+    src: url('../fonts/en/museo-300.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/en/museo-300.woff') format('woff'),
+         url('../fonts/en/museo-300.ttf') format('truetype'),
+         url('../fonts/en/museo-300.svg#swis721_lt_btlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'sansation-regular';
+    src: url('../fonts/en/sansation-regular.eot');
+    src: url('../fonts/en/sansation-regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/en/sansation-regular.woff') format('woff'),
+         url('../fonts/en/sansation-regular.ttf') format('truetype'),
+         url('../fonts/en/sansation-regular.svg#swis721_lt_btlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+body {
+	font-family: 'museo-300','ge_dinar_tworegular', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: 'sansation-regular','ge_dinar_tworegular', sans-serif;
+}
+
+
+
+
+.small{
+	font-size: 11px;
+}
+
+b, strong{
+	font-family: 'dinpro-m','ge_dinar_tworegular', sans-serif;
+	font-weight: normal;
+}
+
+
+
+body {
+	font-size: 14px;
+}
+
+
+body .ar {
+	font-size: 14px;
+}
+body .ar p{
+	line-height: 24px;
+}
+
+
+
