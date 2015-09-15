@@ -36,12 +36,13 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
-      
+
   },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
        // alert(device.uuid);
        $(".device-id").html(device.uuid);
+       alert(device.uuid);
 //        window.plugins.DeviceAccounts.getEmail(function(accounts){
 //   // accounts is an array with objects containing name and type attributes
 
@@ -79,7 +80,7 @@ function Insertdata(email)
 
     var email_id= email;
     var deviceid= $(".device-id").html();
-    
+
 
     
     calls();

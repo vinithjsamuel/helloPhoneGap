@@ -56,7 +56,7 @@ $http({
   url: 'http://getguzzle.com/app/markers',
 
 }).success(function(data){
-
+$("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
 
  var datas=data;
  var result=data;
