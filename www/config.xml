@@ -12,7 +12,7 @@
     </description>
 
     <!-- FB Connect Section -->
-     <gap:plugin name="com.phonegap.plugins.facebookconnect" >
+     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.4.0">
  <param name="APP_ID" value="756110871177634" />
     <param name="APP_NAME" value="Guzzle" />
     </gap:plugin>
