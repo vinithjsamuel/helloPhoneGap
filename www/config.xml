@@ -61,7 +61,10 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     <gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" version="1.2.0" />
 
-  <gap:plugin name="com.phonegap.plugins.facebookconnect" />
+  <gap:plugin name="com.phonegap.plugins.facebookconnect" >
+ <param name="APP_ID" value="com.getguzzle.guzzle" />
+    <param name="APP_NAME" value="Guzzle" />
+    </gap:plugin>
   <!-- Third party plugins -->
   <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <!-- 
