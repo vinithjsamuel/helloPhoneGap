@@ -63,7 +63,7 @@
     <gap:plugin name="com.telerik.plugins.nativepagetransitions" version="0.2.2" />
 
   <gap:plugin name="com.phonegap.plugins.facebookconnect" >
- <param name="APP_ID" value="com.getguzzle.guzzle" />
+ <param name="APP_ID" value="756110871177634" />
     <param name="APP_NAME" value="Guzzle" />
     </gap:plugin>
   <!-- Third party plugins -->

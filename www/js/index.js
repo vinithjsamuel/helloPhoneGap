@@ -60,7 +60,7 @@ if (window.localStorage.getItem("installed") == undefined) {
 alert(device.uuid);
 alert('Device is ready! Make sure you set your app_id below this alert.');
 
-FB.init({ appId: "com.getguzzle.guzzle", nativeInterface: CDV.FB, useCachedDialogs: false });
+FB.init({ appId: "756110871177634", nativeInterface: CDV.FB, useCachedDialogs: false });
 
 var fbLoginSuccess = function (userData) {
 
