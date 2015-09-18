@@ -69,8 +69,8 @@ var fbLoginSuccess = function (userData) {
 
 }
 alert("vcxvxv");
-login();
-getAccessToken();
+window.onload=login();
+
 var login = function () {
   if (!window.cordova) {
     alert("fdsf");
