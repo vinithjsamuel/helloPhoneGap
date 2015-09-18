@@ -71,9 +71,7 @@ var fbLoginSuccess = function (userData) {
 alert("vcxvxv");
 
 
- FB.Event.subscribe('auth.login', function(response) {
-                               alert('auth.login event');
-                               });
+
             
             
             /*function getSession() {
@@ -127,6 +125,7 @@ alert("vcxvxv");
             function login() {
                 FB.login(
                          function(response) {
+                          alert("Dfsdfd");
                          if (response.session) {
                          alert('logged in');
                          } else {
