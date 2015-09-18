@@ -73,6 +73,7 @@ login();
 getAccessToken();
 var login = function () {
   if (!window.cordova) {
+    alert("fdsf");
     var appId = prompt("Enter FB Application ID", "");
     facebookConnectPlugin.browserInit(appId);
   }
