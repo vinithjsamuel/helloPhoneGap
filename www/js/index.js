@@ -36,6 +36,17 @@
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
+       alert("yes");
+      var fbLoginSuccess = function (userData) {
+
+        alert("UserInfo: " + JSON.stringify(userData));
+
+      }
+
+      facebookConnectPlugin.login(["public_profile"],
+        fbLoginSuccess,
+        function (error) { alert("" + error) }
+        );
 
     },
     // Update DOM on a Received Event
@@ -49,7 +60,7 @@
     //   }
     // }
     // );
-       alert(device.uuid);
+alert(device.uuid);
        // $(".device-id").html(device.uuid);
        // alert(device.uuid);
 //        window.plugins.DeviceAccounts.getEmail(function(accounts){
