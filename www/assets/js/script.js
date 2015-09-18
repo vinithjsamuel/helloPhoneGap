@@ -2,7 +2,7 @@
 
 var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();
 var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;
-
+var data_outlet;
 var app = angular.module("geo", ['ngRoute',"ui.map", "ui.event"])
 app .config(['$routeProvider',
   function($routeProvider) {
@@ -62,7 +62,7 @@ $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
  var result=data;
  $scope.useMakes = [];
  $scope.cars=result;
-
+data_outlet=result;
  var nos= datas.length+ " items";
  $(".result").html(nos);
 
@@ -751,7 +751,7 @@ $http.get(url)
   $scope.image2=datas[0].image2;
   $scope.image3=datas[0].image3;
   $('.owl-carousel').owlCarousel({
-    items : 1,
+   
     margin:0,
     nav:false,
     responsive:{

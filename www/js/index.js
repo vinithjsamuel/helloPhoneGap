@@ -21,7 +21,7 @@
     // Application Constructor
     initialize: function() {
 
-       this.bindEvents();
+     this.bindEvents();
    },
     // Bind Event Listeners
     //
@@ -29,7 +29,7 @@
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
-  },
+    },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -37,19 +37,28 @@
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
 
-  },
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+
+      window.plugins.googleplus.isAvailable(
+        function (available) {
+          if (available) {
+            alert("yes");
+        // show the Google+ sign-in button
+      }
+    }
+    );
        // alert(device.uuid);
-       $(".device-id").html(device.uuid);
-       alert(device.uuid);
+       // $(".device-id").html(device.uuid);
+       // alert(device.uuid);
 //        window.plugins.DeviceAccounts.getEmail(function(accounts){
 //   // accounts is an array with objects containing name and type attributes
 
 
 //   //alert(accounts.length);
 //   $(".user-name").html(accounts);
-  
+
 //   Insertdata(accounts);
 //       //alert('account registered on this device:'+accounts);
 
@@ -60,17 +69,17 @@
 
 
 
-       var parentElement = document.getElementById(id);
-       var listeningElement = parentElement.querySelector('.listening');
-       var receivedElement = parentElement.querySelector('.received');
+var parentElement = document.getElementById(id);
+var listeningElement = parentElement.querySelector('.listening');
+var receivedElement = parentElement.querySelector('.received');
 
-       listeningElement.setAttribute('style', 'display:none;');
-       receivedElement.setAttribute('style', 'display:block;');
+listeningElement.setAttribute('style', 'display:none;');
+receivedElement.setAttribute('style', 'display:block;');
 
-       console.log('Received Event: ' + id);
-       
-       
-   }
+console.log('Received Event: ' + id);
+
+
+}
 };
 
 app.initialize();
@@ -78,10 +87,10 @@ function Insertdata(email)
 {
 
 
-    var email_id= email;
-    var deviceid= $(".device-id").html();
+    // var email_id= email;
+    // var deviceid= $(".device-id").html();
 
 
     
     calls();
-}
+  }
