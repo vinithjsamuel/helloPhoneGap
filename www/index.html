@@ -1,160 +1,368 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    </head>
-  <body>
-      <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-    <button onclick="login()">Login</button>
-    <button onclick="me()">Me</button>
-    <!--<button onclick="getSession()">Get session</button>-->
-    <button onclick="getLoginStatus()">Get login</button>
-    <button onclick="logout()">Logout</button>
-    <button onclick="facebookWallPost()">facebookWallPost</button>
-    <button onclick="publishStoryFriend()">friendstory</button>
-        
-        <div id="data">loading ...</div>
-        
-        <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
-        <div id="fb-root"></div>
-        <!-- cordova -->
-    <script src="cordova.js"></script>
-      <!-- cordova facebook plugin -->
-    <script src="cdv-plugin-fb-connect.js"></script>
-      <!-- facebook js sdk -->
-    <script src="facebook-js-sdk.js"></script>
-        
-    <script>
-            
-            if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-            if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-            
-            // FB.Event.subscribe('auth.login', function(response) {
-            //                    alert('auth.login event');
-            //                    });
-            
-            // FB.Event.subscribe('auth.logout', function(response) {
-            //                    alert('auth.logout event');
-            //                    });
-            
-            // FB.Event.subscribe('auth.sessionChange', function(response) {
-            //                    alert('auth.sessionChange event');
-            //                    });
-            
-            // FB.Event.subscribe('auth.statusChange', function(response) {
-            //                    alert('auth.statusChange event');
-            //                    });
-            
-            /*function getSession() {
-                alert("session: " + JSON.stringify(FB.getSession()));
-            }
-            */
-            function getLoginStatus() {
-                FB.getLoginStatus(function(response) {
-                                  if (response.status == 'connected') {
-                                  alert('logged in');
-                                  } else {
-                                  alert('not logged in');
-                                  }
-                                  });
-            }
-            var friendIDs = [];
-      var fdata;
-            function me() {
-                FB.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
-                       if (response.error) {
-                       alert(JSON.stringify(response.error));
-                       } else {
-                       var data = document.getElementById('data');
-             fdata=response.data;
-             console.log("fdata: "+fdata);
-                       response.data.forEach(function(item) {
-                                             var d = document.createElement('div');
-                                             d.innerHTML = "<img src="+item.picture+"/>"+item.name;
-                                             data.appendChild(d);
-                                             });
-                       }
-          var friends = response.data;
-          console.log(friends.length); 
-          for (var k = 0; k < friends.length && k < 200; k++) {
-                var friend = friends[k];
-                var index = 1;
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
 
-                friendIDs[k] = friend.id;
-                //friendsInfo[k] = friend;
-          }
-          console.log("friendId's: "+friendIDs);
-                       });
-            }
-            
-            function logout() {
-                FB.logout(function(response) {
-                          alert('logged out');
-                          });
-            }
-            
-            function login() {
-                FB.login(
-                         function(response) {
-                         if (response.session) {
-                         alert('logged in');
-                         } else {
-                         alert('not logged in');
-                         }
-                         },
-                         { scope: "email" }
-                         );
-            }
-      
-      
-      function facebookWallPost() {
-          console.log('Debug 1');
-        var params = {
-            method: 'feed',
-            name: 'Facebook Dialogs',
-            link: 'https://developers.facebook.com/docs/reference/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-          };
-        console.log(params);
-          FB.ui(params, function(obj) { console.log(obj);});
-      }
-            
-      function publishStoryFriend() {
-        randNum = Math.floor ( Math.random() * friendIDs.length ); 
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
 
-        var friendID = friendIDs[randNum];
-        if (friendID == undefined){
-          alert('please click the me button to get a list of friends first');
-        }else{
-            console.log("friend id: " + friendID );
-              console.log('Opening a dialog for friendID: ', friendID);
-              var params = {
-                method: 'feed',
-                  to: friendID.toString(),
-                  name: 'Facebook Dialogs',
-                  link: 'https://developers.facebook.com/docs/reference/dialogs/',
-                  picture: 'http://fbrell.com/f8.jpg',
-                  caption: 'Reference Documentation',
-                  description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-            };
-          FB.ui(params, function(obj) { console.log(obj);});
-          }
-      }
-            
-       
-                                      alert('Device is ready! Make sure you set your app_id below this alert.');
-                    //Put your FB APP_ID here!
-                                      FB.init({ appId: "756110871177634", nativeInterface: CDV.FB, useCachedDialogs: false });
-                                      document.getElementById('data').innerHTML = "";
-                                     
-            </script>
-        <div id="log"></div>
-  </body>
+  <!-- meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="........................."/>
+  <meta name="keywords" content="............................"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="author" content="but.ae"/>
+  <!-- mobile viewport -->
+  <meta id="viewport" name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+
+
+  <title>Guzzle - Home</title>
+
+  <!-- icons -->
+  <link rel="shortcut icon" href="assets/images/icons/favicon.ico?v=50">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/icons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/icons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/icons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/icons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/icons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/icons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/icons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/icons/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="assets/images/icons/favicon-196x196.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="assets/images/icons/favicon-160x160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/icons/favicon-96x96.png" >
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32x32.png">
+  <meta name="msapplication-TileColor" content="#17a652">
+  <meta name="msapplication-TileImage" content="assets/images/icons/mstile-144x144.png">
+  <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/libs/cosmo.min.css">
+  <link rel="stylesheet" href="assets/css/libs/animations.css">
+  <link rel="stylesheet" href="assets/css/libs/side-menu.css">
+  <link rel="stylesheet" href="assets/css/libs/owl.css">
+  <link rel="stylesheet"  href="assets/css/libs/slick.css"/>
+  <link rel="stylesheet" href="assets/fonts/font-awesome.css">
+
+  
+
+
+
+  <!-- local -->
+
+  <link rel="stylesheet" href="assets/css/addons.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  <!-- JS -->
+  <script src="assets/js/libs/modernizr.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+
+
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+
+
+  <style type="text/css">
+
+  </style>
+
+
+</head>
+
+
+<div id="preloader">
+
+  <div id="status">
+    <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" /><br>
+    <!-- <img alt="logo-splash-anim" src="assets/images/css/171.gif" class="logo-splash-anim" width="32"/> -->
+    <!-- <img alt="logo-splash-anim" src="assets/images/css/294.gif" class="logo-splash-anim" width="120"/> -->
+
+
+  </div>
+</div>
+<body ng-app="geo" class="page-list">
+
+
+  <div ng-controller="mainController" class="parent-map">
+
+    <!--================ side menu ================-->
+
+    <nav class="user-menu" id="cd-lateral-nav">
+      <div class="container">
+        <span id="email-id" class="user-name" style="display:none;">yar@gmail.com</span>
+        <span class="device-id" style="display:none;" >333333</span>
+        <span class="login" id="login" style="display:none;"></span>
+        <span class="entry" style="display:none;"></span>
+        <span><button onclick="login()">Login</button> <span>
+         <span><button onclick="me()">Me</button> <span>
+        <!--<button onclick="getSession()">Get session</button>-->
+         <span><button onclick="getLoginStatus()">Get login</button> </span>
+         <span><button onclick="logout()">Logout</button> </span>
+
+        <div class="row profile bg-color-b v-align-row">
+          <div class="col-xs-4 no-padding-bottom v-align">
+            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
+          </div>
+          <div class="col-xs-8 reset color-c v-align">
+            <h4> <span class="name">Wim</span></h4>
+
+            <p>Saved since Dec 2015</p>
+            <h3 class="save"><strong><span class="price">0</span></strong><em>AED</em></h3>
+          </div>
+        </div>
+
+
+        <div class="user-settings row centered bg-color-fff v-align-row no-hover">
+          <div class="col-xs-6 v-align reset">
+            <a href=""><i class="fa fa-dollar"></i></a>
+          </div>
+          <div class="col-xs-6 v-align reset gear">
+            <a href="#profile"><i class="fa fa-gear"></i></a>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12 search-box">
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputEmail3"  ng-model="test" placeholder="Search" ng-model="test"/>
+
+            </div>
+          </div>
+
+          <div class="col-xs-12 filter reset " ng-if="cars">
+            <h4><strong>Filter outlet</strong></h4>
+
+            <ul class="reset"  ng-init="group = (cars | groupBy:'type')">
+              <li ng-repeat="m in group" >
+                <div class="switch f-right"  >
+                  <input id=" {{m}}" class="cmn-toggle cmn-toggle-round" type="checkbox"   ng-model="useMakes[$index]">
+                  <label for="{{m}}"></label>
+                </div>
+                {{m}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!-- container -->
+
+<!--
+
+    <a class="invite" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      <div>Invite Friends<br><div class="light-text"><span class="invite-left"></span>invites left</div>
+    </div>
+  -->
+
+  <a class="invite" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <div class="f-left">Invite Friends<br>
+      <span class="pos-a light-text"><span class="invite-left"></span> left</span>
+    </div>
+    <i class="f-right fa fa-user-plus"></i></a>
+
+
+  </a>
+  <div class="collapse" id="collapseExample">
+    <div class="well">
+      <p >Invite your friends to use the app.</p>
+
+
+      <div class="input-group">
+        <input type="text" class="form-control invite-email" placeholder="Friend email">
+        <span class="input-group-btn">
+          <button class="btn btn-default send" ng-click="inviteUser();" type="button">Send</button>
+          <p class="success" style="display:none;">Your invitation has been send.</p>
+        </span>
+      </div><!-- /input-group -->
+
+    </div>
+  </div>
+
+
+
+</nav>
+
+<!------------ overlay ------------>
+<div class="overlay z-up"></div>
+
+<!--================ top menu ================-->
+<header class="top-menu v-align-p z-upup">
+
+ <a id="cd-menu-trigger" class="cd-icon icon-left ico menu "></a>
+ <a id="cd-logo" class="guzzle-logo "></a>
+
+ <a class="cd-icon icon-right ico list  " ng-click='list()'  ></a>
+ <a class="cd-icon icon-right ico mapy  " data-ajax="false" ng-click='Mapsfn()'></a>
+ <div class="result " style="display:none;" >{{cars.length}} items</div>
+
+ <!--<a class="cd-icon icon-left ico back" href="/"></a>-->
+ <a class="cd-icon icon-left ico back" href="#/"></a>
+
+
+</header>
+
+
+<!-- Modal -->
+<div class="modal fade" id="demoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title" id="myModalLabel">Terms and conditions</h4>
+      </div>
+
+      <div class="terms-step1">
+       <div class="modal-body">
+        I wish to view offers including alcoholic beverages.
+      </div>
+      <div class="modal-footer center">
+        <button type="button" class="step1 btn btn-default">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </div>
+    </div>
+
+    <div class="terms-step2">
+      <div class="modal-body">
+        I am of legal drinking age and not Muslim.
+      </div>
+      <div class="modal-footer center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Agree</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Disagree</button>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<main class="mz-main-content main"  >
+
+
+
+
+
+  <!------------ map ------------>
+  <div class="maps" style="display:none;">
+    <div id="map_canvas" ui-map="model.myMap" class="map home-map" ui-options="mapOptions">
+    </div>
+    <div ng-repeat="marker in markers" ng-model="productObject">
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="dynamic view-list reset">
+      <div class="" ng-if="cars">
+
+        <!------------ list ------------>
+        <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
+
+          <a class=" " href="#outlet/{{car.urltitle}}"  data-transition="slide">
+            <div class="col-xs-3 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'http://static-site.dubainight.com/images/upload/lieux/photos/68793.jpg'}})">
+
+            </div>
+
+            <div class="col-xs-9 no-padding-bottom">
+              <h4 class="color-a title" >{{car.title}}</h4>
+              <ul class="list-inline">
+                <li class="caps">{{car.type}}</li>
+                <li class="color-a rating">Offer Value :  <span class="total-value-{{car.title}}"></span></li>
+              </ul>
+              <ul class="list-inline">
+                <li><i class="fa fa-clock-o"></i>Last Call: <strong>{{car.lastcall}}</strong></li>
+                <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li>
+                <!-- <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li> -->
+              </ul>
+            </div>
+          </a>
+        </div><!-- /row 1 item -->
+
+
+
+
+      </div><!-- /container -->
+    </div>
+  </div>
+</main><!-- mz-main-->
+
+
+<div class="ng-view"></div>
+
+
+
+</div><!-- mainController -->
+<!--================ content ================-->
+
+
+
+
+
+<div class="js">
+
+
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en"></script>
+  <script type="text/javascript" src="assets/js/libs/jquery.min.js"></script>
+  <script src="assets/js/libs//bootstrap.min.js"></script>
+  <script type="text/javascript" src="assets/js/libs//slick.min.js"></script>
+  <script src="assets/js/jquery.touchSwipe.min.js"></script>
+  <script src="assets/js/libs/angular.min.js"></script>
+  <script src="assets/js/event.js"></script>
+  <script src="assets/js/ui-map.min.js"></script>
+  <script src="assets/js/libs/cssBrowserSelector.js"></script>
+  <script src="assets/js/libs/appear.js"></script>
+  <script src="assets/js/libs/matchHeight.js"></script>
+  <script src="assets/js/libs/localScroll.js"></script>
+  <script src="assets/js/libs/scrollUp.js"></script>
+  <script src="assets/js/jquery.pjax.js"></script>
+  <script src="assets/js/libs/owl.js"></script>
+  <script src="assets/js/libs/sideMenu.js"></script>
+  <script src="assets/js/plugins.js"></script>
+  <script src="assets/js/main.js"></script>
+  
+
+  <script src="assets/js/angular-route.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script src="cdv-plugin-fb-connect.js"></script>
+  <!-- facebook js sdk -->
+  <script src="facebook-js-sdk.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+  
+
+
+</div><!-- end js -->
+</body>
+
+<script type="text/javascript">
+var e = $('.dummy');
+
+for (var i = 0; i < 2; i++) {
+  e.clone().insertAfter(e);
+}
+
+
+
+
+
+</script>
 </html>
