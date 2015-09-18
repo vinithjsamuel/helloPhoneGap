@@ -51,6 +51,12 @@
     //   }
     // }
     // );
+
+if (window.localStorage.getItem("installed") == undefined) {
+ /* run function */
+ alert("yes");
+ window.localStorage.setItem("installed", true);
+}
 alert(device.uuid);
 alert('Device is ready! Make sure you set your app_id below this alert.');
 
@@ -63,6 +69,22 @@ var fbLoginSuccess = function (userData) {
 
 }
 alert("vcxvxv");
+login();
+getAccessToken();
+var login = function () {
+  if (!window.cordova) {
+    var appId = prompt("Enter FB Application ID", "");
+    facebookConnectPlugin.browserInit(appId);
+  }
+  facebookConnectPlugin.login( ["email"],
+    function (response) { alert(JSON.stringify(response)) },
+    function (response) { alert(JSON.stringify(response)) });
+}
+ var getAccessToken = function () { 
+                facebookConnectPlugin.getAccessToken( 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
 
 FB.getLoginStatus(function(response) {
   if (response.status == 'connected') {
