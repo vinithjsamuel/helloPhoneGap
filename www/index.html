@@ -79,6 +79,7 @@
 
 </head>
 
+
 <div id="preloader">
 
   <div id="status">
@@ -90,7 +91,11 @@
   </div>
 </div>
 <body ng-app="geo" class="page-list">
-
+  <button onclick="login()">Login</button>
+  <button onclick="me()">Me</button>
+  <!--<button onclick="getSession()">Get session</button>-->
+  <button onclick="getLoginStatus()">Get login</button>
+  <button onclick="logout()">Logout</button>
 
 
   <div ng-controller="mainController" class="parent-map">

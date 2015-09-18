@@ -75,17 +75,6 @@ alert("vcxvxv");
                                alert('auth.login event');
                                });
             
-            FB.Event.subscribe('auth.logout', function(response) {
-                               alert('auth.logout event');
-                               });
-            
-            FB.Event.subscribe('auth.sessionChange', function(response) {
-                               alert('auth.sessionChange event');
-                               });
-            
-            FB.Event.subscribe('auth.statusChange', function(response) {
-                               alert('auth.statusChange event');
-                               });
             
             /*function getSession() {
                 alert("session: " + JSON.stringify(FB.getSession()));
@@ -97,7 +86,7 @@ alert("vcxvxv");
                                   alert('logged in');
                                   } else {
                                   alert('not logged in');
-                                  login();
+                                 
                                   }
                                   });
             }
