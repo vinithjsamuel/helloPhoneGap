@@ -37,7 +37,7 @@
     onDeviceReady: function() {
       app.receivedEvent('deviceready');
       
-      
+
 
     },
     // Update DOM on a Received Event
@@ -52,6 +52,9 @@
     // }
     // );
 alert(device.uuid);
+alert('Device is ready! Make sure you set your app_id below this alert.');
+
+FB.init({ appId: "com.getguzzle.guzzle", nativeInterface: CDV.FB, useCachedDialogs: false });
 
 var fbLoginSuccess = function (userData) {
 
@@ -59,10 +62,18 @@ var fbLoginSuccess = function (userData) {
   alert("UserInfo: " + JSON.stringify(userData));
 
 }
+alert("vcxvxv");
 
+FB.getLoginStatus(function(response) {
+  if (response.status == 'connected') {
+    alert('logged in');
+  } else {
+    alert('not logged in');
+  }
+});
 facebookConnectPlugin.login(["public_profile"],
   fbLoginSuccess,
-  function (error) { alert("" + error) }
+  function (error) { alert("vbnvbv " + error) }
   );
        // $(".device-id").html(device.uuid);
        // alert(device.uuid);

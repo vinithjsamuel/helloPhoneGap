@@ -195,7 +195,7 @@
  <a id="cd-menu-trigger" class="cd-icon icon-left ico menu "></a>
  <a id="cd-logo" class="guzzle-logo "></a>
 
- <a class="cd-icon icon-right ico list  " ng-click='list()'></a>
+ <a class="cd-icon icon-right ico list  " ng-click='list()'  ></a>
  <a class="cd-icon icon-right ico mapy  " data-ajax="false" ng-click='Mapsfn()'></a>
  <div class="result " style="display:none;" >{{cars.length}} items</div>
 
@@ -272,7 +272,7 @@
         <!------------ list ------------>
         <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
 
-          <a class=" " href="#outlet/{{car.urltitle}}" >
+          <a class=" " href="#outlet/{{car.urltitle}}"  data-transition="slide">
             <div class="col-xs-3 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'http://static-site.dubainight.com/images/upload/lieux/photos/68793.jpg'}})">
 
             </div>
