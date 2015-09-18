@@ -41,15 +41,15 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
-      window.plugins.googleplus.isAvailable(
-        function (available) {
-          if (available) {
-            alert("yes");
-        // show the Google+ sign-in button
-      }
-    }
-    );
-       // alert(device.uuid);
+    //   window.plugins.googleplus.isAvailable(
+    //     function (available) {
+    //       if (available) {
+    //         alert("yes");
+    //     // show the Google+ sign-in button
+    //   }
+    // }
+    // );
+       alert(device.uuid);
        // $(".device-id").html(device.uuid);
        // alert(device.uuid);
 //        window.plugins.DeviceAccounts.getEmail(function(accounts){
