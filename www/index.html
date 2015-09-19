@@ -312,11 +312,11 @@
         <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
 
           <a class=" " href="#outlet/{{car.urltitle}}" >
-            <div class="col-xs-3 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'assets/images/logo.png'}})">
+            <div class="col-xs-4 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'assets/images/logo.png'}})">
 
             </div>
 
-            <div class="col-xs-9 no-padding-bottom">
+            <div class="col-xs-8 no-padding-bottom">
               <h4 class="color-a title">{{car.title}}</h4>
               <ul class="list-inline">
                 <li class="caps">{{car.type}}</li>
