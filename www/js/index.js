@@ -21,7 +21,7 @@
     // Application Constructor
     initialize: function() {
 
-       this.bindEvents();
+     this.bindEvents();
    },
     // Bind Event Listeners
     //
@@ -29,7 +29,7 @@
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
       document.addEventListener('deviceready', this.onDeviceReady, false);
-  },
+    },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -39,7 +39,7 @@
       
 
 
-  },
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
@@ -53,11 +53,10 @@
     // );
 
 if (window.localStorage.getItem("install") == undefined) {
-   /* run function */
-   $('#demoBox').modal("show"); 
-   var val=window.localStorage.getItem("install");
-   alert(val);
-   window.localStorage.setItem("install", true);
+ /* run function */
+ $('#demoBox').modal("show"); 
+ var val=window.localStorage.getItem("install");
+ window.localStorage.setItem("install", true);
 }
 
 
@@ -94,11 +93,11 @@ function Insertdata()
 {
 
 
-    var email_id= window.localStorage.getItem("email");
-    $("#email-id").html(email_id);
-    var deviceid= $(".device-id").html();
+  var email_id= window.localStorage.getItem("email");
+  $("#email-id").html(email_id);
+  var deviceid= $(".device-id").html();
 
 
-    
-    calls();
+  
+  calls();
 }
