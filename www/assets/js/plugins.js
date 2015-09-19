@@ -15,18 +15,18 @@ $(window).load(function() {
 	
 	$(function() {
 		$('.equal .item').matchHeight();
-		$("body").swipe( {
-        //Generic swipe handler for all directions
-        swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
-        	var xPos = e.originalEvent.touches[0].pageX;
-        	if(xPos<150)
-        	{
-        		$( "#cd-menu-trigger" ).trigger( "click" );
+		// $("body").swipe( {
+  //       //Generic swipe handler for all directions
+  //       swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
+  //       	var xPos = e.originalEvent.touches[0].pageX;
+  //       	if(xPos<150)
+  //       	{
+  //       		$( "#cd-menu-trigger" ).trigger( "click" );
 
-        	}
-        }
+  //       	}
+  //       }
 
-    });
+  //   });
 	});
 	
 })
