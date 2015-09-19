@@ -60,24 +60,9 @@ if (window.localStorage.getItem("installed") == undefined) {
 alert(device.uuid);
 alert('Device is ready! Make sure you set your app_id below this alert.');
 
+FB.init({ appId: "756110871177634", nativeInterface: CDV.FB, useCachedDialogs: false });
 
-window.fbAsyncInit = function() {
-  FB.init({ appId: '756110871177634', 
-        status: true, 
-        cookie: true,
-        xfbml: true,
-        oauth: true});
-
-var fbLoginSuccess = function (userData) {
-
-  alert("yes");
-  alert("UserInfo: " + JSON.stringify(userData));
-
-}
-
-
-
-
+alert("vcxvxv");
 FB.getLoginStatus();
 
 
@@ -86,7 +71,6 @@ FB.getLoginStatus();
             }
             */
             FB.getLoginStatus(function(response) {
-              alert("yes");
               if (response.status === 'connected') {
     // the user is logged in and connected to your
     // app, and response.authResponse supplies
