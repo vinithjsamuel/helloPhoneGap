@@ -66,9 +66,9 @@
        <param name="APP_ID" value="756110871177634" />
        <param name="APP_NAME" value="Guzzle" />
    </gap:plugin>
-   
-    <!-- Define app icon for each platform. -->
-    <icon src="icon.png" />
+   <icon src="icon.png" />
+    <icon src="icon-57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icon-72.png" gap:platform="ios" width="72" height="72" />
     <access origin="*"/>
 
 </widget>
