@@ -3,6 +3,14 @@
 
 
 
+	<div id="preloader-er">
+		<div id="status">
+			<img alt="logo-splash-anim" src="assets/images/css/171.gif" class="logo-splash-anim" width="60"/>
+		</div>
+	</div>
+
+
+
 
 	<!-- <br/> -->
 
@@ -10,244 +18,218 @@
 	<!--================ content ================-->
 
 	<main class="mz-main-content " id="" >
-		<div class="container" >
-			<div class="dynamic view-list reset ">
-				<div class="">
 
-					<!------------ list ------------>
+		<!------------ detail ------------>
+		<div class="dynamic">
+			<div class="container">
 
-
-
-					<!------------ detail ------------>
-					<div class="  " >
-
-
-
-						<div class="container "   >
+				<div class="row">
+					<div class="reset animated maps-hide mapy" >
+						<div id="map-canvas" class=" " style="height: 350px; z-index:10; " ></div>
+					</div>
+				</div>
 
 
-							<!--
-							<div class="row">
-								<div class="col-xs-12 reset map animated">
-									<iframe style="height: 300px; z-index:10;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28904.840753958735!2d55.20951138869824!3d25.09830357655589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43496ad9c645%3A0x74ced0bf2b0029e9!2sDubai!5e0!3m2!1sen!2sae!4v1433081577725" width="100%" height="100%" frameborder="0" style="border:0"></iframe>
-								</div>
-							</div>
-							-->
+				<div class="row img-slider">
+					<!-- slider -->
+					<div class="col-xs-12 reset pos-r slider"  >
+						<div  >
+							<img class="item-logo"  alt="140x140" ng-if="outlet" src="{{(outlet.logo) || 'assets/images/logo.png'}}"/>
 
+							<time class="pos-a" ng-repeat="m in outlets" >
+								<div class="code1" style="display:none;" data-id="{{m.owner}}">{{m.empcode}}</div>
+								<div class="outlets"></div>
+								<div class="code2" style="display:none;" data-id="{{m.owner}}">{{m.codes}}</div>
 
-						<div class="row">
-
-							<div class="reset   animated maps-show" >
-								<div id="map-canvas" class=" " style="height: 350px; z-index:10; " ></div>
-							</div>
+								<div class="outlet-name" style="display:none;">{{m.title}}</div>
+								<i class="fa fa-clock-o"></i>Last Call: <strong>{{m.lastcall}}</strong>
+							</time>
 						</div>
-						<div class="row">
-							<!-- slider -->
-							<div class="col-xs-12 reset pos-r slider"  >
-								<div  >
-									<img class="item-logo" alt="140x140" src="{{(outlet.logo) || 'http://static-site.dubainight.com/images/upload/lieux/photos/68793.jpg'}}"/>
+
+						<ul class="owl-carousel reset no-list"  >
+							<li class="item"style="background:url({{outlet.image1 || 'assets/images/dummy/01.jpg'}})"></li>
+							<li class="item" style="background:url({{outlet.image2  || 'assets/images/dummy/02.jpg'}});"></li>
+							<li class="item" style="background:url({{outlet.image3 || 'assets/images/dummy/03.jpg'}});"></li>
+						</ul>
+
+					</div><!-- /col -->
+				</div><!-- /col -->
 
 
-									<time class="pos-a" ng-repeat="m in outlet" >
-										<div class="code1"  style="display:none;" data-id="{{m.owner}}">{{m.empcode}}</div><div class="outlets"></div><div class="code2" style="display:none;" data-id="{{m.owner}}">{{m.codes}}</div>
-										<div class="outlet-name" style="display:none;">{{m.title}}</div>
-
-										<i class="fa fa-clock-o"></i>Last Call: <strong>{{m.lastcall}}</strong> </time>
-
-									</div>
-
-
-									<ul class="owl-carousel reset no-list"  >
-										<li class="item" style="background:url({{image1 || 'assets/images/dummy/01.jpg'}})"></li>
-										<li class="item "  style="background:url({{image2  || 'assets/images/dummy/02.jpg'}});"></li>
-										<li class="item "   style="background:url({{image3 || 'assets/images/dummy/03.jpg'}});"></li>
+				<div class="row desc" ng-if="outlet" >
+					<div class="col-xs-12 reset">
+						<h3>{{outlet.title}}</h3>
+						<p>{{outlet.desc}}</p>
+					</div>
+				</div><!-- /row -->
 
 
-									</ul>
-								</div><!-- /col -->
-							</div><!-- /col -->
-						</div><!-- container -->
+				<div class="row timing" ng-if="outlet">
+					<div class="col-xs-12 reset voucher">
+						<ul class="open-times list-inline f-left">
+							<li>Open</li>
+							<li><i>S</i><i>M</i><i>T</i> <i >W</i> <i >T</i> <i>F</i> <i>S</i> </li>
+						</ul>
+
+						<ul class="share-icons list-inline f-right but" >
+							<li><a class="call" href="tel:{{outlet.phone}}"><i class="fa fa-phone"></i></a></li>
+							<li><a class="btn-map  map-toggle" data-id="maps"  ng-click='mapClick()'><i class="fa fa-map-marker"></i></a></li>
+							<li><a class="share" href="#" onclick="window.plugins.socialsharing.shareViaFacebook('Message', null,  'img' , 'assets/images/dummy/01.jpg', function() {console.log('share ok')}, function(errormsg){alert(errormsg)})"><i class="fa fa-share-alt"></i></a></li>
+						</ul>
+
+					</div>
+				</div><!-- /row -->
 
 
-						<div class="container">
-							<div class="row timing" >
-								<div class="col-xs-12 reset voucher">
-									<ul class="open-times list-inline f-left">
-										<li>Open</li>
-										<li><i>S</i><i>M</i><i>T</i> <i >W</i> <i >T</i> <i>F</i> <i>S</i> </li>
-									</ul>
-
-									<ul class="share-icons list-inline f-right but" >
-										<li><a class="call" href="tel:{{phone}}"><i class="fa fa-phone"></i></a></li>
-										<li><a class="btn-map  map-toggle" ><i class="fa fa-map-marker"></i></a></li>
-										<li><a class="share" href="#"><i class="fa fa-share-alt"></i></a></li>
-
-									</ul>
-								</div>
-							</div><!-- /row -->
-
-							<div class="row">
-								<div class="col-xs-12 reset">
-									<hr class="sep-line"></hr>
-								</div><!-- /col -->
-							</div><!-- /row -->
+				<div class="row">
+					<div class="col-xs-12 reset">
+						<hr class="sep-line"></hr>
+					</div><!-- /col -->
+				</div><!-- /row -->
 
 
-							<div class="row">
-								<div class="col-xs-12 vouchers no-list  reset" ng-repeat="voucher in vouchers"  >
+				<div class="row">
+					<div class="col-xs-12 vouchers no-list  reset" ng-repeat="voucher in vouchers"  >
 
-									<ul class=" first dummy first voucher-click  "   >
-										<!-- Vouchers Not Used -->
-										<li class="item slide1 order-{{voucher.urltitle}} " ng-if="voucher.used!=0" ng-click="pinVerf(voucher.urltitle);" >
-											<ul class="second">
-												<li class="ticket f-left">
-													<ul>
-														<li>Order now</li>
-														<li class="number"> <span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
-													</ul>
-												</li>
+						<ul class=" first dummy first voucher-click  "   >
+							<!-- Vouchers Not Used -->
+							<li class="item slide1 order-{{voucher.urltitle}} " ng-if="voucher.used!=0" ng-click="pinVerf(voucher.urltitle);" >
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"> <span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
 
-												<li class="cups f-left">
-													<ul>
-														<li class="type type-1"></li>
-														<li class="plus">+</li>
-														<li class="type type-1"></li>
-													</ul>
-												</li>
+									<li class="cups f-left">
+										<ul>
+											<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/beverage.png"/></li>
+											<li class="plus">+</li>
+											<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/mojito.png"/></li>
+										</ul>
+									</li>
 
-												<li class="desc f-left">
-													<ul>
-														<li><strong>{{voucher.voucherchoice}}<span ng-attr-title="cafe"></span></strong></li>
-														<li>Expiry: {{voucher.expirydate}}</li>
+									<li class="desc f-left">
+										<ul>
+											<li><strong>{{voucher.voucherchoice}}<span ng-attr-title="cafe"></span></strong></li>
+											<li>Expiry: {{voucher.expirydate}}</li>
 
-													</ul>
-												</li>
+										</ul>
+									</li>
 
-											</ul>
+								</ul>
 
-										</li>
-										<div class="cost-{{voucher.urltitle}}" style="display:none;">{{voucher.cost}}</div>
-										<!-- Vouchers  Finished -->
-										<li class="item slide1 order-{{voucher.urltitle}} " ng-if="voucher.used==0"  >
-											<ul class="second">
-												<li class="ticket f-left">
-													<ul>
-														<li></li>
-														<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
-													</ul>
-												</li>
+							</li>
 
-												<li class="cups f-left">
-													<ul>
-														<li class="type type-1"></li>
-														<li class="plus">+</li>
-														<li class="type type-1"></li>
-													</ul>
-												</li>
-
-												<li class="desc f-left">
-													<ul>
-														<li><strong>{{voucher.voucherchoice}}<span ng-attr-title="cafe"></span></strong></li>
-														<li>Expiry: {{voucher.expirydate}}</li>
-
-													</ul>
-												</li>
-
-											</ul>
-
-										</li>
-										<li class="item slide2 confirm-{{voucher.urltitle}} voucher-code" style="display:none;" >
-											<ul class="second">
-
-												<li class="ticket f-left">
-													<ul>
-														<li>Order now</li>
-														<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
-													</ul>
-												</li>
+							<div class="cost-{{voucher.urltitle}}" style="display:none;">{{voucher.cost}}</div>
 
 
-												<li class="pin f-left">
-													<ul>
-														<li>Bartender confirmation pin</li>
-														<div class="form-group">
-															<input type="tel" pattern="[0-9]*" inputmode="numeric" class="form-control code-{{voucher.urltitle}}"  ng-model="confirmed" maxlength="4" type="password" name="psw" ng-change="pageVerf(voucher.urltitle,voucher.voucherchoice)"/>
-														</div>
-														<div class="form-group">
+							<!-- Vouchers  Finished -->
+							<li class="item slide1 order-{{voucher.urltitle}} " ng-if="voucher.used==0"  >
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li></li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+
+									<li class="cups f-left">
+										<ul>
+											<li class="type type-1"></li>
+											<li class="plus">+</li>
+											<li class="type type-1"></li>
+										</ul>
+									</li>
+
+									<li class="desc f-left">
+										<ul>
+											<li><strong>{{voucher.voucherchoice}}<span ng-attr-title="cafe"></span></strong></li>
+											<li>Expiry: {{voucher.expirydate}}</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+
+							<li class="item slide2 confirm-{{voucher.urltitle}} voucher-code" style="display:none;" >
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+
+									<li class="pin f-left">
+										<ul>
+											<li>Bartender confirmation pin</li>
+											<div class="form-group">
+												<input type="tel" class="form-control code-{{voucher.urltitle}}"  ng-model="confirmed" maxlength="4"  name="psw" ng-change="pageVerf(voucher.urltitle,voucher.voucherchoice)"/>
+											</div>
+											<div class="form-group">
 
 
-														</div>
-													</ul>
-												</li>
+											</div>
+										</ul>
+									</li>
+								</ul>
+							</li>
 
-											</ul>
-										</li>
-										<li class="item slide3 result-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);">
-											<ul class="second">
+							<li class="item slide3 result-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);">
+								<ul class="second">
 
-												<li class="ticket f-left">
-													<ul>
-														<li>Order now</li>
-														<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
-													</ul>
-												</li>
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+									<li class="feedback f-left">
+										<ul>
+											<li>BOTTOMS UP!</li>
+											<li>Confirmation code</li>
+											<li class="code"><strong><span class="redem-code-{{voucher.urltitle}}"></span></strong></li>
+										</ul>
+									</li>
+									<li class="feedback f-right">
+										<div class="face"></div>
+									</li>
 
+								</ul>
+								<div class="titles" style="display:none;">{{voucher.title}}</div>
+								<div class="vouchertitle" style="display:none;">{{voucher.urltitle}}</div>
+							</li>
 
-												<li class="feedback f-left">
-													<ul>
-														<li>BOTTOMS UP!</li>
-														<li>Confirmation code</li>
-														<li class="code"><strong><span class="redem-code-{{voucher.urltitle}}"></span></strong></li>
-													</ul>
-												</li>
+							<li class="item slide3 error-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);">
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number">{{voucher.used}}<small>Left</small></li>
+										</ul>
+									</li>
 
-												<li class="feedback f-right">
-													<div class="face"></div>
-												</li>
+									<li class="feedback f-left">
+										<ul>
+											<li>Error!</li>
+										</ul>
+									</li>
+									<li class="feedback f-right">
+										<div class="face"></div>
+									</li>
+								</ul>
+							</li>
+						</ul><!-- /1 item -->
 
-											</ul>
-											<div class="titles" style="display:none;">{{voucher.title}}</div>
-											<div class="vouchertitle" style="display:none;">{{voucher.urltitle}}</div>
+					</div><!-- /col -->
+				</div><!-- /row -->
+			</div><!-- container -->
+		</div> <!-- /dynamic -->
 
-										</li>
-										<li class="item slide3 error-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);">
-											<ul class="second">
-
-												<li class="ticket f-left">
-													<ul>
-														<li>Order now</li>
-														<li class="number">{{voucher.used}}<small>Left</small></li>
-													</ul>
-												</li>
-
-
-												<li class="feedback f-left">
-													<ul>
-														<li>Error!</li>
-
-													</ul>
-												</li>
-
-												<li class="feedback f-right">
-													<div class="face"></div>
-												</li>
-
-											</ul>
-										</li>
-
-
-									</ul><!-- /1 item -->
-
-								</div><!-- /col -->
-							</div><!-- /row -->
-
-
-						</div><!-- container -->
-					</div> <!-- /dynamic -->
-				</div><!-- /container -->
-			</div>
-		</div>
 	</main><!-- mz-main-->
+
+
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
@@ -269,4 +251,6 @@
 
 		</div>
 	</div>
+
+
 </div><!-- mainController -->

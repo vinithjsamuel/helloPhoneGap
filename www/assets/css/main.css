@@ -724,6 +724,7 @@ img.item-logo {
 	width: 100%;
 	/*height: 90px;*/
 	position: relative;
+	padding: 0 0 10px 0;
 
 }
 
@@ -768,7 +769,10 @@ img.item-logo {
   margin-left: 5px;
 }
 
-
+.vouchers li.cups img{
+	width: 40px;
+	height: 40px;
+}
 
 .vouchers li.cups, .vouchers li.desc{
 	padding: 15px 0 0 0;
@@ -786,12 +790,12 @@ img.item-logo {
 	padding: 10px 0 0 0;
 }
 
-.vouchers li.type{
+/*.vouchers li.type{
 	background: url(../images/sprite.png);
 	background-size: 500px;
 	width: 40px;
 	height: 40px;
-}
+}*/
 
 .vouchers li.type.type-1{
 	background-position: 0 0;
@@ -842,6 +846,32 @@ img.item-logo {
 .terms-step2{
 	display: none;
 }
-input[type=tel] {
-    -webkit-text-security: disc;
+
+
+.dynamic{
+	padding: 0 15px;
 }
+.img-slider{
+	margin: 0 -30px;
+}
+
+
+ #preloader-er{
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	z-index: 999;
+}
+	#preloader-er #status {
+		width: 200px; height: 200px;
+		position: absolute;
+		left: 50%; top:50%;
+		/*background: url(../images/css/171.gif) no-repeat center;*/
+		margin: -100px 0 0 -100px;
+		text-align: center;
+	}
+
+

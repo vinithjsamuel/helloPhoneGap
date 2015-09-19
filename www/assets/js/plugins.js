@@ -11,17 +11,26 @@ jQuery(document).ready(function() {
 
 
 $(window).load(function() {
-	
-	
+
+	$("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
 	$(function() {
 		$('.equal .item').matchHeight();
-	});
-	$("body").swipe( {
+		$("body").swipe( {
         //Generic swipe handler for all directions
         swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
-          $( "#cd-menu-trigger" ).trigger( "click" );
+        	alert(event.pageX);
+        	 var xPos = e.originalEvent.touches[0].pageX;
+        	 alert(xPos);
+        	if(xPos<20)
+        	{
+        		$( "#cd-menu-trigger" ).trigger( "click" );
+
+        	}
         }
-      });
+
+    });
+	});
+	
 })
 
 
