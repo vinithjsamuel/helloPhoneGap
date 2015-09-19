@@ -52,12 +52,12 @@
     // }
     // );
 
-if (window.localStorage.getItem("installed") == undefined) {
+if (window.localStorage.getItem("install") == undefined) {
    /* run function */
    $('#demoBox').modal("show"); 
-   var val=window.localStorage.getItem("installed");
+   var val=window.localStorage.getItem("install");
    alert(val);
-   window.localStorage.setItem("installed", true);
+   window.localStorage.setItem("install", true);
 }
 
 
