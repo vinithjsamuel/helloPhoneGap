@@ -61,6 +61,7 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     <gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" version="1.2.0" />
     <gap:plugin name="com.telerik.plugins.nativepagetransitions" version="0.2.2" />
+    <gap:plugin name="nl.x-services.plugins.socialsharing" source="plugins.cordova.io" />
 
   <gap:plugin name="com.phonegap.plugins.facebookconnect" >
  <param name="APP_ID" value="756110871177634" />

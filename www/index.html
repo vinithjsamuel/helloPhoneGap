@@ -93,63 +93,63 @@
 
 
 
-<div ng-controller="mainController" class="parent-map">
+  <div ng-controller="mainController" class="parent-map">
 
-  <!--================ side menu ================-->
+    <!--================ side menu ================-->
 
-  <nav class="user-menu" id="cd-lateral-nav">
-    <div class="container">
-      <span id="email-id" class="user-name" style="display:none;">uu@gmail.com</span>
-      <span class="device-id" style="display:none;" >3333393</span>
-      <span class="login" id="login" style="display:none;"></span>
-      <span class="entry" style="display:none;"></span>
+    <nav class="user-menu" id="cd-lateral-nav">
+      <div class="container">
+        <span id="email-id" class="user-name" style="display:none;">uu@gmail.com</span>
+        <span class="device-id" style="display:none;" >3333393</span>
+        <span class="login" id="login" style="display:none;"></span>
+        <span class="entry" style="display:none;"></span>
 
-      <div class="row profile bg-color-b v-align-row">
-        <div class="col-xs-4 no-padding-bottom v-align">
-          <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
-        </div>
-        <div class="col-xs-8 reset color-c v-align">
-          <h4> <span class="name">Wim</span></h4>
+        <div class="row profile bg-color-b v-align-row">
+          <div class="col-xs-4 no-padding-bottom v-align">
+            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
+          </div>
+          <div class="col-xs-8 reset color-c v-align">
+            <h4> <span class="name">Wim</span></h4>
 
-          <p>Saved since Dec 2015</p>
-          <h3 class="save"><strong><span class="price">0</span></strong><em>AED</em></h3>
-        </div>
-      </div>
-
-
-      <div class="user-settings row centered bg-color-fff v-align-row no-hover">
-        <div class="col-xs-6 v-align reset">
-          <a href="" ng-click="loginId();"><i class="fa fa-dollar"></i></a>
-        </div>
-        <div class="col-xs-6 v-align reset gear">
-          <a href="#profile"><i class="fa fa-gear"></i></a>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-xs-12 search-box">
-          <div class="form-group">
-            <input type="text" class="form-control" id="inputEmail3"  ng-model="test" placeholder="Search" ng-model="test"/>
-
+            <p>Saved since Dec 2015</p>
+            <h3 class="save"><strong><span class="price">0</span></strong><em>AED</em></h3>
           </div>
         </div>
 
-        <div class="col-xs-12 filter reset " ng-if="cars">
-          <h4><strong>Filter outlet</strong></h4>
 
-          <ul class="reset"  ng-init="group = (cars | groupBy:'type')">
-            <li ng-repeat="m in group" >
-              <div class="switch f-right"  >
-                <input id=" {{m}}" class="cmn-toggle cmn-toggle-round" type="checkbox"   ng-model="useMakes[$index]">
-                <label for="{{m}}"></label>
-              </div>
-              {{m}}
-            </li>
-          </ul>
+        <div class="user-settings row centered bg-color-fff v-align-row no-hover">
+          <div class="col-xs-6 v-align reset">
+            <a href="" ng-click="loginId();"><i class="fa fa-dollar"></i></a>
+          </div>
+          <div class="col-xs-6 v-align reset gear">
+            <a href="#profile"><i class="fa fa-gear"></i></a>
+          </div>
         </div>
-      </div>
-    </div><!-- container -->
+
+
+        <div class="row">
+          <div class="col-xs-12 search-box">
+            <div class="form-group">
+              <input type="text" class="form-control" id="inputEmail3"  ng-model="test" placeholder="Search" ng-model="test"/>
+
+            </div>
+          </div>
+
+          <div class="col-xs-12 filter reset " ng-if="cars">
+            <h4><strong>Filter outlet</strong></h4>
+
+            <ul class="reset"  ng-init="group = (cars | groupBy:'type')">
+              <li ng-repeat="m in group" >
+                <div class="switch f-right"  >
+                  <input id=" {{m}}" class="cmn-toggle cmn-toggle-round" type="checkbox"   ng-model="useMakes[$index]">
+                  <label for="{{m}}"></label>
+                </div>
+                {{m}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div><!-- container -->
 
 <!--
 
@@ -217,8 +217,8 @@
         <h4 class="modal-title">Please provide your activation code to start using our services</h4>
       </div>
       <div class="modal-body">
-        <input type="text" class="email">
-        <input type="text" class="active-code">
+        <div><label>Email Id</label><input type="text" class="email"></div>
+        <div><label>Email Id</label><input type="text" class="active-code"></div>
       </div>
       <div class="modal-footer">
         <p class="error-profile" style="display:none;">Your activation code is already used / invalid.</p>
@@ -355,7 +355,6 @@
 
 
   <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
   <script type="text/javascript" src="assets/js/libs/jquery.min.js"></script>
   <script src="assets/js/libs//bootstrap.min.js"></script>
   <script type="text/javascript" src="assets/js/libs//slick.min.js"></script>
