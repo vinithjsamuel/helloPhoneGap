@@ -21,7 +21,7 @@ $(window).load(function() {
         	alert(event.pageX);
         	 var xPos = e.originalEvent.touches[0].pageX;
         	 alert(xPos);
-        	if(xPos<20)
+        	if(xPos<100)
         	{
         		$( "#cd-menu-trigger" ).trigger( "click" );
 
