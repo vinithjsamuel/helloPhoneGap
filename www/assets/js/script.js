@@ -493,6 +493,7 @@ $http({
       else{
        $("#acc-activated").modal('show');
      }
+      $(".user-menu").removeClass("menu-open");;
    }
 
 

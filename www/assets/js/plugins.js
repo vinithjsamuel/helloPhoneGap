@@ -18,10 +18,8 @@ $(window).load(function() {
 		$("body").swipe( {
         //Generic swipe handler for all directions
         swipeRight:function(event, direction, distance, duration, fingerCount, fingerData) {
-        	alert(event.pageX);
-        	 var xPos = e.originalEvent.touches[0].pageX;
-        	 alert(xPos);
-        	if(xPos<100)
+        	var xPos = e.originalEvent.touches[0].pageX;
+        	if(xPos<150)
         	{
         		$( "#cd-menu-trigger" ).trigger( "click" );
 
