@@ -979,8 +979,6 @@ $http.get(url)
    phone:datas[0].phonenumber,
    image1:datas[0].image1,
    image2:datas[0].image2,
-   image3:datas[0].image3,
-   logo:datas[0].logo,
    lastcall:datas[0].lastcall
 
  }
