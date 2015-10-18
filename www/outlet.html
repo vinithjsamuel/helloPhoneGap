@@ -106,7 +106,7 @@
 
 					<ul class=" first dummy first voucher-click  "   >
 						<!-- Vouchers Not Used -->
-						<li class="item slide1 order-{{voucher.urltitle}}" ng-if="voucher.used!=0" ng-click="pinVerf(voucher.urltitle);" ng-swipe-left="pinVerf(voucher.urltitle);" ng-swipe-right="pinVerf(voucher.urltitle);">
+						<li class="item slide1 order-{{voucher.urltitle}}" ng-if="voucher.used!=0" ng-click="pinVerf(voucher.urltitle);" ng-swipe-right="pinVerf(voucher.urltitle);" >
 							<ul class="second">
 								<li class="ticket f-left">
 									<ul>
@@ -201,7 +201,7 @@
 							</ul>
 						</li>
 
-						<li class="item slide3 result-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe-right="frontLoad(voucher.urltitle);" ng-swipe-left="frontLoad(voucher.urltitle);">
+						<li class="item slide3 result-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe="frontLoad(voucher.urltitle);">
 							<ul class="second">
 
 								<li class="ticket f-left">
@@ -226,7 +226,7 @@
 							<div class="vouchertitle" style="display:none;">{{voucher.urltitle}}</div>
 						</li>
 
-						<li class="item slide3 error-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe-right="frontLoad(voucher.urltitle);" ng-swipe-left="frontLoad(voucher.urltitle);">
+						<li class="item slide3 error-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe="frontLoad(voucher.urltitle);">
 							<ul class="second">
 								<li class="ticket f-left">
 									<ul>
