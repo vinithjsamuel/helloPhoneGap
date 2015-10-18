@@ -35,7 +35,7 @@
 									ng-model="profiles.gender"
 									ng-value="name"
 									name="cf_gender">
-									    {{name}}
+									{{name}}
 								</label>
 							</div>
 						</div>
@@ -47,22 +47,17 @@
 							</div>
 
 							<div class="form-group col-md-12">
+								<label>Country</label>
+								<input type="text" name="cf_country" value="{{country}}" class="form-control country"/>
+							</div>
+							<div class="form-group col-md-12">
 								<label>City</label>
 								<input type="text" name="cf_city" value="{{city}}" class="form-control city"/>
 							</div>
 
 						</div>
 
-
-
-						<div class="row">
-							<div class="form-group col-md-12">
-								<label>Country</label>
-								<input type="text" name="cf_country" value="{{country}}" class="form-control country"/>
-							</div>
-						</div>
-
-
+						
 
 						<div class="row">
 							<div class="form-group col-md-12">
@@ -72,29 +67,29 @@
 
 							<div class="form-group col-md-12">
 
-								<label>List Alcohol</label>
+								<label>List Alcohol:</label>
 								<label ng-repeat="name in alcohol" for="{{name}}" class="radio-inline">
-									<!--<input type="radio" ng-model="profiles.alcohol" ng-value="name" name="alcohol">
-									{{name}}-->
+									<input type="radio" ng-model="profiles.alcohol" ng-value="name" name="alcohol">
+									{{name}}
 								</label>
 
-								<div class="switch f-right">
-									<input id="bar" class="cmn-toggle cmn-toggle-round cmn-toggle-yes-no " type="checkbox"  data-on="Yes" data-off="No" >
-									<label for="bar" data-on="Yes" data-off="No"></label>
-								</div>
+								<!--  <div class="switch f-right">
+									<input id="" class="cmn-toggle cmn-toggle-round cmn-toggle-yes-no " type="checkbox"  name="" >
+									<label  data-on="Yes" data-off="No"></label>
+								</div>-->
 							</div>
 						</div>
 
 
 						<div class="form-group col-md-12">
-							<input type="submit" value="Update" ng-click="update();" class="btn btn-default" />
+							<input type="submit" value="Update" ng-click="updateProfile();" class="btn btn-default" />
 						</div>
 
 					</form>
 
 
-						<p class="success" style="display:none">Your profile has been updated</p>
-						<p class="error" style="display:none">Your profile has been updated with errors. Please try again</p>
+					<p class="success" style="display:none">Your profile has been updated</p>
+					<p class="error" style="display:none">Your profile has been updated with errors. Please try again</p>
 
 
 
