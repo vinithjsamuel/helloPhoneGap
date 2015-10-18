@@ -51,7 +51,6 @@
   <link rel="stylesheet" href="assets/css/libs/animations.css">
   <link rel="stylesheet" href="assets/css/libs/side-menu.css">
   <link rel="stylesheet" href="assets/css/libs/owl.css">
-  <link rel="stylesheet"  href="assets/css/libs/slick.css"/>
   <link rel="stylesheet" href="assets/fonts/font-awesome.css">
 
 
@@ -78,22 +77,16 @@
 
 
 </head>
-
-<body ng-app="geo" class="page-list">
-
-  <div id="preloader">
-
-    <div id="status">
-      <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" /><br>
-      <!-- <img alt="logo-splash-anim" src="assets/images/css/171.gif" class="logo-splash-anim" width="32"/> -->
-      <!-- <img alt="logo-splash-anim" src="assets/images/css/294.gif" class="logo-splash-anim" width="120"/> -->
-    </div>
+<div id="preloader">
+  <div id="status">
+    <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" style="display:none;" /><br>
   </div>
+</div>
 
-
-
+<body ng-app="geo" class="page-list" style="display:none;">
 
   <div ng-controller="mainController" class="parent-map">
+
 
     <!--================ side menu ================-->
 
@@ -128,10 +121,16 @@
 
 
         <div class="row">
-          <div class="col-xs-12 search-box">
-            <div class="form-group">
-              <input type="text" class="form-control" id="inputEmail3"  ng-model="test" placeholder="Search" ng-model="test"/>
-
+          <div class="col-xs-12 ">
+            <div class="row">
+              <div class="col-xs-12 search-box">
+                <div class="form-group">
+                  <input type="text" class="form-control filter-input" id="inputEmail3"  ng-model="test" placeholder="Search" />
+                  <a ng-click="hideMenu();">
+                    <i class="fa fa-search font-search" ></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -158,27 +157,29 @@
     </div>
   -->
 
+
   <a class="invite" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    <div class="f-left">Invite Friends<br>
+    <div class="f-left">Invite friends <br/>
       <span class="pos-a light-text"><span class="invite-left"></span> left</span>
     </div>
-    <i class="f-right fa fa-user-plus"></i></a>
+    <i class="f-right fa fa-user"></i></a>
 
 
   </a>
   <div class="collapse" id="collapseExample">
     <div class="well">
-      <p >Invite your friends to use the app.</p>
+      <p >Invite your friends to join guzzle beta testing.</p>
 
 
       <div class="input-group">
         <input type="text" class="form-control invite-email" placeholder="Friend email">
         <span class="input-group-btn">
           <button class="btn btn-default send" ng-click="inviteUser();" type="button">Send</button>
-          <p class="success" style="display:none;">Your invitation has been send.</p>
+          
         </span>
-      </div><!-- /input-group -->
 
+      </div><!-- /input-group -->
+      <p class="success" style="display:none;">Your invitation has been send.</p>
     </div>
   </div>
 
@@ -193,51 +194,55 @@
 <header class="top-menu v-align-p z-upup">
 
  <a id="cd-menu-trigger" class="cd-icon icon-left ico menu "></a>
- <a id="cd-logo" class="guzzle-logo "></a>
-
- <a class="cd-icon icon-right ico list  " ng-click='list()'></a>
- <a class="cd-icon icon-right ico mapy  " data-ajax="false" ng-click='Mapsfn()'></a>
- <div class="result " style="display:none;" >{{cars.length}} items</div>
+ <a id="cd-logo" class="guzzle-logo " ng-click="clearFilter();"></a>
+ <a class="cd-icon icon-right ico list" ng-click='list()'></a>
+ <a class="cd-icon icon-right ico mapy" data-ajax="false" ng-click='Mapsfn(map.latitude,map.longitude)'></a>
+ <div class="result " style="display:none;" >{{cars.length}} outlets</div>
 
  <!--<a class="cd-icon icon-left ico back" href="/"></a>-->
- <a class="cd-icon icon-left ico back" href="#/"  ></a>
+ <a class="cd-icon icon-left ico back" href="#/" ></a>
 
 
 </header>
 
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<div id="myModal" class="modal fade"  data-controls-modal="modal-submit" 
+data-backdrop="static" 
+data-keyboard="false" >
+<div class="modal-dialog" role="document">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Please provide your email and activation code to start using our services</h4>
-      </div>
-      <div class="modal-body">
-        <input type="text" class="email" placeholder="Email">
-        <input type="text" class="active-code" placeholder="Activation Code">
-      </div>
-      <div class="modal-footer">
-        <p class="error-profile" style="display:none;">Your activation code is already used / invalid.</p>
-        <button type="button" class="btn btn-default"  ng-click="addUser()">Submit</button>
-      </div>
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+
+      <h4 class="modal-title">Please provide your activation code to start using our services</h4>
     </div>
-
+    <div class="modal-body">
+      <input type="text" class="active-code">
+    </div>
+    <div class="modal-footer">
+      <p class="error-profile" style="display:none;">Oops wrong code, try again!.</p>
+      <button type="button" id="modal-submit" class="btn btn-default"  ng-click="addUser()">Submit</button>
+    </div>
   </div>
+
+</div>
 </div>
 
 
 <!-- Modal -->
-<div id="acc-activated" class="modal fade " role="dialog">
-  <div class="modal-dialog">
+<div id="acc-activated" class="modal fade ">
+  <div class="modal-dialog" role="document">
 
     <!-- Modal content-->
     <div class="modal-content">
-     <button type="button" class="close" data-dismiss="modal">&times;</button>
-     <div class="modal-body">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Account Information</h4>
+      </div>
+
+      <div class="modal-body">
        <h4 class="modal-title">Your account is active</h4>
      </div>
 
@@ -259,29 +264,35 @@
         I wish to view offers including alcoholic beverages.
       </div>
       <div class="modal-footer center">
-        <button type="button" class="step1 btn btn-default">Yes</button>
+        <button type="button" class="step1 btn btn-default" data-dismiss="modal">Yes</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
       </div>
     </div>
-
-    <div class="terms-step2">
-      <div class="modal-body">
-        I am of legal drinking age and not Muslim.
-      </div>
-      <div class="modal-footer center">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Agree</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Disagree</button>
-      </div>
-    </div>
-
-
-
-
 
   </div>
 </div>
 </div>
 
+<div class="modal fade" id="demoBox2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title" id="myModalLabel">Terms and conditions</h4>
+      </div>
+
+      <div >
+        <div class="modal-body">
+          I am of legal drinking age and not Muslim.
+        </div>
+        <div class="modal-footer center">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Agree</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Disagree</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -296,31 +307,32 @@
 
 
   <!------------ map ------------>
-  <div class="maps" style="display:none;">
-    <div id="map_canvas" ui-map="model.myMap" class="map home-map" ui-options="mapOptions">
-    </div>
-    <div ng-repeat="marker in markers" ng-model="productObject">
+  <div class="maps" style="display:none;" >
+    <div id="map_canvas" ui-map="model.myMap"    class="map home-map" ui-options="mapOptions">
+
+      <div ng-repeat="marker in markers" ng-model="productObject">
+      </div>
     </div>
   </div>
 
 
   <div class="container">
     <div class="dynamic view-list reset">
-      <div class="" ng-if="cars">
+      <div class="" >
 
         <!------------ list ------------>
         <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
 
-          <a class=" " href="#outlet/{{car.urltitle}}" >
+          <a class=" " href="#outlet/{{car.urltitle}}" data-transition="slide" >
             <div class="col-xs-4 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'assets/images/logo.png'}})">
 
             </div>
 
-            <div class="col-xs-8 no-padding-bottom">
+            <div class="col-xs-8 no-padding-bottom" ng-if="cars && homemaintitle">
               <h4 class="color-a title">{{car.title}}</h4>
               <ul class="list-inline">
                 <li class="caps">{{car.type}}</li>
-                <li class="color-a rating">Offer Value :  <span class="total-value-{{car.title}}"></span></li>
+                <!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
               </ul>
               <ul class="list-inline">
                 <li><i class="fa fa-clock-o"></i>Last Call: <strong>{{car.lastcall}}</strong></li>
@@ -354,25 +366,27 @@
 <div class="js">
 
 
-  <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en"></script>
-  <script type="text/javascript" src="assets/js/libs/jquery.min.js"></script>
-  <script src="assets/js/libs//bootstrap.min.js"></script>
-  <script type="text/javascript" src="assets/js/libs//slick.min.js"></script>
-  <script src="assets/js/libs/angular.min.js"></script>
-  <script src="assets/js/event.js"></script>
-  <script src="assets/js/ui-map.min.js"></script>
-  <script src="assets/js/libs/cssBrowserSelector.js"></script>
-  <script src="assets/js/libs/appear.js"></script>
-  <script src="assets/js/libs/matchHeight.js"></script>
-  <script src="assets/js/libs/localScroll.js"></script>
-  <script src="assets/js/libs/scrollUp.js"></script>
-  <script src="assets/js/jquery.pjax.js"></script>
-  <script src="assets/js/libs/owl.js"></script>
-  <script src="assets/js/libs/sideMenu.js"></script>
-  <script src="assets/js/plugins.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/angular-route.js"></script>
-  <script src="assets/js/script.js"></script>
+ <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en"></script>
+ <script type="text/javascript" src="assets/js/libs/jquery-1.7.min.js"></script>
+ <script src="assets/js/libs/angular.min.js"></script>
+ <script src="assets/js/angular-route.js"></script>
+ <script src="assets/js/libs/jquery.min.js"></script>
+ <script src="assets/js/libs/bootstrap.min.js"></script>
+ <script src="assets/js/event.js"></script>
+ <script src="assets/js/ui-map.min.js"></script>
+ <script src="assets/js/libs/cssBrowserSelector.js"></script>
+ <script src="assets/js/libs/appear.js"></script>
+ <script src="assets/js/libs/matchHeight.js"></script>
+ <script src="assets/js/libs/localScroll.js"></script>
+ <script src="assets/js/libs/scrollUp.js"></script>
+ <script src="assets/js/jquery.pjax.js"></script>
+ <script src="assets/js/libs/owl.js"></script>
+ <script src="assets/js/libs/sideMenu.js"></script>
+ <script src="assets/js/plugins.js"></script>
+ <script src="assets/js/main.js"></script>
+ <script src="assets/js/readmore.js"></script>
+ <script src="assets/js/angular-touch.min.js"></script>
+ <script src="assets/js/script.js"></script>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   
