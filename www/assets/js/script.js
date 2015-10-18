@@ -26,7 +26,6 @@ app .config(['$routeProvider',
 app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 {
 
-  
   $("body").show();
   $rootScope.homemaintitle = false;
   $(".logo-splash").show();
@@ -35,30 +34,30 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
   });
 
 
-  // angular.element(document).ready(function () {
-  //   calls();
-  // });
+  angular.element(document).ready(function () {
+    calls();
+  });
 
-$scope.hideMenu=function()
-{
- $(".user-menu").removeClass("menu-open");
- $("body").removeClass("menu-open");
-}
+  $scope.hideMenu=function()
+  {
+   $(".user-menu").removeClass("menu-open");
+   $("body").removeClass("menu-open");
+ }
 
-$scope.clearFilter = function() {
+ $scope.clearFilter = function() {
 
- $scope.test="";
- $scope.useMakes={};
-};
+   $scope.test="";
+   $scope.useMakes={};
+ };
 
-$scope.model = { myMap: undefined };
-$scope.lat = "0";
-$scope.lng = "0";
-$scope.accuracy = "0";
-$scope.error = "";
+ $scope.model = { myMap: undefined };
+ $scope.lat = "0";
+ $scope.lng = "0";
+ $scope.accuracy = "0";
+ $scope.error = "";
 
-$scope.myMarkers = [];
-var image = {
+ $scope.myMarkers = [];
+ var image = {
   url: "assets/images/location.png",
   scaledSize: new google.maps.Size(35,35)
 };
@@ -163,19 +162,35 @@ $http({
 
   $scope.$apply();
 
-  var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-  marker.setPosition(latlng);
-  for (i = 0; i < result.length; i++) {
+  if (markersArray) {
+    for (i=0; i < markersArray.length; i++) {
+     markersArray[i].setMap(null);
+   }
+   markersArray.length = 0;
+ }
 
-    var lat=result[i].latitude;
-    var longi=result[i].longitude;var infobox;
-    var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-    var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
-    var encoded=data[i].title;
-    var titles=encoded.replace(/&amp;/g, '&');
-    var url=data[i].urltitle;
-    data[i].title=titles;
-    datas[i].distance=dist;
+ var images = {
+  url: "assets/images/my-location.png"
+
+};
+var latlng = new google.maps.LatLng($scope.lat1, $scope.lng1);
+markers = new google.maps.Marker({
+  map: $scope.model.myMap,
+  position:latlng ,
+  icon:images
+});
+markersArray.push(markers);
+for (i = 0; i < result.length; i++) {
+
+  var lat=result[i].latitude;
+  var longi=result[i].longitude;var infobox;
+  var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+  var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+  var encoded=data[i].title;
+  var titles=encoded.replace(/&amp;/g, '&');
+  var url=data[i].urltitle;
+  data[i].title=titles;
+  datas[i].distance=dist;
       // offer value
       // var urltit=data[i].title;
       // var names=data[i].urltitle;
@@ -300,7 +315,7 @@ $http({
             });
           }
           else {
-            $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
+            $scope.error = "Geolocation is not supported by this browser.";
             alert($scope.error);
           }
         }
@@ -637,7 +652,8 @@ $http({
   $scope.addUser = function() {
 
 
-    var email= $(".user-name").html();
+    var email= $(".emails").val();
+   
     var deviceid= $(".device-id").html();
     var code= $(".active-code").val();
     var name = email.split('@')[0];
@@ -959,6 +975,8 @@ $http.get(url)
    phone:datas[0].phonenumber,
    image1:datas[0].image1,
    image2:datas[0].image2,
+   image3:datas[0].image3,
+   logo:datas[0].logo,
    lastcall:datas[0].lastcall
 
  }
@@ -1069,9 +1087,9 @@ $http.get(urls)
 
 $scope.goBack= function(url) {
 
-
- $(".order-"+url).show();
- $(".confirm-"+url).hide();
+  
+  $(".order-"+url).show();
+  $(".confirm-"+url).hide();
 
 }
 
@@ -1092,119 +1110,119 @@ $scope.goBack= function(url) {
     }
     else
     {
-      $(".code-"+url).val(null);
-      $(".order-"+url).hide();
-      $(".confirm-"+url).show();
 
-    }
-
-  }
-
-
-  $scope.pageVerf = function(url,voucher1) {
-    var code=$(".code-"+url).val();
-    var empcode=$(".code1").html();
-    var empdata=$(".code1").attr("data-id");
-    var temp = new Array();
-    var datas = $(".code2").html();;
-    temp=datas.split("**");
-
-    var total,user;
-    var flag=0; var final_code=0;var users="";
-
-    if(code.length > 3){
-      if(code== empcode)
-      {
-       flag=1;
-       users =empdata
-       final_code= empcode;
-     }
-
-     for(var j=0;j<temp.length;j++)
-     {   
-
-      var str= temp[j];
-      var tricode=str.split("-");
-      var string= tricode[1];
-      var name= tricode[0];
-
-      if(code == string)
-      {
-       final_code= code;
-       users = empdata;
-       flag=1;
-     }
-
-
+     $(".order-"+url).hide();
+     $(".confirm-"+url).show();
 
    }
 
-   if(flag==1)
-   {
-    var title=url;
+ }
 
-    var outlet_name=$(".outlet-name").html();
-    var device_user =$(".user-name").html();
-    var voucher2= voucher1;
-    var cost=$(".cost-"+url).html();
-    var total_now= $(".price").html();
-    var total = Number(total_now)+Number(cost);
-    var newId = Date.now().toString().substr(7); 
-    var strings= outlet_name.substr(0, 2);
-    var id=strings+" "+newId;
-    $(".code-"+url).val(null);
 
-    var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id};
+ $scope.pageVerf = function(url,voucher1) {
+  var code=$(".code-"+url).val();
+  var empcode=$(".code1").html();
+  var empdata=$(".code1").attr("data-id");
+  var temp = new Array();
+  var datas = $(".code2").html();;
+  temp=datas.split("**");
 
-    $.ajax({
-      type       : "POST",
-      url        : "http://getguzzle.com/app/tester/"+data,
-      crossDomain: true,
-      data:{json: JSON.stringify(data)},
-      dataType   : 'json',
-      success    : function(response,status) {
+  var total,user;
+  var flag=0; var final_code=0;var users="";
 
-        if(response.status==true)
+  if(code.length > 3){
+    if(code== empcode)
+    {
+     flag=1;
+     users =empdata
+     final_code= empcode;
+   }
+
+   for(var j=0;j<temp.length;j++)
+   {   
+
+    var str= temp[j];
+    var tricode=str.split("-");
+    var string= tricode[1];
+    var name= tricode[0];
+
+    if(code == string)
+    {
+     final_code= code;
+     users = empdata;
+     flag=1;
+   }
+
+
+
+ }
+
+ if(flag==1)
+ {
+  var title=url;
+
+  var outlet_name=$(".outlet-name").html();
+  var device_user =$(".user-name").html();
+  var voucher2= voucher1;
+  var cost=$(".cost-"+url).html();
+  var total_now= $(".price").html();
+  var total = Number(total_now)+Number(cost);
+  var newId = Date.now().toString().substr(7); 
+  var strings= outlet_name.substr(0, 2);
+  var id=strings+" "+newId;
+  $(".code-"+url).val(null);
+
+  var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id};
+
+  $.ajax({
+    type       : "POST",
+    url        : "http://getguzzle.com/app/tester/"+data,
+    crossDomain: true,
+    data:{json: JSON.stringify(data)},
+    dataType   : 'json',
+    success    : function(response,status) {
+
+      if(response.status==true)
+      {
+
+        $(".confirm-"+url).hide();
+        $(".result-"+url).show(); 
+        var number=$(".number-"+url).html();
+        var values= Number(number)-1;
+
+        if(values==0)
         {
-
-          $(".confirm-"+url).hide();
-          $(".result-"+url).show(); 
-          var number=$(".number-"+url).html();
-          var values= Number(number)-1;
-
-          if(values==0)
-          {
-            $(".pending-"+url).hide();
-            $(".finished-"+url).show();
+          $(".pending-"+url).hide();
+          $(".finished-"+url).show();
 
 
-
-          }
-          $(".number-"+url).html(values);
-          $(".redem-code-"+url).html(id);
-          $(".price").html(total);
 
         }
-        else
-        {
-          $(".confirm-"+url).hide();
-          $(".error-"+url).show();
-        }
+        $(".number-"+url).html(values);
+        $(".redem-code-"+url).html(id);
+        $(".price").html(total);
 
-      },
-      error      : function() {
+      }
+      else
+      {
+        $(".confirm-"+url).hide();
+        $(".error-"+url).show();
+      }
+
+    },
+    error      : function() {
             //console.error("error");
             $(".confirm-"+url).hide();
             $(".error-"+url).show();                
           }
         });     
 
-  }
-  else
-  {
-   $(".confirm-"+url).hide();
-   $(".error-"+url).show();
- }
+}
+else
+{
+ $(".confirm-"+url).hide();
+ $(".error-"+url).show();
+}
 
 
 }
@@ -1230,7 +1248,7 @@ $scope.frontLoad = function(url) {
 
 function insertData()
 {
-  var email= $(".user-name").html();
+  var email= $(".emails").val();
   var deviceid= $(".device-id").html();
   var code= $(".active-code").val();
   var name = email.split('@')[0];
@@ -1249,7 +1267,7 @@ function insertData()
 
         $(".login").html(names);
         login_id=$(".login").html();
-
+        localStorage.emails = email;
         $("#myModal").modal('hide');
 
       }
@@ -1272,18 +1290,25 @@ function insertData()
 
 function calls()
 {
+  $(".user-name").html(localStorage.getItem("emails"))
   var email_id= $(".user-name").html();
   var deviceid= $(".device-id").html();
+  
+  if(email_id !=null || typeof email_id !="undefined" )
+  {
+    var name = email_id.split('@')[0];
+    var user = name+deviceid;
+    var scope = angular.element(document.getElementById("email-id")).scope();
+    var login_id=$(".login").html();
 
-  var name = email_id.split('@')[0];
-  var user = name+deviceid;
-  var scope = angular.element(document.getElementById("email-id")).scope();
-  var login_id=$(".login").html();
-
-  scope.$apply(function () {
-    scope.loginCheck();
-  });
-
+    scope.$apply(function () {
+      scope.loginCheck();
+    });
+  }
+  else
+  {
+   $("#myModal").modal('show');
+ }
 
 
 }
