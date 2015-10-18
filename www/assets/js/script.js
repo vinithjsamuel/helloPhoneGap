@@ -1,9 +1,9 @@
 
 
-var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();
+var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();var markersArray = [];var markers = new Array();
 var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;
 
-var app = angular.module("geo", ['ngRoute',"ui.map", "ui.event"])
+var app = angular.module("geo", ['ngRoute',"ui.map", "ui.event","readMore",'ngTouch'])
 app .config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -23,15 +23,33 @@ app .config(['$routeProvider',
       redirectTo: '/'
     });
   }]);
-app.controller("mainController", function($scope,$http,$filter,$q)
+app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 {
 
-
+  
+  $("body").show();
+  $rootScope.homemaintitle = false;
+  $(".logo-splash").show();
+  $(".step1").on('click', function (){
+    $('#demoBox2').modal("show"); 
+  });
 
 
   // angular.element(document).ready(function () {
   //   calls();
   // });
+
+$scope.hideMenu=function()
+{
+ $(".user-menu").removeClass("menu-open");
+ $("body").removeClass("menu-open");
+}
+
+$scope.clearFilter = function() {
+
+ $scope.test="";
+ $scope.useMakes={};
+};
 
 $scope.model = { myMap: undefined };
 $scope.lat = "0";
@@ -40,14 +58,19 @@ $scope.accuracy = "0";
 $scope.error = "";
 
 $scope.myMarkers = [];
-$scope.group
+var image = {
+  url: "assets/images/location.png",
+  scaledSize: new google.maps.Size(35,35)
+};
+
+
 
 $scope.mapOptions = 
 {
-  center: new google.maps.LatLng($scope.lat, $scope.lng),
-  zoom: 13,
+  zoom: 15,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 };
+
 
 
 
@@ -56,12 +79,14 @@ $http({
   url: 'http://getguzzle.com/app/markers',
 
 }).success(function(data){
+
+  $rootScope.homemaintitle = true;
   $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
 
   var datas=data;
   var result=data;
   $scope.useMakes = [];
-  $scope.cars=result;
+  $scope.cars=result,$scope.lat1, $scope.lng1;
 
   var nos= datas.length+ " items";
   $(".result").html(nos);
@@ -71,131 +96,131 @@ $http({
     return $scope.error == "";
   }
 
-
-
-
-  $scope.visible = false;
-  $scope.mapViewPosition = {};
-  LocationCenter = new google.maps.LatLng($scope.lat, $scope.lng);
-  approxCircle = {
-    strokeColor: "#008595",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "#008595",
-    fillOpacity: 0.25,
-    map: $scope.model.myMap,
-    center: LocationCenter,
-    radius: 50,
-    clickable : false
-  };
-
-
-  pinCircle = new google.maps.Circle(approxCircle);
-
-
   $scope.showPosition = function (position)
   {
 
 
     $scope.$apply();
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    $scope.model.myMap.setCenter(latlng);
+
+    $scope.lat1 = position.coords.latitude;
+    $scope.lng1 = position.coords.longitude;
+    $scope.accuracy = position.coords.accuracy;
+    
+    var images = {
+      url: "assets/images/my-location.png"
+
+    };
+    var latlng = new google.maps.LatLng($scope.lat1, $scope.lng1);
+    var markers = new google.maps.Marker({
+      map: $scope.model.myMap,
+      position:latlng ,
+      icon:images
+    });
+    markersArray.push(markers);
+
+    $scope.map = {
+      latitude:position.coords.latitude,
+      longitude:position.coords.longitude
+    }
+    
+
     for (i = 0; i < result.length; i++) {
-      if(i==0)
-      {
-        $scope.lat = position.coords.latitude;
-        $scope.lng = position.coords.longitude;
-        $scope.accuracy = position.coords.accuracy;
 
-
-        $scope.$apply();
-        var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
-        $scope.model.myMap.setCenter(latlng);
-        $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
-
-        $scope.$apply();
-      }
-
-      $scope.lat = result[i].latitude;
-      $scope.lng =  result[i].longitude;
       var lat=result[i].latitude;
       var longi=result[i].longitude;var infobox;
-
-
-
       var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
       var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
       var encoded=data[i].title;
       var titles=encoded.replace(/&amp;/g, '&');
       var url=data[i].urltitle;
       data[i].title=titles;
-      $scope.infoWindow = new google.maps.InfoWindow();
-      var url='#outlet/'+datas[i].urltitle;
-      datas[i].distance=dist; 
-      var marker = new google.maps.Marker({
-        map: $scope.model.myMap,
-        position:latlng ,
-        title:datas[i].title,
-        icon:'assets/images/location.png',
-        url:url
-      });
+      datas[i].distance=dist;
+      // offer value
+      // var urltit=data[i].title;
+      // var names=data[i].urltitle;
+      // $scope.offerValue(urltit,names);
+      $scope.$apply();
 
-      marker.content = '<div><a href="#outlet/">' + titles + '</a></div>';
+    }
 
-      $scope.myMarkers.push(marker);
-
-      google.maps.event.addListener(marker, 'click', function() {
-
-        $scope.$apply();
-        $scope.infoWindow.setContent('<a href="'+url+'"><h4>'+this.title+'</h2></4>');
-
-        $scope.infoWindow.open($scope.model.myMap,this);
-      });
-         // $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
-
-
-       }
-       $(".maps").hide();
-       $(".items-show").hide();
-
-       $scope.$apply();
+    /*License agreement popup*/
+    if (window.localStorage.getItem("install") == undefined) {
+     /* run function */
+     $('#demoBox').modal("show"); 
+     var val=window.localStorage.getItem("install");
+     window.localStorage.setItem("install", true);
+   }
 
 
 
-     }
+ }
 
 
-     $scope.showError = function (error) 
-     {
-      switch (error.code)
+ $scope.setPosition = function (position)
+ {
+
+
+  $scope.$apply();
+
+  var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+  marker.setPosition(latlng);
+  for (i = 0; i < result.length; i++) {
+
+    var lat=result[i].latitude;
+    var longi=result[i].longitude;var infobox;
+    var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+    var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+    var encoded=data[i].title;
+    var titles=encoded.replace(/&amp;/g, '&');
+    var url=data[i].urltitle;
+    data[i].title=titles;
+    datas[i].distance=dist;
+      // offer value
+      // var urltit=data[i].title;
+      // var names=data[i].urltitle;
+      // $scope.offerValue(urltit,names);
+      $scope.$apply();
+
+    }
+
+    
+
+
+
+  }
+  $scope.showError = function (error) 
+  {
+
+    switch (error.code)
+    {
+      case error.PERMISSION_DENIED:
+      $scope.error = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+      $scope.error = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+      $scope.error = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+      $scope.error = "An unknown error occurred."
+      break;
+    }
+
+    var latlng = new google.maps.LatLng(25.08135,55.144075);
+
+    for (i = 0; i < result.length; i++)
+    {
+      if(i==0)
       {
-        case error.PERMISSION_DENIED:
-        $scope.error = "User denied the request for Geolocation."
-        break;
-        case error.POSITION_UNAVAILABLE:
-        $scope.error = "Location information is unavailable."
-        break;
-        case error.TIMEOUT:
-        $scope.error = "The request to get user location timed out."
-        break;
-        case error.UNKNOWN_ERROR:
-        $scope.error = "An unknown error occurred."
-        break;
-      }
-
-      var latlng = new google.maps.LatLng(25.08135,55.144075);
-      $scope.model.myMap.setCenter(latlng);
-      for (i = 0; i < result.length; i++)
-      {
-        if(i==0)
-        {
-          $scope.lat =25.08135;
-          $scope.lng = 55.144075;
+        $scope.lat =25.08135;
+        $scope.lng = 55.144075;
                 //$scope.accuracy = position.coords.accuracy;
                 $scope.$apply();
 
                 var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
-                $scope.model.myMap.setCenter(latlng);
+                
                 $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
               }
               $scope.lat = result[i].latitude;
@@ -209,36 +234,14 @@ $http({
 
               $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
 
-              $(".items-show").hide();
-              $(".maps").hide();
-
+              var urltit=data[i].title;
+              var names=data[i].urltitle;
+              $scope.offerValue(urltit,names);
               $scope.$apply();
             }
           }
 
 
-          $scope.$watch('nas',
-
-            function (newValue, oldValue) {
-
-              for (jdx in $scope.myMarkers) {
-
-                $scope.myMarkers[jdx].setMap(null);
-              }
-              $scope.myMarkers = [];
-              for (idx in $scope.nas) {
-
-                createMarker($scope.nas[idx]);
-
-              }
-            }, 
-            true);
-
-          var createMarker = function (info)
-          {
-            var latlng = new google.maps.LatLng(info.latitude,info.longitude);
-            $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
-          }
 
           $scope.filterMakes = function () 
           {
@@ -273,200 +276,285 @@ $http({
 
           };
 
+          var positionTimer = navigator.geolocation.watchPosition($scope.setPosition, $scope.showError);
 
+          setTimeout(
+            function(){
+                    // Clear the position watcher.
+                    navigator.geolocation.clearWatch( positionTimer );
+                  },
+                  (1000 * 60 * 5)
+                  );
 
-          $scope.getLocation = function () {
-            if (navigator.geolocation) {
+          function onOnline() {
+           navigator.geolocation.clearWatch( positionTimer );
+         }
 
-              navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
-            }
-            else {
-              $scope.error = "Geolocation is not supported by this browser.";
-              alert($scope.error);
-            }
+         $scope.getLocation = function () {
+          if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError,{
+              timeout: (5 * 1000),
+              maximumAge: (1000 * 60 * 15),
+              enableHighAccuracy: true
+            });
           }
-
-
-          $scope.getLocation();
-
-          $scope.offerValue();
-
-        }).error(function(){
-
-        });
-
-
-
-
-        $scope.offerValue = function () 
-        {
-          var urls="http://getguzzle.com/app-test/cost"
-
-          $http.get(urls)
-          .success(function (response) {
-
-            console.log(response)
-            var total_cost=0;
-            datas=response;
-            var results=datas;
-            for (i = 0; i < response.length; i++) {
-
-              total_cost=Number(total_cost)+Number(results[i].cost);
-              $(".total-value-"+results[i].outlet).html(total_cost);
-
-
-            }
-          });
+          else {
+            $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
+            alert($scope.error);
+          }
         }
 
 
-        $scope.login=$(".email").html();
-
-
-        $scope.listItem = function() 
-        {
-
-          $('body').removeClass("page-list");
-          $('body').addClass("page-map");
-          $(".list-show").show();
-          $(".maps").hide();
-          $(".items-show").hide();
-          flag=1;
-
-        }
-
-        $scope.updateOffer = function (offer) {
-         $http.get(offer)
-         .success(function (response) {
-
-          var datas=response;
-          price = datas;
-
-          for (i = 0; i < price.length; i++) {
-           total_prices=Number(total_prices)+Number(price[i].price);
-         }
-
-         $(".price").html(total_prices);
-
-
-       });
-
-       };
+        $scope.getLocation();
 
 
 
-       $scope.updateInvite = function (numbers) {
-         $http.get(numbers)
-         .success(function (response) {
 
-
-          if(response.length <10)
-          {
-           var value=response.length;
-           var nos= 10-Number(value);
-           $(".invite-left").html(nos);
-         }
-         else
-         {
-          $("invites").hide();
-          $(".invite-left").html(0);
-        }
-
+      }).error(function(){
 
       });
+      $scope.$watch('nas',
 
-       };
+        function (newValue, oldValue) {
 
-       $scope.loginCheck = function (logins) {
 
-         var email_id= $(".user-name").html();
-         var deviceid= $(".device-id").html();
+          for (jdx in $scope.myMarkers) {
 
-         var name = email_id.split('@')[0];
-         var user = name+deviceid;var flag=0;
-         $http.get(logins)
-         .success(function (response) {
-
-          var data=response;
-          if(data.length !=0)
-          {
-
-            for(i=0;i<data.length;i++)
+            if(jdx != 0)
             {
 
-              if(data[i].email==email_id && data[i].device==deviceid)
-              {
-
-               $(".name").html(name);
-               $(".login").html(user);
-               $(".entry").html(data[i].entry);
-               var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
-               var offer="http://getguzzle.com/app-test/offer-used/"+user;
-               $scope.updateInvite(numbers);
-               $scope.updateOffer(offer); 
-
-
-
-             }
-             else
-             {
-               flag=1;
-
-             }
-
+             $scope.myMarkers[jdx].setMap(null);
            }
-
          }
-         else
-         {
-
-         }
-
-         if(flag==1)
-         {
+         $scope.myMarkers = [];
 
 
-         }
+         for (idx in $scope.nas) {
+
+          createMarker($scope.nas[idx]);
 
 
-       });
+        }
+      }, 
+      true);
 
-       };
-
-
-
-
-
+      var createMarker = function (info)
+      {
 
 
-       $scope.list = function() 
-       {
-        $('body').removeClass("page-map");
-        $('body').removeClass("page-detail");
-        $('body').addClass("page-list");
-        $(".list-show").show();
-        $(".maps").hide();
-        $(".result").hide();
-        $(".items-show").hide();
+        if(info !="" || typeof info !="undefined")
+        {
 
-        flag=1;
+
+
+
+
+         var encoded=info.title;
+         var titles=encoded.replace(/&amp;/g, '&');
+         var url=info.urltitle;
+         $scope.infoWindow = new google.maps.InfoWindow();
+         var url='#outlet/'+info.urltitle;
+         var latlng = new google.maps.LatLng(info.latitude,info.longitude);
+         var marker = new google.maps.Marker({
+          map: $scope.model.myMap,
+          position:latlng ,
+          title:info.title,
+          icon:image,
+          url:url
+        });
+         marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png">' + titles + '</a> </div>';
+
+         $scope.myMarkers.push(marker);
+
+         google.maps.event.addListener(marker, 'click', function() {
+
+          $scope.$apply();
+          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:10%;margin-right:5px;">' +  this.title+'  </h4></a>');
+
+          $scope.infoWindow.open($scope.model.myMap,this);
+        });
+       }
+
+     }
+
+
+
+
+
+     $scope.offerValue = function (url,names) 
+     {
+
+      var urls="http://getguzzle.com/app-test/cost/"+url;
+
+      $http.get(urls)
+      .success(function (response) {
+        var total_cost=0;
+        datas=response;
+        var results=datas;
+
+        for (i = 0; i < response.length; i++) {
+          total_cost=Number(total_cost)+Number(results[i].cost);
+        }
+        $(".total-value-"+names).html(total_cost);
+      });
+    }
+
+
+    $scope.login=$(".email").html();
+
+
+    $scope.listItem = function() 
+    {
+
+      $('body').removeClass("page-list");
+      $('body').addClass("page-map");
+      $(".list-show").show();
+      $(".maps").hide();
+      $(".items-show").hide();
+      flag=1;
+
+    }
+
+    $scope.updateOffer = function (offer) {
+     $http.get(offer)
+     .success(function (response) {
+
+      var datas=response;
+      price = datas;
+      var  total_prices=0;
+      for (i = 0; i < price.length; i++) {
+
+        if(price[i].price  !="" || typeof price[i].price != "undefined")
+        {
+
+          total_prices=Number(total_prices)+Number(price[i].price);
+        }
       }
 
 
+      $(".price").html(total_prices);
 
-      $scope.Mapsfn = function() {
+
+    });
+
+   };
 
 
-        $('body').removeClass("page-list");
-        $('body').removeClass("page-detail");
-        $('body').addClass("page-map");
 
-        $(".list-show").hide();
-        $(".items-show").hide();
-        $(".result").show();
-        $(".maps").show();
+   $scope.updateInvite = function (numbers) {
+     $http.get(numbers)
+     .success(function (response) {
+
+
+      if(response.length <10)
+      {
+       var value=response.length;
+       var nos= 10-Number(value);
+       $(".invite-left").html(nos);
+     }
+     else
+     {
+      $("invites").hide();
+      $(".invite-left").html(0);
+    }
+
+
+  });
+
+   };
+
+   $scope.loginCheck = function (logins) {
+
+     var email_id= $(".user-name").html();
+     var deviceid= $(".device-id").html();
+
+     var name = email_id.split('@')[0];
+     var user = name+deviceid;var flag=0;
+
+     var login="http://getguzzle.com/app-test/login/"+user;
+     $http.get(login)
+     .success(function (response) {
+
+      var data=response;
+
+      if(data.length !=0)
+      {
+
+        for(i=0;i<data.length;i++)
+        {
+
+          if(data[i].email==email_id && data[i].device==deviceid)
+          {
+
+           $(".name").html(name);
+           $(".login").html(user);
+           $(".entry").html(data[i].entry);
+           var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
+           var offer="http://getguzzle.com/app-test/offer-used/"+user;
+           $scope.updateInvite(numbers);
+           $scope.updateOffer(offer); 
+
+
+
+         }
+         else
+         {
+           flag=1;
+           $("#myModal").modal('show');
+
+         }
+
+       }
+
+     }
+     else
+     {
+       $("#myModal").modal('show');
+     }
+
+
+   });
+
+   };
+
+
+
+
+
+
+
+   $scope.list = function() 
+   {
+    $('body').removeClass("page-map");
+    $('body').removeClass("page-detail");
+    $('body').addClass("page-list");
+    $(".list-show").show();
+    $(".maps").hide();
+    $(".result").hide();
+    $(".items-show").hide();
+
+    flag=1;
+  }
+
+
+
+  $scope.Mapsfn = function(lat,lang) {
+    var latlng = new google.maps.LatLng(lat,lang);
+
+    $('body').removeClass("page-list");
+    $('body').removeClass("page-detail");
+    $('body').addClass("page-map");
+    $(".list-show").hide();
+    $(".items-show").hide();
+    $(".result").show();
+    $(".maps").show();
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend( latlng );
+
+        // $scope.model.myMap.setCenter(latlng);
         google.maps.event.trigger($scope.model.myMap, 'resize' );
-
+        $scope.model.myMap.setCenter( bounds.getCenter() );
 
 
         flag=1;
@@ -493,7 +581,8 @@ $http({
       else{
        $("#acc-activated").modal('show');
      }
-      $(".user-menu").removeClass("menu-open");;
+     $(".user-menu").removeClass("menu-open");
+     $("body").removeClass("menu-open");
    }
 
 
@@ -502,8 +591,10 @@ $http({
     var email= $(".user-name").html();
     var value= $(".invite-email").val();
     var login_id=$(".login").html();
-
-    var id="YW"+new Date().getTime();
+    var entry=$(".entry").html();
+    var entry_left=$(".invite-left").html();
+    var left= 10-Number(entry_left);
+    var id="YW"+entry+left;
 
 
 
@@ -558,10 +649,10 @@ $http({
     .success(function (response) {
       datas = response;
 
-      console.log("jd"+datas);
+
       if(datas.length==0)
       {
-        alert("FDf");
+
         $(".error-profile").show();
 
 
@@ -573,7 +664,7 @@ $http({
         $http.get(url)
         .success(function (response) {
           datas = response;
-          alert("FDf");
+
           if(datas.length>=1)
           {
 
@@ -626,7 +717,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         // iDiv.innerHTML =dist;
         var rounded = Math.round( dist * 10 ) / 10;
         dist = rounded.toFixed(1);
-
+        dist=parseFloat(dist)
         return dist
 
        //names.distance=dist;
@@ -680,18 +771,34 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
     app.controller("othercontroller", function($scope) {
      $(".main").show();
-     $(".result").hide();
+     
      $('body').removeClass("page-detail");
-     $('body').addClass("page-list");
+     if ($(".maps").css('display') != 'none') {
 
-   });
+       $('body').addClass("page-map");
+     }
+     else
+     {
+
+      $('body').addClass("page-list");
+    }
+
+    $(".result").hide();
+    $scope.update=function()
+    {
+    };
+
+  });
 
     app.controller("profileController", function($scope,$http) {
       $(".main").hide();
       $('body').removeClass("page-map");
       $('body').removeClass("page-list");
       $('body').addClass("page-detail");
-
+      $(".user-menu").removeClass("menu-open");
+      $("body").removeClass("menu-open");
+      $(".result").hide();
+      
 
       var user=$(".login").html();
       var logins="http://getguzzle.com/app-test/login/"+user;
@@ -718,7 +825,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
 
 
-      $scope.update=function()
+      $scope.updateProfile=function()
       {
 
         $(".sucess").hide();
@@ -745,7 +852,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
             if(response.status==true)
             {
 
-              $(".sucess").show();
+              $(".success").show();
 
             }
             else
@@ -776,6 +883,7 @@ app.controller("outController", function($scope,$routeParams,$http)
   $('body').removeClass("page-list");
   $('body').removeClass("page-map");
   $('body').addClass("page-detail");
+  $(".result").hide();
 
   var login_id=$(".login").html();
 
@@ -789,18 +897,35 @@ app.controller("outController", function($scope,$routeParams,$http)
 
 
    var myOptions = {
-    zoom: 7,
+    zoom: 14,
     center: new google.maps.LatLng(lat,longi),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   var myLatlng=new google.maps.LatLng(lat,longi);
   map = new google.maps.Map(document.getElementById("map-canvas"),
     myOptions);
-  var marker = new google.maps.Marker({
-    position: myLatlng
 
-  });
-  marker.setMap(map);
+   // var images = {
+   //    url: "assets/images/my-location.png"
+
+   //  };
+   //  var latlng = new google.maps.LatLng($scope.lat1, $scope.lng1);
+   //  var marker = new google.maps.Marker({
+   //    map: $scope.model.myMap,
+   //    position:latlng ,
+   //    icon:images
+   //  });
+var icons = {
+  url: "assets/images/location.png",
+  scaledSize: new google.maps.Size(35,35)
+};
+
+var marker = new google.maps.Marker({
+  position: myLatlng,
+  icon:icons
+
+});
+marker.setMap(map);
 
 
 }
@@ -816,21 +941,26 @@ $scope.urltitle = $routeParams.url;
 $scope.datas=$scope.cars;
 
 
-
-var url="http://getguzzle.com/app/outlets/"+ $scope.urltitle;
+var url="http://getguzzle.com/app/outlets/"+$scope.urltitle;
 $http.get(url)
 .success(function (response) {
- $("#preloader-er").fadeOut();
+
+
+
+
  datas = response;
  $scope.outlets=datas;
+ $scope.text = datas[0].desc;
+ var encoded=datas[0].title;
+ var titles=encoded.replace(/&amp;/g, '&');
+
  $scope.outlet={
-   title:datas[0].title,
-   desc:datas[0].desc,
+   title:titles,
    phone:datas[0].phonenumber,
    image1:datas[0].image1,
    image2:datas[0].image2,
-   image3:datas[0].image3,
-   logo:datas[0].logo
+   lastcall:datas[0].lastcall
+
  }
  var lat=datas[0].latitude;
  var longi=datas[0].longitude;
@@ -846,44 +976,49 @@ $http.get(url)
   }
 
 });
+
+
+ $("#preloader-er").fadeOut();
  $scope.mapClick=function()
  {
   var val=$(".map-toggle").attr('data-id');
 
   if(val=="maps")
   {
-    $(".mapy").removeClass("maps-hide");
-    $(".mapy").addClass("maps-show");
+    $(".map-fn").removeClass("maps-hide");
+    $(".map-fn").addClass("maps-show");
 
     $(".map-toggle").addClass("bg-color-a");
     $(".map-toggle").attr('data-id','list');
   }
   else{
-    $(".mapy").removeClass("maps-show");
-    $(".mapy").addClass("maps-hide");
+    $(".map-fn").removeClass("maps-show");
+    $(".map-fn").addClass("maps-hide");
     $(".map-toggle").attr('data-id','maps');
     $(".map-toggle").removeClass("bg-color-a");
 
   }
-  $(".maps-hide").toggleClass("maps-show");
 
-  $scope.displayMap(lat,longi);
 }
+
+$scope.displayMap(lat,longi);
+
 
 });
 
 
 
+var str=$scope.urltitle;
+str=str.replace(/-/g, ' ');
 
 
-
-
-var urls="http://getguzzle.com/app-test/markers/"+$scope.urltitle;
+var urls="http://getguzzle.com/app-test/markers/"+str;
 $http.get(urls)
 .success(function (response) {
  $scope.vouchers=response
  datas=response;
  var results=datas;
+ 
  for (i = 0; i < results.length; i++) {
 
   var day=$scope.vouchers[i].day;
@@ -893,6 +1028,8 @@ $http.get(urls)
   var mess=$scope.vouchers[i].validity; 
   var mont= Number(month)+Number(mess);
   theBigDay.setMonth(mont);
+  var image=datas[i].title;
+  $scope.vouchers[i].image = image.replace(/ /g, '-');
 
   var months=theBigDay.getMonth()+1;
   var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
@@ -917,7 +1054,7 @@ $http.get(urls)
               offers = data;
             }
           });
-          console.log(offers);
+
           var values= offers.length;
           $scope.vouchers[i].used=Number(max)-Number(values);
         }
@@ -930,31 +1067,41 @@ $http.get(urls)
     });
 
 
-    //veriffying whether logged in
-    $scope.pinVerf = function(url) {
-      var user;var profiles;
-      var email_id= $(".user-name").html();
-      var deviceid= $(".device-id").html();
-      login_id=$(".login").html();
-      var user_flag=0;
-
-      if(login_id == "" || typeof login_id == "undefined" )
-      {
-        $("#myModal").modal('show');
-
-      }
-      else
-      {
-
-       $(".order-"+url).hide();
-       $(".confirm-"+url).show();
-
-     }
-
-   }
+$scope.goBack= function(url) {
 
 
-   $scope.pageVerf = function(url,voucher1) {
+ $(".order-"+url).show();
+ $(".confirm-"+url).hide();
+
+}
+
+
+   //veriffying whether logged in
+
+   $scope.pinVerf = function(url) {
+    var user;var profiles;
+    var email_id= $(".user-name").html();
+    var deviceid= $(".device-id").html();
+    login_id=$(".login").html();
+    var user_flag=0;
+
+    if(login_id == "" || typeof login_id == "undefined" )
+    {
+      $("#myModal").modal('show');
+
+    }
+    else
+    {
+      $(".code-"+url).val(null);
+      $(".order-"+url).hide();
+      $(".confirm-"+url).show();
+
+    }
+
+  }
+
+
+  $scope.pageVerf = function(url,voucher1) {
     var code=$(".code-"+url).val();
     var empcode=$(".code1").html();
     var empdata=$(".code1").attr("data-id");
@@ -1008,7 +1155,7 @@ $http.get(urls)
     $(".code-"+url).val(null);
 
     var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id};
-    console.log(data);
+
     $.ajax({
       type       : "POST",
       url        : "http://getguzzle.com/app/tester/"+data,
@@ -1024,6 +1171,15 @@ $http.get(urls)
           $(".result-"+url).show(); 
           var number=$(".number-"+url).html();
           var values= Number(number)-1;
+
+          if(values==0)
+          {
+            $(".pending-"+url).hide();
+            $(".finished-"+url).show();
+
+
+
+          }
           $(".number-"+url).html(values);
           $(".redem-code-"+url).html(id);
           $(".price").html(total);
@@ -1074,10 +1230,7 @@ $scope.frontLoad = function(url) {
 
 function insertData()
 {
-  var email= $(".email").val();
-  alert(email);
-  window.localStorage.setItem("email", email);
-
+  var email= $(".user-name").html();
   var deviceid= $(".device-id").html();
   var code= $(".active-code").val();
   var name = email.split('@')[0];
@@ -1124,18 +1277,67 @@ function calls()
 
   var name = email_id.split('@')[0];
   var user = name+deviceid;
-
-  var logins="http://getguzzle.com/app-test/login/"+user;
   var scope = angular.element(document.getElementById("email-id")).scope();
   var login_id=$(".login").html();
 
   scope.$apply(function () {
-    scope.loginCheck(logins);
+    scope.loginCheck();
   });
 
 
 
 }
+
+app.directive('ddTextCollapse', ['$compile', function($compile) {
+
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, element, attrs) {
+
+            // start collapsed
+            scope.collapsed = false;
+
+            // create the function to toggle the collapse
+            scope.toggle = function() {
+              scope.collapsed = !scope.collapsed;
+            };
+
+            // wait for changes on the text
+            attrs.$observe('ddTextCollapseText', function(text) {
+
+                // get the length from the attributes
+                var maxLength = scope.$eval(attrs.ddTextCollapseMaxLength);
+
+                if (text.length > maxLength) {
+                    // split the text in two parts, the first always showing
+                    var firstPart = String(text).substring(0, maxLength);
+                    var secondPart = String(text).substring(maxLength, text.length);
+
+                    // create some new html elements to hold the separate info
+                    var firstSpan = $compile('<span>' + firstPart + '</span>')(scope);
+                    var secondSpan = $compile('<span ng-if="collapsed">' + secondPart + '</span>')(scope);
+                    var moreIndicatorSpan = $compile('<span ng-if="!collapsed">... </span>')(scope);
+                    var lineBreak = $compile('<br ng-if="collapsed">')(scope);
+                    var toggleButton = $compile('<span class="collapse-text-toggle" ng-click="toggle()">{{collapsed ? "" : "Read more"}}</span>')(scope);
+
+                    // remove the current contents of the element
+                    // and add the new ones we created
+                    element.empty();
+                    element.append(firstSpan);
+                    element.append(secondSpan);
+                    element.append(moreIndicatorSpan);
+                    element.append(lineBreak);
+                    element.append(toggleButton);
+                  }
+                  else {
+                    element.empty();
+                    element.append(text);
+                  }
+                });
+}
+};
+}]);
 
 // function inviteLeft() {
 
@@ -1151,10 +1353,3 @@ function calls()
 
 
 // }
-
-
-
-
-
-
-
