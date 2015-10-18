@@ -52,12 +52,7 @@
     // }
     // );
 
-if (window.localStorage.getItem("install") == undefined) {
- /* run function */
- $('#demoBox').modal("show"); 
- var val=window.localStorage.getItem("install");
- window.localStorage.setItem("install", true);
-}
+
 
 
 
@@ -93,8 +88,7 @@ function Insertdata()
 {
 
 
-  var email_id= window.localStorage.getItem("email");
-  $("#email-id").html(email_id);
+
   var deviceid= $(".device-id").html();
 
 

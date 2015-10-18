@@ -173,7 +173,7 @@ $http({
   url: "assets/images/my-location.png"
 
 };
-var latlng = new google.maps.LatLng($scope.lat1, $scope.lng1);
+var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 markers = new google.maps.Marker({
   map: $scope.model.myMap,
   position:latlng ,
@@ -653,7 +653,7 @@ for (i = 0; i < result.length; i++) {
 
 
     var email= $(".emails").val();
-   
+
     var deviceid= $(".device-id").html();
     var code= $(".active-code").val();
     var name = email.split('@')[0];
@@ -691,6 +691,10 @@ for (i = 0; i < result.length; i++) {
           {
             $(".error-profile").hide();
             insertData();
+            var numbers="http://getguzzle.com/app-test/invite-nos/"+names;
+            var offer="http://getguzzle.com/app-test/offer-used/"+names;
+            $scope.updateInvite(numbers);
+            $scope.updateOffer(offer); 
           }
         });
       }
@@ -1087,7 +1091,7 @@ $http.get(urls)
 
 $scope.goBack= function(url) {
 
-  
+
   $(".order-"+url).show();
   $(".confirm-"+url).hide();
 
@@ -1266,6 +1270,8 @@ function insertData()
       {
 
         $(".login").html(names);
+        $(".name").html(name);
+
         login_id=$(".login").html();
         localStorage.emails = email;
         $("#myModal").modal('hide');
