@@ -23,11 +23,11 @@
 		<div class="dynamic">
 			<div class="container">
 
-				<!--<div class="row">
-					<div class="reset animated maps-hide map-fn" >
+				<div class="row">
+					<div class="reset animated maps-hide map-fn" style="display:none;" >
 						<div id="map-canvas" class=" " style="height: 250px; z-index:10; " ></div>
 					</div>
-				</div>-->
+				</div>
 
 
 				<div class="row img-slider">
@@ -47,16 +47,13 @@
 						</div>
 
 						<ul class="owl-carousel reset no-list"  >
-							<li class="item"  style="background:url('assets/images/dummy/02.jpg');"></li>
-							<li class="item" style="background:url('assets/images/dummy/02.jpg');"></li>
+							<li class="item"  style="background:url({{outlet.image1  || 'assets/images/dummy/01.jpg'}});"></li>
+							<li class="item" style="background:url({{outlet.image2  || 'assets/images/dummy/02.jpg'}});"></li>
+							
+						</ul>
 
-
-
-						
-					</ul>
-
+					</div><!-- /col -->
 				</div><!-- /col -->
-			</div><!-- /col -->
 
 
 				<div class="row timing" ng-if="outlet">
