@@ -57,7 +57,7 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
-     $(".device-id").html(device.uuid);
+
 
     //   window.plugins.googleplus.isAvailable(
     //     function (available) {
@@ -103,7 +103,8 @@ app.initialize();
 function Insertdata()
 {
 
-
+  alert(device.uuid);
+  $(".device-id").html(device.uuid);
 
   var deviceid= $(".device-id").html();
   alert(deviceid);

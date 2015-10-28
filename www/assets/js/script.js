@@ -37,60 +37,60 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
  $(".step1").on('click', function (){
   $('#demoBox2').modal("show");
 });
- var myScroll,
- pullDownEl, pullDownOffset,
- pullUpEl, pullUpOffset,
- generatedCount = 0;
+//  var myScroll,
+//  pullDownEl, pullDownOffset,
+//  pullUpEl, pullUpOffset,
+//  generatedCount = 0;
 
- $scope.pullDownAction=function () {
-   // <-- Simulate network congestion, remove setTimeout from production!
-   $http({
-    method: 'GET',
-    url: 'http://getguzzle.com/app/markers',
+//  $scope.pullDownAction=function () {
+//    // <-- Simulate network congestion, remove setTimeout from production!
+//    $http({
+//     method: 'GET',
+//     url: 'http://getguzzle.com/app/markers',
 
-  }).success(function(data){
+//   }).success(function(data){
 
-    localStorage.removeItem("outlets");
-    updateOutlet(data,$scope);
-    myScroll.refresh();
+//     localStorage.removeItem("outlets");
+//     updateOutlet(data,$scope);
+//     myScroll.refresh();
 
-  });
+//   });
 
-}
-
-
-
-
-pullDownEl = document.getElementById('pullDown');
-pullDownOffset = pullDownEl.offsetHeight;
+// }
 
 
 
-myScroll = new iScroll('wrapper', {
-  useTransition: true,
-  topOffset: pullDownOffset,
-  onRefresh: function () {
-   pullDownEl.className = '';
 
- },
- onScrollMove: function () {
-  if (this.y > 5 && !pullDownEl.className.match('flip')) {
-    pullDownEl.className = 'flip';
-    pullDownEl.querySelector('.pullDownLabel').innerHTML = '';
-    this.minScrollY = 0;
-  }
-},
-onScrollEnd: function () {
-  if (pullDownEl.className.match('flip')) {
-    pullDownEl.className = 'loading';
-    pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';        
-          // Execute custom function (ajax call?)
-          $scope.pullDownAction();
-        } 
-      }
-    });
+// pullDownEl = document.getElementById('pullDown');
+// pullDownOffset = pullDownEl.offsetHeight;
 
-setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+
+
+// myScroll = new iScroll('wrapper', {
+//   useTransition: true,
+//   topOffset: pullDownOffset,
+//   onRefresh: function () {
+//    pullDownEl.className = '';
+
+//  },
+//  onScrollMove: function () {
+//   if (this.y > 5 && !pullDownEl.className.match('flip')) {
+//     pullDownEl.className = 'flip';
+//     pullDownEl.querySelector('.pullDownLabel').innerHTML = '';
+//     this.minScrollY = 0;
+//   }
+// },
+// onScrollEnd: function () {
+//   if (pullDownEl.className.match('flip')) {
+//     pullDownEl.className = 'loading';
+//     pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';        
+//           // Execute custom function (ajax call?)
+//           $scope.pullDownAction();
+//         } 
+//       }
+//     });
+
+// setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
 
 
 
@@ -695,7 +695,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
      var email_id= $(".user-name").html();
      var deviceid= $(".device-id").html();
-
+     alert(email_id+deviceid);
      var name = email_id.split('@')[0];
      var user = name+deviceid;var flag=0;
 
@@ -1300,7 +1300,7 @@ $http.get(urls)
   
   if(voucher_data[i].title=="2 for 1 house beverage")
   {
-   
+
     if(house == "" || typeof house == "undefined" )
     {
       var beverage=voucher_data[i].housebeverage
@@ -1314,21 +1314,21 @@ $http.get(urls)
   else
   {
    beverage=$scope.vouchers[i].other;
-  }
-  $scope.vouchers[i].housebeverage=beverage;
-  var day=$scope.vouchers[i].day;
-  var month=$scope.vouchers[i].month-1;
-  var year=$scope.vouchers[i].year;
-  var theBigDay = new Date(year,month,day);
-  var mess=$scope.vouchers[i].validity;
-  var mont= Number(month)+Number(mess);
-  theBigDay.setMonth(mont);
-  var image=voucher_data[i].title;
-  $scope.vouchers[i].image = image.replace(/ /g, '-');
+ }
+ $scope.vouchers[i].housebeverage=beverage;
+ var day=$scope.vouchers[i].day;
+ var month=$scope.vouchers[i].month-1;
+ var year=$scope.vouchers[i].year;
+ var theBigDay = new Date(year,month,day);
+ var mess=$scope.vouchers[i].validity;
+ var mont= Number(month)+Number(mess);
+ theBigDay.setMonth(mont);
+ var image=voucher_data[i].title;
+ $scope.vouchers[i].image = image.replace(/ /g, '-');
 
-  var months=theBigDay.getMonth()+1;
-  var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
-  $scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+ var months=theBigDay.getMonth()+1;
+ var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+ $scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
         // $final_date.html("Valid to  : "+theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear());
         var max=$scope.vouchers[i].maxvouchers;
         if(login_id == "" || typeof login_id == "undefined" )
@@ -1572,10 +1572,10 @@ function calls()
 {
  $(".user-name").html(window.localStorage.getItem("emails"));
  alert(window.localStorage.getItem("emails")+"email");
- 
+
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
-
+ alert(deviceid);
  var name = email_id.split('@')[0];
  var user = name+deviceid;
  var scope = angular.element(document.getElementById("email-id")).scope();
