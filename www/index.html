@@ -80,6 +80,7 @@
 <div id="preloader">
   <div id="status">
     <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" style="display:none;" /><br>
+    <p class="loading">LOADING...</p>
   </div>
 </div>
 
@@ -93,9 +94,11 @@
     <nav class="user-menu" id="cd-lateral-nav">
       <div class="container">
         <span id="email-id" class="user-name" style="display:none;"></span>
-        <span class="device-id" style="display:none;" ></span>
+        <span class="device-id" style="display:none;" >55555</span>
         <span class="login" id="login" style="display:none;"></span>
         <span class="entry" style="display:none;"></span>
+        <span class="datap" style=""></span>
+
 
         <div class="row profile bg-color-b v-align-row">
           <div class="col-xs-4 no-padding-bottom v-align">
@@ -111,11 +114,14 @@
 
 
         <div class="user-settings row centered bg-color-fff v-align-row no-hover">
-          <div class="col-xs-6 v-align reset">
+          <div class="col-xs-4 v-align reset">
             <a href="" ng-click="loginId();"><i class="fa fa-dollar"></i></a>
           </div>
-          <div class="col-xs-6 v-align reset gear">
+          <div class="col-xs-4 v-align reset gear">
             <a href="#profile"><i class="fa fa-gear"></i></a>
+          </div>
+          <div class="col-xs-4 v-align reset feedback">
+            <a href="#"><i class="fa fa-comments "></i></a>
           </div>
         </div>
 
@@ -175,7 +181,7 @@
         <input type="text" class="form-control invite-email" placeholder="Friend email">
         <span class="input-group-btn">
           <button class="btn btn-default send" ng-click="inviteUser();" type="button">Send</button>
-          
+
         </span>
 
       </div><!-- /input-group -->
@@ -199,16 +205,16 @@
  <a class="cd-icon icon-right ico mapy" data-ajax="false" ng-click='Mapsfn(map.latitude,map.longitude)'></a>
  <div class="result " style="display:none;" >{{cars.length}} outlets</div>
 
- <!--<a class="cd-icon icon-left ico back" href="/"></a>-->
  <a class="cd-icon icon-left ico back" href="#/" ></a>
+ <a class="cd-icon icon-right ico back feedback" href="#/" ></a>
 
 
 </header>
 
 
 <!-- Modal -->
-<div id="myModal" class="modal fade"  data-controls-modal="modal-submit" 
-data-backdrop="static" 
+<div id="myModal" class="modal fade"  data-controls-modal="modal-submit"
+data-backdrop="static"
 data-keyboard="false" >
 <div class="modal-dialog" role="document">
 
@@ -219,18 +225,18 @@ data-keyboard="false" >
       <h4 class="modal-title">Please provide your activation code to start using our services</h4>
     </div>
     <div class="modal-body">
-       <div>
+      <div>
        <input type="text" class="emails" placeholder="Email">
      </div>
      <div style="margin-top:5px;">
-      <input type="text" class="active-code" placeholder="Activation code">
-    </div>
-    </div>
-    <div class="modal-footer">
-      <p class="error-profile" style="display:none;">Oops wrong code, try again!.</p>
-      <button type="button" id="modal-submit" class="btn btn-default"  ng-click="addUser()">Submit</button>
+      <input type="text" class="active-code">
     </div>
   </div>
+  <div class="modal-footer">
+    <p class="error-profile" style="display:none;">Oops wrong code, try again!.</p>
+    <button type="button" id="modal-submit" class="btn btn-default"  ng-click="addUser()">Submit</button>
+  </div>
+</div>
 
 </div>
 </div>
@@ -321,25 +327,31 @@ data-keyboard="false" >
   </div>
 
 
-  <div class="container">
-    <div class="dynamic view-list reset">
+  <div id="wrapper" class="container">
+    <div id="scroller" class="dynamic view-list reset">
+      <div id="pullDown">
+        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
+      </div>
       <div class="" >
 
         <!------------ list ------------>
         <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
 
-          <a class=" " href="#outlet/{{car.urltitle}}" data-transition="slide" >
+
+          <a class=" " href="#outlet/{{car.urltitle}}/{{car.title}}" data-transition="slide" >
             <div class="col-xs-4 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'assets/images/logo.png'}})">
 
             </div>
 
             <div class="col-xs-8 no-padding-bottom" ng-if="cars && homemaintitle">
-              <h4 class="color-a title">{{car.title}}</h4>
-              <ul class="list-inline">
-                <li class="caps">{{car.type}}</li>
-                <!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
-              </ul>
-              <ul class="list-inline">
+            	<h4 class="color-a title">{{car.title}}</h4>
+            	<ul class="list-inline">
+            		<li><img alt="80x80" src="assets/images/css/new.png" class="tag img-new" /></li>
+            		<!-- <li><img alt="80x80" src="assets/images/css/update.png" class="tag img-update" /></li> -->
+            		<li class="caps">{{car.type}}</li>
+            		<!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
+            	</ul>
+            	<ul class="list-inline">
                 <li><i class="fa fa-clock-o"></i>Last Call: <strong>{{car.lastcall}}</strong></li>
                 <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li>
                 <!-- <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li> -->
@@ -374,6 +386,7 @@ data-keyboard="false" >
  <script src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en"></script>
  <script type="text/javascript" src="assets/js/libs/jquery-1.7.min.js"></script>
  <script src="assets/js/libs/angular.min.js"></script>
+ <script src="assets/js/geolocationmarker-compiled.js"></script>
  <script src="assets/js/angular-route.js"></script>
  <script src="assets/js/libs/jquery.min.js"></script>
  <script src="assets/js/libs/bootstrap.min.js"></script>
@@ -387,26 +400,32 @@ data-keyboard="false" >
  <script src="assets/js/jquery.pjax.js"></script>
  <script src="assets/js/libs/owl.js"></script>
  <script src="assets/js/libs/sideMenu.js"></script>
+ <script src="assets/js/libs/hammer.js"></script>
+ <script src="assets/js/libs/angular.hammer.js"></script>
+ <script src="assets/js/libs/gestures.js"></script>
  <script src="assets/js/plugins.js"></script>
  <script src="assets/js/main.js"></script>
+ <script src="assets/js/iscroll.js"></script>
  <script src="assets/js/readmore.js"></script>
  <script src="assets/js/angular-touch.min.js"></script>
  <script src="assets/js/script.js"></script>
-  <script type="text/javascript" src="cordova.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
-  
+ <script type="text/javascript" src="cordova.js"></script>
+ <script type="text/javascript" src="js/index.js"></script>
+
+
+
+
 
 
 </div><!-- end js -->
 </body>
 
 <script type="text/javascript">
-var e = $('.dummy');
+var e = $('.dummy');var net=0;
 
 for (var i = 0; i < 2; i++) {
   e.clone().insertAfter(e);
 }
-
 
 
 
