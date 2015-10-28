@@ -41,6 +41,7 @@
     <!-- Plugins -->
 
     <!-- Core plugins -->
+
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
@@ -59,6 +60,7 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
     <gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" version="1.2.0" />
     <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
 
@@ -70,7 +72,8 @@
  <gap:splash src="splash.png" />
  <preference name="AutoHideSplashScreen" value="false" />
  <preference name="SplashScreenDelay" value="50000" />
- <preference name="SplashScreenBackgroundColor" value="yellow" /> 
+ <preference name="SplashScreenBackgroundColor" value="yellow" />
+ <preference name="StatusBarOverlaysWebView" value="false" />  
  
  <icon src="icon-57.png" gap:platform="ios" width="57" height="57" />
 

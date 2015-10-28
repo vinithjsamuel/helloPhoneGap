@@ -170,7 +170,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.showPositions = function (position)
   {
 
-    alert("fdgfd");
+   
     $scope.$apply();
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     var images = {
@@ -695,7 +695,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
      var email_id= $(".user-name").html();
      var deviceid= $(".device-id").html();
-     alert(email_id+deviceid);
+     
      var name = email_id.split('@')[0];
      var user = name+deviceid;var flag=0;
 
@@ -1571,11 +1571,11 @@ function insertData()
 function calls()
 {
  $(".user-name").html(window.localStorage.getItem("emails"));
- alert(window.localStorage.getItem("emails")+"email");
+
 
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
- alert(deviceid);
+ 
  var name = email_id.split('@')[0];
  var user = name+deviceid;
  var scope = angular.element(document.getElementById("email-id")).scope();

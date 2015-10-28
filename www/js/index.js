@@ -103,11 +103,8 @@ app.initialize();
 function Insertdata()
 {
 
-  alert(device.uuid);
   $(".device-id").html(device.uuid);
-
   var deviceid= $(".device-id").html();
-  alert(deviceid);
   calls();
 
   
