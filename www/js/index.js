@@ -28,7 +28,7 @@
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-     document.body.style.marginTop = "40px";
+     
      document.addEventListener('deviceready', this.onDeviceReady, false);
    },
     // deviceready Event Handler
@@ -36,7 +36,10 @@
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-     if (window.localStorage.getItem("install") == undefined) {
+      if (parseFloat(window.device.version) === 7.0) {
+        document.body.style.marginTop = "20px";
+      }
+      if (window.localStorage.getItem("install") == undefined) {
        /* run function */
        setTimeout(function() {
         navigator.splashscreen.hide();

@@ -65,19 +65,22 @@
     <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
 
     <gap:plugin name="com.phonegap.plugins.facebookconnect" >
-     <param name="APP_ID" value="756110871177634" />
-     <param name="APP_NAME" value="Guzzle" />
- </gap:plugin>
- <icon src="icon.png" />
- <gap:splash src="splash.png" />
- <preference name="AutoHideSplashScreen" value="false" />
- <preference name="SplashScreenDelay" value="50000" />
- <preference name="SplashScreenBackgroundColor" value="yellow" />
- <preference name="StatusBarOverlaysWebView" value="false" />  
- 
- <icon src="icon-57.png" gap:platform="ios" width="57" height="57" />
+       <param name="APP_ID" value="756110871177634" />
+       <param name="APP_NAME" value="Guzzle" />
+   </gap:plugin>
+   <icon src="icon.png" />
+   <gap:splash src="splash.png" />
+   <preference name="StatusBarOverlaysWebView" value="false" /> 
+   <preference name="StatusBarBackgroundColor" value="#732B8E" />
+   <preference name="StatusBarStyle" value="lightcontent" />
+   <preference name="AutoHideSplashScreen" value="false" />
+   <preference name="SplashScreenDelay" value="50000" />
+   <preference name="SplashScreenBackgroundColor" value="" />
 
- <icon src="icon-72.png" gap:platform="ios" width="72" height="72" />
- <access origin="*"/>
+
+   <icon src="icon-57.png" gap:platform="ios" width="57" height="57" />
+
+   <icon src="icon-72.png" gap:platform="ios" width="72" height="72" />
+   <access origin="*"/>
 
 </widget>
