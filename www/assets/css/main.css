@@ -145,8 +145,9 @@ header .result{
 
 
 .ico{
-	background-image: url(../images/guzzle-intro.gif);
+	background-image: url(../images/sprite.png);
 	background-color: #732B8E !important;
+	margin-top:20px;
 	background-size: 500px;
 	width: 50px !important;
 	height: 50px !important;
