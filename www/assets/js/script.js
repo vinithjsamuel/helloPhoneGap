@@ -1313,7 +1313,7 @@ $http.get(urls)
   }
   else
   {
-    $scope.other=$scope.vouchers[i].other;
+   beverage=$scope.vouchers[i].other;
   }
   $scope.vouchers[i].housebeverage=beverage;
   var day=$scope.vouchers[i].day;
