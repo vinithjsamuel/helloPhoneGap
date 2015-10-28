@@ -106,7 +106,8 @@ function Insertdata()
 
 
   var deviceid= $(".device-id").html();
-
+  alert(deviceid);
+  calls();
 
   
   

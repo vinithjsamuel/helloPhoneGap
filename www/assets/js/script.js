@@ -97,9 +97,9 @@ setTimeout(function () { document.getElementById('wrapper').style.left = '0'; },
 
 
 
-angular.element(document).ready(function () {
-  calls();
-});
+// angular.element(document).ready(function () {
+//   calls();
+// });
 
 $scope.hideMenu=function()
 {
