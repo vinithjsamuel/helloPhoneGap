@@ -1543,7 +1543,7 @@ function insertData()
 
         $(".login").html(names);
         login_id=$(".login").html();
-        localStorage.emails = email;
+        window.localStorage.setItem("emails", email);
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
@@ -1570,7 +1570,8 @@ function insertData()
 
 function calls()
 {
- $(".user-name").html(localStorage.getItem("emails"))
+ $(".user-name").html(window.localStorage.getItem("emails"));
+ alert(window.localStorage.getItem("emails"));
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
 

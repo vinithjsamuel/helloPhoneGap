@@ -28,7 +28,7 @@
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-     document.body.style.marginTop = "20px";
+     document.body.style.marginTop = "40px";
      document.addEventListener('deviceready', this.onDeviceReady, false);
    },
     // deviceready Event Handler
