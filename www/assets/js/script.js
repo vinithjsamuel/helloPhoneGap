@@ -1571,7 +1571,8 @@ function insertData()
 function calls()
 {
  $(".user-name").html(window.localStorage.getItem("emails"));
- alert(window.localStorage.getItem("emails"));
+ alert(window.localStorage.getItem("emails")+"email");
+ 
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
 
