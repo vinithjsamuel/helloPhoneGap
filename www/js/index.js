@@ -28,20 +28,39 @@
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-      document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
+
+     document.addEventListener('deviceready', this.onDeviceReady, false);
+   },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-      app.receivedEvent('deviceready');
-      
+     if(navigator.network.connection.type == Connection.NONE) {
+      alert("Sorry, without an internet connection we can’t show you any offers.");
+    }
+    if (window.localStorage.getItem("install") == undefined) {
+     /* run function */
+     setTimeout(function() {
+      navigator.splashscreen.hide();
+    }, 3000);
+
+   }
+   else
+   {
+     setTimeout(function() {
+      navigator.splashscreen.hide();
+    }, 150);
+   }
+   app.receivedEvent('deviceready');
 
 
-    },
+
+ },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+
+
 
     //   window.plugins.googleplus.isAvailable(
     //     function (available) {
@@ -52,12 +71,7 @@
     // }
     // );
 
-if (window.localStorage.getItem("install") == undefined) {
- /* run function */
- $('#demoBox').modal("show"); 
- var val=window.localStorage.getItem("install");
- window.localStorage.setItem("install", true);
-}
+
 
 
 
@@ -92,12 +106,10 @@ app.initialize();
 function Insertdata()
 {
 
-
-  var email_id= window.localStorage.getItem("email");
-  $("#email-id").html(email_id);
+  $(".device-id").html(device.uuid);
   var deviceid= $(".device-id").html();
-
+  calls();
 
   
-  calls();
+  
 }
