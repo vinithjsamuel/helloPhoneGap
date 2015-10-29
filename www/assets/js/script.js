@@ -1410,7 +1410,7 @@ $http.get(urls)
     
    if($scope.vouchers[i].other!="all")
    { 
-    $scope.other=$scope.vouchers[i].other;
+    beverage=$scope.vouchers[i].other;
   }
 }
 $scope.vouchers[i].housebeverage=beverage;
