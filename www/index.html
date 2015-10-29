@@ -93,9 +93,9 @@
 
     <nav class="user-menu" id="cd-lateral-nav">
       <div class="container">
-        <span id="email-id" class="user-name" style="display:none;">shravanigmail.com</span>
-        <span class="device-id" style="display:none;" >3D8B53C9-042B-4421-87F3-D76884205247</span>
-        <span class="login" id="login" style="display:none;">shravani3D8B53C9-042B-4421-87F3-D76884205247</span>
+        <span id="email-id" class="user-name" style="display:none;">shravanimmy@gmail.com</span>
+        <span class="device-id" style="display:none;" >5000137e9cca5e8</span>
+        <span class="login" id="login" style="display:none;"></span>
         <span class="entry" style="display:none;"></span>
         <span class="datap" style=""></span>
 
@@ -174,7 +174,7 @@
   </a>
   <div class="collapse" id="collapseExample">
     <div class="well">
-      <p >Invite your friends to join guzzle beta testing.</p>
+      <p >Invite your friends to join guzzle.</p>
 
 
       <div class="input-group">
@@ -185,7 +185,7 @@
         </span>
 
       </div><!-- /input-group -->
-      <p class="success" style="display:none;">Your invitation has been send.</p>
+      <p class="invite-success" style="display:none;">Your invitation has been send.</p>
     </div>
   </div>
 
@@ -205,7 +205,7 @@
  <a class="cd-icon icon-right ico mapy" data-ajax="false" ng-click='Mapsfn(map.latitude,map.longitude)'></a>
  <div class="result " style="display:none;" >{{cars.length}} outlets</div>
 
- <a class="cd-icon icon-left ico back" href="#/" ></a>
+ <a class="cd-icon icon-left ico back" href="#/" ng-click="updateProfile();" ></a>
  <a class="cd-icon icon-right ico back feedback" data-toggle="modal" data-target="#outlet-feed"></a>
 
 
@@ -287,7 +287,7 @@ data-keyboard="false" >
         <div class="modal-body">
           <p>How do you like the guzzle app? Send us your suggestions and feedback.</p>
           <textarea type="input" class="feedback-text"></textarea>
-         <p class="success" style="display:none;">Thanks for your feedback.</p>
+         <p class="feedback-success" style="display:none;">Thanks for your feedback.</p>
        </div>
 
        <div class="modal-footer center">
@@ -330,7 +330,7 @@ data-keyboard="false" >
 
           <p></p>
           <textarea type="textarea" class="outfeed" placeholder="Comments"></textarea>
-          <p class="success" style="display:none;">Thanks for your feedback.</p>
+          <p class="outlet-success" style="display:none;">Thanks for your feedback.</p>
 
         </div>
         <div class="modal-footer center">
@@ -469,6 +469,8 @@ data-keyboard="false" >
  <script src="assets/js/jquery.plugin.pullToRefresh.js"></script>
  <script src="assets/js/angular-touch.min.js"></script>
  <script src="assets/js/script.js"></script>
+
+
  <script type="text/javascript" src="cordova.js"></script>
  <script type="text/javascript" src="js/index.js"></script>
 

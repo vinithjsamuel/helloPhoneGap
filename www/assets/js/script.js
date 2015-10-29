@@ -53,6 +53,7 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
   }).success(function(data){
 
     localStorage.removeItem("outlets");
+
     updateOutlet(data,$scope);
     
 
@@ -194,7 +195,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     });
 
     google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-      
+
     });
 
     GeoMarker.setMap($scope.model.myMap);
@@ -265,7 +266,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     $scope.error = "An unknown error occurred."
     break;
   }
- 
+
   var latlng = new google.maps.LatLng(25.08135,55.144075);
 
   for (i = 0; i < result.length; i++)
@@ -846,10 +847,11 @@ if(window.localStorage.getItem("outlets") != undefined )
 
         if(response.status==true)
         {
-         $(".success").show();
+         $(".feedback-success").show();
          $(".feedback-text").val(null);
          setTimeout(function() {
-          $(".success").hide();
+          $(".feedback-success").hide();
+           $('#app-feed').modal('hide');
         }, 2000)
 
        }
@@ -884,10 +886,11 @@ if(window.localStorage.getItem("outlets") != undefined )
 
         if(response.status==true)
         {
-         $(".success").show();
+         $(".outlet-success").show();
          
          setTimeout(function() {
-          $(".success").hide();
+          $(".outlet-success").hide();
+           $('#outlet-feed').modal('hide');
         }, 2000)
 
        }
@@ -926,14 +929,14 @@ if(window.localStorage.getItem("outlets") != undefined )
 
         if(response.status==true)
         {
-         $(".success").show();
+         $(".invite-success").show();
          $(".invite-email").val(null);
          var val=$(".invite-left").html();
          var invitation=Number(val)-1;
          $(".invite-left").html(invitation);
 
          setTimeout(function() {
-          $(".success").hide();
+          $(".invite-success").hide();
         }, 2000)
 
        }
@@ -1333,16 +1336,10 @@ $scope.mapClick=function()
 
   if(val=="maps")
   {
-
-    //  $(".map-fn").removeClass("maps-hide");
-    // $(".map-fn").addClass("maps-show");
-
-    // $(".map-toggle").addClass("bg-color-a");
-    // $(".map-toggle").attr('data-id','list');
     $(".map-fn").show();
-    // $(".slider").hide();
+    
     google.maps.event.trigger( map, 'resize' );
-    // $(".map-fn").addClass("maps-show");
+    //$(".map-fn").addClass("maps-show");
 
     $(".map-toggle").addClass("bg-color-a");
     $(".map-toggle").attr('data-id','list');
@@ -1350,7 +1347,7 @@ $scope.mapClick=function()
   else{
 
    $(".map-fn").hide();
-   $(".slider").show();
+   
    // $(".map-fn").removeClass("maps-show");
     // $(".map-fn").addClass("maps-hide");
     $(".map-toggle").attr('data-id','maps');
@@ -1414,9 +1411,9 @@ $http.get(urls)
   else
   {
     if($scope.vouchers[i].other!="all")
-   { 
-    beverage=$scope.vouchers[i].other;
-  }
+    { 
+      beverage=$scope.vouchers[i].other;
+    }
   }
   $scope.vouchers[i].housebeverage=beverage;
   var day=$scope.vouchers[i].day;
@@ -1765,6 +1762,10 @@ function updateOutlet(data,$scope) {
 
     for (i = 0; i < result.length; i++) {
 
+      if(i > 3){
+        result[i].show=0;
+
+      }
       var lat=result[i].latitude;
       var longi=result[i].longitude;var infobox;
       var latlng = new google.maps.LatLng($scope.lat1,$scope.lng1);

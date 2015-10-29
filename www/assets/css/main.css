@@ -883,6 +883,13 @@ img.item-logo {
 		padding: 20px;
 	}
 
+	.profile-page .dynamic{
+		padding: 20px 0;
+	}
+
+
+
+
 
 	.modal-footer, .modal-header{
 		text-align: center;
@@ -900,8 +907,15 @@ img.item-logo {
 	height: 100px;
 	width: 100%;
 	padding: 10px;
+	border-radius: 0;
+	border: 1px solid #ccc;
 }
 
+.form-control {
+	padding: 10px;
+	border-radius: 0;
+	border: 1px solid #ccc;
+}
 
 
 .activation input{
@@ -1009,7 +1023,18 @@ img.item-logo {
 
 .safari .pin input{
 	letter-spacing: 30px;
+	font-size: 20px;
 }
+
+
+
+
+
+
+.safari #outlet-feed input{
+	margin-top: 0;
+}
+
 
 
 
