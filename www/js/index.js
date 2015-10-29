@@ -50,7 +50,7 @@
    {
      setTimeout(function() {
       navigator.splashscreen.hide();
-    }, 550);
+    }, 150);
    }
    app.receivedEvent('deviceready');
 

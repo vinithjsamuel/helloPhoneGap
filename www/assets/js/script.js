@@ -150,8 +150,8 @@ if(window.localStorage.getItem("outlets") != undefined )
 
   $rootScope.homemaintitle = true;
   setTimeout(function(){
-    $("#status").fadeOut(); $("#preloader").delay(450).fadeOut("slow");
-  }, 4500);
+    $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
+  }, 6500);
   $rootScope.storage = JSON.parse(window.localStorage['outlets' || '{}']);
 
   var datas=$rootScope.storage;
@@ -253,16 +253,16 @@ if(window.localStorage.getItem("outlets") != undefined )
   switch (error.code)
   {
     case error.PERMISSION_DENIED:
-    $scope.error = "Location information is unavailable. Please make sure the location settings is on in your device."
+    $scope.error = "User denied the request for Geolocation."
     break;
     case error.POSITION_UNAVAILABLE:
-    $scope.error = "Location information is unavailable. Please make sure the location settings is on in your device."
+    $scope.error = "Location information is unavailable."
     break;
     case error.TIMEOUT:
-    $scope.error = "Location information is unavailable. Please make sure the location settings is on in your device."
+    $scope.error = "The request to get user location timed out."
     break;
     case error.UNKNOWN_ERROR:
-    $scope.error = "Location information is unavailable. Please make sure the location settings is on in your device."
+    $scope.error = "An unknown error occurred."
     break;
   }
   alert($scope.error);
@@ -1407,26 +1407,25 @@ $http.get(urls)
   }
   else
   {
-    
-   if($scope.vouchers[i].other!="all")
+    if($scope.vouchers[i].other!="all")
    { 
     beverage=$scope.vouchers[i].other;
   }
-}
-$scope.vouchers[i].housebeverage=beverage;
-var day=$scope.vouchers[i].day;
-var month=$scope.vouchers[i].month-1;
-var year=$scope.vouchers[i].year;
-var theBigDay = new Date(year,month,day);
-var mess=$scope.vouchers[i].validity;
-var mont= Number(month)+Number(mess);
-theBigDay.setMonth(mont);
-var image=voucher_data[i].title;
-$scope.vouchers[i].image = image.replace(/ /g, '-');
+  }
+  $scope.vouchers[i].housebeverage=beverage;
+  var day=$scope.vouchers[i].day;
+  var month=$scope.vouchers[i].month-1;
+  var year=$scope.vouchers[i].year;
+  var theBigDay = new Date(year,month,day);
+  var mess=$scope.vouchers[i].validity;
+  var mont= Number(month)+Number(mess);
+  theBigDay.setMonth(mont);
+  var image=voucher_data[i].title;
+  $scope.vouchers[i].image = image.replace(/ /g, '-');
 
-var months=theBigDay.getMonth()+1;
-var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
-$scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+  var months=theBigDay.getMonth()+1;
+  var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+  $scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
         // $final_date.html("Valid to  : "+theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear());
         var max=$scope.vouchers[i].maxvouchers;
         if(login_id == "" || typeof login_id == "undefined" )

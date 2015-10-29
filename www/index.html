@@ -226,12 +226,12 @@
       </div>
 
       <div class="modal-body">
-       <h4 class="modal-title">Your account is active</h4>
-     </div>
+        <h4 class="modal-title">Your account is active</h4>
+      </div>
 
-   </div>
+    </div>
 
- </div>
+  </div>
 </div>
 
 
@@ -243,30 +243,30 @@ data-backdrop="static"
 data-keyboard="false" >
 <div class="modal-dialog" role="document">
 
-	<!-- Modal content-->
-	<div class="modal-content">
-		<div class="modal-header">
-			<h4 class="modal-title">Your activation code</h4>
-		</div>
-		<div class="modal-body">
-			<p>Please provide your activation code to start using our services</p>
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Your activation code</h4>
+    </div>
+    <div class="modal-body activation">
+      <p>Please provide your activation code to start using our services</p>
 
-			<div>
-				<input type="text" class="emails" placeholder="Email address">
-			</div>
+      <div>
+        <input type="text" class="emails" placeholder="Email address">
+      </div>
 
-			<div style="margin-top:10px;">
-				<input type="text" class="active-code" placeholder="Activation code">
-			</div>
+      <div style="margin-top:10px;">
+        <input type="text" class="active-code" placeholder="Activation code">
+      </div>
 
-			<p class="error-profile" style="display:none;">Oops wrong code, try again!.</p>
+      <p class="error-profile warning" style="display:none; margin-top:10px;">Oops wrong code, try again!.</p>
 
-		</div>
-		<div class="modal-footer">
+    </div>
+    <div class="modal-footer">
 
-			<button type="button" id="modal-submit" class="btn btn-default" ng-click="addUser()">Submit</button>
-		</div>
-	</div>
+      <button type="button" id="modal-submit" class="btn btn-default" ng-click="addUser()">Submit</button>
+    </div>
+  </div>
 
 </div>
 </div>
@@ -276,20 +276,20 @@ data-keyboard="false" >
 
 <!-- Modal -->
 <div class="modal fade" id="app-feed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-				<h4 class="modal-title" id="myModalLabel">User Feedback</h4>
-			</div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title" id="myModalLabel">User Feedback</h4>
+      </div>
 
-			<div class="terms-step1">
-				<div class="modal-body">
-					<p>Please provide us with any feedback regarding the app.</p>
-					<textarea type="input" class="feedback-text"></textarea>
+      <div class="terms-step1">
+        <div class="modal-body">
+          <p>Please provide us with any feedback regarding the app.</p>
+          <textarea type="input" class="feedback-text"></textarea>
          <p class="success" style="display:none;">Your feedback has been send.</p>
        </div>
-       
+
        <div class="modal-footer center">
          <button type="button" id="modal-submit" class="btn btn-default"  ng-click="feedApp();">Submit</button>
        </div>
@@ -307,26 +307,26 @@ data-keyboard="false" >
 
 <!-- Modal -->
 <div class="modal fade" id="outlet-feed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
 
-			<div class="modal-header">
-				<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-				<h4 class="modal-title" id="myModalLabel">Outlet Feedback</h4>
-			</div>
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+        <h4 class="modal-title" id="myModalLabel">Outlet Feedback</h4>
+      </div>
 
-			<div class="terms-step1">
-				<div class="modal-body">
+      <div class="terms-step1">
+        <div class="modal-body">
 
-					<p>Did the voucher worked for you?</p>
+          <p>Did the voucher worked for you?</p>
 
-					<div class="radio">
-						<label><input type="radio"  name="status" class="status" checked="checked" value="declined">Declined The Offer</label>
-					</div>
+          <div class="radio">
+            <label><input type="radio"  name="status" class="status" checked="checked" value="declined">Declined The Offer</label>
+          </div>
 
-					<div class="radio">
-						<label><input type="radio"  name="status" class="status" value="worked">Worked Perfectly</label>
-					</div>
+          <div class="radio">
+            <label><input type="radio"  name="status" class="status" value="worked">Worked Perfectly</label>
+          </div>
 
           <p></p>
           <textarea type="textarea" class="outfeed" placeholder="Please provide us with any feedback regarding the app."></textarea>
@@ -403,14 +403,14 @@ data-keyboard="false" >
             </div>
 
             <div class="col-xs-8 no-padding-bottom" ng-if="cars && homemaintitle">
-            	<h4 class="color-a title">{{car.title}}</h4>
-            	<ul class="list-inline">
-            		<li ng-if="car.show!=0"><img alt="80x80" src="assets/images/css/new.png" class="tag img-new" /></li>
-            		<!-- <li><img alt="80x80" src="assets/images/css/update.png" class="tag img-update" /></li> -->
-            		<li class="caps">{{car.type}}</li>
-            		<!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
-            	</ul>
-            	<ul class="list-inline">
+              <h4 class="color-a title">{{car.title}}</h4>
+              <ul class="list-inline">
+                <li ng-if="car.show!=0"><img alt="80x80" src="assets/images/css/new.png" class="tag img-new" /></li>
+                <!-- <li><img alt="80x80" src="assets/images/css/update.png" class="tag img-update" /></li> -->
+                <li class="caps">{{car.type}}</li>
+                <!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
+              </ul>
+              <ul class="list-inline">
                 <li><i class="fa fa-clock-o"></i>Last Call: <strong>{{car.lastcall}}</strong></li>
                 <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li>
                 <!-- <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li> -->
@@ -442,7 +442,7 @@ data-keyboard="false" >
 <div class="js">
 
 
-  <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
+ <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
  <script type="text/javascript" src="assets/js/libs/jquery-1.7.min.js"></script>
  <script src="assets/js/libs/angular.min.js"></script>
  <script src="assets/js/geolocationmarker-compiled.js"></script>
