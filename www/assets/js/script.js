@@ -1120,6 +1120,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
 
       var user=$(".login").html();
+      console.log(user);
 
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
