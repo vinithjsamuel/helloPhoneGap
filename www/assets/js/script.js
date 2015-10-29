@@ -194,7 +194,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     });
 
     google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-      alert('There was an error obtaining your position. Message: ' + e.message);
+      
     });
 
     GeoMarker.setMap($scope.model.myMap);
@@ -265,7 +265,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     $scope.error = "An unknown error occurred."
     break;
   }
-  alert($scope.error);
+ 
   var latlng = new google.maps.LatLng(25.08135,55.144075);
 
   for (i = 0; i < result.length; i++)
@@ -1333,10 +1333,16 @@ $scope.mapClick=function()
 
   if(val=="maps")
   {
+
+    //  $(".map-fn").removeClass("maps-hide");
+    // $(".map-fn").addClass("maps-show");
+
+    // $(".map-toggle").addClass("bg-color-a");
+    // $(".map-toggle").attr('data-id','list');
     $(".map-fn").show();
-    $(".slider").hide();
+    // $(".slider").hide();
     google.maps.event.trigger( map, 'resize' );
-    //$(".map-fn").addClass("maps-show");
+    // $(".map-fn").addClass("maps-show");
 
     $(".map-toggle").addClass("bg-color-a");
     $(".map-toggle").attr('data-id','list');

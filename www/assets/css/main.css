@@ -135,9 +135,7 @@ header .result{
 }
 
 
-#wrapper{
-	padding-top: 20px;
-}
+
 .tag{
 	/*position: absolute;*/
 	zoom: 40%;
@@ -619,7 +617,7 @@ input.cmn-toggle-round:checked + label:after {
 	.map, .maps-hide{
 		position: absolute;
 		top: 0;
-		transform: translateY(-300px);
+		/*transform: translateY(-300px);*/
 		z-index: 199;
 		left: 0;
 		width: 100%;
@@ -822,7 +820,7 @@ img.item-logo {
 }
 
 .vouchers li.expiry{
-	margin: 15px 0 0 10px;
+	margin: 15px 0 0 5px;
 }
 .vouchers .cups li{
 	float: left;
@@ -854,7 +852,7 @@ img.item-logo {
 
 
 	.vouchers .feedback{
-		padding-top: 10px;
+		padding-top: 20px;
 		margin-right: 0;
 	}
 
@@ -1003,7 +1001,15 @@ img.item-logo {
 	height: 140px;
 }
 
+.safari #wrapper{
+	padding-top: 20px;
+}
 
+
+
+.safari .pin input{
+	letter-spacing: 30px;
+}
 
 
 
