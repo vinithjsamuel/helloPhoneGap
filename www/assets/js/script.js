@@ -611,7 +611,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          google.maps.event.addListener(marker, 'click', function() {
 
           $scope.$apply();
-          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:10%;margin-right:5px;">' +  this.title+'  </h4></a>');
+          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:25px;margin-right:5px;">' +  this.title+'  </h4></a>');
 
           $scope.infoWindow.open($scope.model.myMap,this);
         });
@@ -727,8 +727,13 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           if(data[i].email==email_id && data[i].device==deviceid)
           {
-
-           $(".name").html(data[i].names);
+            if(typeof data[i].names !="undefined" || data[i].names !="")
+            {
+             $(".name").html(data[i].names);
+           }
+           else{
+             $(".name").html(name);
+           }
            $(".login").html(user);
            $(".entry").html(data[i].entry);
            var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
@@ -851,7 +856,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          $(".feedback-text").val(null);
          setTimeout(function() {
           $(".feedback-success").hide();
-           $('#app-feed').modal('hide');
+          $('#app-feed').modal('hide');
         }, 2000)
 
        }
@@ -890,7 +895,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          
          setTimeout(function() {
           $(".outlet-success").hide();
-           $('#outlet-feed').modal('hide');
+          $('#outlet-feed').modal('hide');
         }, 2000)
 
        }
@@ -1150,7 +1155,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
       $scope.updateProfile=function()
       {
-
+       
         $(".sucess").hide();
         $(".error").hide();
         var entry_id=$(".entry").html();
