@@ -604,7 +604,7 @@ if(window.localStorage.getItem("outlets") != undefined )
           icon:image,
           url:url
         });
-         marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png">' + titles + '</a> </div>';
+         marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png" style="width:50%!important;height:50%;">' + titles + '</a> </div>';
 
          $scope.myMarkers.push(marker);
 
@@ -728,7 +728,7 @@ if(window.localStorage.getItem("outlets") != undefined )
           if(data[i].email==email_id && data[i].device==deviceid)
           {
 
-           $(".name").html(name);
+           $(".name").html(data[i].names);
            $(".login").html(user);
            $(".entry").html(data[i].entry);
            var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
@@ -1120,7 +1120,6 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
 
       var user=$(".login").html();
-      console.log(user);
 
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
