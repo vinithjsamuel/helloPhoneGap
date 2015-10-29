@@ -414,14 +414,7 @@ if(window.localStorage.getItem("outlets") != undefined )
              if(i > 3){
               result[i].show=0;
             }
-            var selectedTimestamp=result[i].date;
-            var timestamp = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
-            if(timestamp > selectedTimestamp){
-              result[i].show=0;
-              alert("fg");
-            }
-
-
+            
             var lat=result[i].latitude;
             var longi=result[i].longitude;var infobox;
             var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
@@ -1672,7 +1665,7 @@ function insertData()
 function calls()
 {
  $(".user-name").html(window.localStorage.getItem("emails"));
- alert(window.localStorage.getItem("emails"));
+
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
 
