@@ -601,7 +601,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          var titles=encoded.replace(/&amp;/g, '&');
          var url=info.urltitle;
          $scope.infoWindow = new google.maps.InfoWindow();
-         var url='#outlet/'+info.urltitle;
+         var url='#outlet/'+info.urltitle+'/'+info.title;
          var latlng = new google.maps.LatLng(info.latitude,info.longitude);
          var marker = new google.maps.Marker({
           map: $scope.model.myMap,
