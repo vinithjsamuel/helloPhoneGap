@@ -19,7 +19,7 @@ app .config(['$routeProvider',
       templateUrl: 'profile.html',
 
     }).
-    otherwise({f
+    otherwise({
       redirectTo: '/'
     });
 
