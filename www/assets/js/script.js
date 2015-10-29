@@ -1135,13 +1135,13 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.namer=profile[0].names;
         $scope.gender=['male ', 'female'];
         $scope.mobile=profile[0].mobile;
-        alert(profile[0].mobile+profile[0].country+profile[0].nationality);
+        alert(profile[0].mobile+profile[0].country+profile[0].nationality)
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
         console.log(profile[0].country);
         $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
-        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').attr("selected","selected");
-        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').attr("selected","selected");
+        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').attr("selected","true");
+        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').attr("selected","true");
         $scope.alcohol = ['Yes', 'No'];
         $scope.profiles = {
           alcohol: profile[0].alcohol,
@@ -1748,6 +1748,8 @@ app.directive('ddTextCollapse', ['$compile', function($compile) {
 }]);
 
 function updateOutlet(data,$scope) {
+
+
 
 
   window.localStorage['outlets'] = JSON.stringify(data);
