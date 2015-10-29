@@ -7,7 +7,7 @@
 }
 
 .loading {
-	color: #732B8E;
+	color: #7F1FAA;
 	font-size: 16px;
 }
 
@@ -109,9 +109,6 @@ body{
 	font-family: 'Roboto', sans-serif;
 	font-size:13px;
 }
-body.phonegap-ios-7{
-  margin-top: 20px;
-}
 
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
@@ -147,7 +144,6 @@ header .result{
 .ico{
 	background-image: url(../images/sprite.png);
 	background-color: #732B8E !important;
-	margin-top:20px;
 	background-size: 500px;
 	width: 50px !important;
 	height: 50px !important;
@@ -543,6 +539,9 @@ button.send{
 }
 
 
+.form-control{
+	font-size: inherit;
+}
 .form-control:focus {
 	box-shadow: none;
 }
@@ -899,6 +898,30 @@ img.item-logo {
 		display: none;
 	}
 
+.modal{
+	z-index: 20000;
+}
+
+.modal textarea{
+	height: 100px;
+	width: 100%;
+}
+.modal input, .modal textarea{
+	padding: 10px;
+}
+
+
+
+
+
+
+.modal-backdrop{
+	z-index: 10000;
+}
+
+.modal-title{
+	font-size: 16px;
+}
 
 	.dynamic{
 		padding: 0 15px;
@@ -928,10 +951,6 @@ img.item-logo {
 
 
 
-.modal-body input{
-	width: 100%;
-}
-
 	/*-------------Style for password verification--------------*/
 	input[type="tel"]
 	{
@@ -960,3 +979,41 @@ img.item-logo {
 	{
 		margin-left:5px;
 	}
+
+
+
+
+/* -------------- IOS ----------------*/
+
+.safari header {
+	height: 70px;
+	padding-top: 20px;
+}
+
+
+
+.safari .cd-icon {
+	top: 20px !important;
+}
+
+
+.safari .user-menu .profile{
+	padding-top: 20px;
+	height: 140px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,26 +37,28 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
  $(".step1").on('click', function (){
   $('#demoBox2').modal("show");
 });
-//  var myScroll,
-//  pullDownEl, pullDownOffset,
-//  pullUpEl, pullUpOffset,
-//  generatedCount = 0;
+ var myScroll,
+ pullDownEl, pullDownOffset,
+ pullUpEl, pullUpOffset,
+ generatedCount = 0;
 
-//  $scope.pullDownAction=function () {
-//    // <-- Simulate network congestion, remove setTimeout from production!
-//    $http({
-//     method: 'GET',
-//     url: 'http://getguzzle.com/app/markers',
 
-//   }).success(function(data){
 
-//     localStorage.removeItem("outlets");
-//     updateOutlet(data,$scope);
-//     myScroll.refresh();
+ $scope.pullDownAction=function () {
+   // <-- Simulate network congestion, remove setTimeout from production!
+   $http({
+    method: 'GET',
+    url: 'http://getguzzle.com/app/markers',
 
-//   });
+  }).success(function(data){
 
-// }
+    localStorage.removeItem("outlets");
+    updateOutlet(data,$scope);
+    
+
+  });
+
+}
 
 
 
@@ -170,7 +172,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.showPositions = function (position)
   {
 
-   
+
     $scope.$apply();
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     var images = {
@@ -206,6 +208,13 @@ if(window.localStorage.getItem("outlets") != undefined )
 
 
     for (i = 0; i < result.length; i++) {
+
+
+      if(i > 3){
+        result[i].show=0;
+
+      }
+      
 
       var lat=result[i].latitude;
       var longi=result[i].longitude;var infobox;
@@ -402,15 +411,26 @@ if(window.localStorage.getItem("outlets") != undefined )
 
             for (i = 0; i < result.length; i++) {
 
-              var lat=result[i].latitude;
-              var longi=result[i].longitude;var infobox;
-              var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-              var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
-              var encoded=data[i].title;
-              var titles=encoded.replace(/&amp;/g, '&');
-              var url=data[i].urltitle;
-              data[i].title=titles;
-              datas[i].distance=dist;
+             if(i > 3){
+              result[i].show=0;
+            }
+            var selectedTimestamp=result[i].date;
+            var timestamp = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
+            if(timestamp > selectedTimestamp){
+              result[i].show=0;
+              alert("fg");
+            }
+
+
+            var lat=result[i].latitude;
+            var longi=result[i].longitude;var infobox;
+            var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+            var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+            var encoded=data[i].title;
+            var titles=encoded.replace(/&amp;/g, '&');
+            var url=data[i].urltitle;
+            data[i].title=titles;
+            datas[i].distance=dist;
       // offer value
       // var urltit=data[i].title;
       // var names=data[i].urltitle;
@@ -695,7 +715,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
      var email_id= $(".user-name").html();
      var deviceid= $(".device-id").html();
-     
+
      var name = email_id.split('@')[0];
      var user = name+deviceid;var flag=0;
 
@@ -812,9 +832,85 @@ if(window.localStorage.getItem("outlets") != undefined )
      $("body").removeClass("menu-open");
    }
 
-
-   $scope.inviteUser = function()
+   $scope.feedApp = function()
    {
+
+    var email= $(".user-name").html();
+    var value= $(".feedback-text").val();
+
+
+
+
+    var data       = {title:email,feedback:value};
+    $.ajax({
+      type       : "POST",
+      url        : "http://getguzzle.com/app-test/app-feedback/"+data,
+      crossDomain: true,
+      data:{json: JSON.stringify(data)},
+      dataType   : 'json',
+      success    : function(response,status)
+      {
+
+        if(response.status==true)
+        {
+         $(".success").show();
+         $(".feedback-text").val(null);
+         setTimeout(function() {
+          $(".success").hide();
+        }, 2000)
+
+       }
+
+
+     },
+     error      : function() {
+                //console.error("error");
+
+              }
+            });
+
+
+  }
+  $scope.feedOut = function()
+  {
+
+    var email= $(".user-name").html();
+    var status= $(".status").val();
+    var value= $(".outfeed").val();
+
+
+    var data       = {title:email,status:status,feedback:value};
+    $.ajax({
+      type       : "POST",
+      url        : "http://getguzzle.com/app-test/outlet-feedback/"+data,
+      crossDomain: true,
+      data:{json: JSON.stringify(data)},
+      dataType   : 'json',
+      success    : function(response,status)
+      {
+
+        if(response.status==true)
+        {
+         $(".success").show();
+         
+         setTimeout(function() {
+          $(".success").hide();
+        }, 2000)
+
+       }
+
+
+     },
+     error      : function() {
+                //console.error("error");
+
+              }
+            });
+
+
+  }
+  $scope.inviteUser = function()
+  {
     var email= $(".user-name").html();
     var value= $(".invite-email").val();
     var login_id=$(".login").html();
@@ -1244,15 +1340,20 @@ $scope.mapClick=function()
 
   if(val=="maps")
   {
-    $(".map-fn").removeClass("maps-hide");
-    $(".map-fn").addClass("maps-show");
+    $(".map-fn").show();
+    $(".slider").hide();
+    google.maps.event.trigger( map, 'resize' );
+    //$(".map-fn").addClass("maps-show");
 
     $(".map-toggle").addClass("bg-color-a");
     $(".map-toggle").attr('data-id','list');
   }
   else{
-    $(".map-fn").removeClass("maps-show");
-    $(".map-fn").addClass("maps-hide");
+
+   $(".map-fn").hide();
+   $(".slider").show();
+   // $(".map-fn").removeClass("maps-show");
+    // $(".map-fn").addClass("maps-hide");
     $(".map-toggle").attr('data-id','maps');
     $(".map-toggle").removeClass("bg-color-a");
 
@@ -1313,22 +1414,22 @@ $http.get(urls)
   }
   else
   {
-   beverage=$scope.vouchers[i].other;
- }
- $scope.vouchers[i].housebeverage=beverage;
- var day=$scope.vouchers[i].day;
- var month=$scope.vouchers[i].month-1;
- var year=$scope.vouchers[i].year;
- var theBigDay = new Date(year,month,day);
- var mess=$scope.vouchers[i].validity;
- var mont= Number(month)+Number(mess);
- theBigDay.setMonth(mont);
- var image=voucher_data[i].title;
- $scope.vouchers[i].image = image.replace(/ /g, '-');
+    $scope.other=$scope.vouchers[i].other;
+  }
+  $scope.vouchers[i].housebeverage=beverage;
+  var day=$scope.vouchers[i].day;
+  var month=$scope.vouchers[i].month-1;
+  var year=$scope.vouchers[i].year;
+  var theBigDay = new Date(year,month,day);
+  var mess=$scope.vouchers[i].validity;
+  var mont= Number(month)+Number(mess);
+  theBigDay.setMonth(mont);
+  var image=voucher_data[i].title;
+  $scope.vouchers[i].image = image.replace(/ /g, '-');
 
- var months=theBigDay.getMonth()+1;
- var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
- $scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+  var months=theBigDay.getMonth()+1;
+  var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
+  $scope.vouchers[i].expirydate=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
         // $final_date.html("Valid to  : "+theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear());
         var max=$scope.vouchers[i].maxvouchers;
         if(login_id == "" || typeof login_id == "undefined" )
@@ -1571,11 +1672,10 @@ function insertData()
 function calls()
 {
  $(".user-name").html(window.localStorage.getItem("emails"));
-
-
+ alert(window.localStorage.getItem("emails"));
  var email_id= $(".user-name").html();
  var deviceid= $(".device-id").html();
- 
+
  var name = email_id.split('@')[0];
  var user = name+deviceid;
  var scope = angular.element(document.getElementById("email-id")).scope();
