@@ -1153,7 +1153,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.namer=profile[0].names;
         $scope.gender=['male ', 'female'];
         $scope.mobile=profile[0].mobile;
-        alert(profile[0].mobile+profile[0].country+profile[0].nationality)
+
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
         console.log(profile[0].country);
@@ -1193,7 +1193,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       var entry_id=$(".entry").html();
       var url="http://getguzzle.com/app-test/update/"+ entry_id;
       var name=$(".screen-name").val();
-      var mobile=$(".mobile").val();
+      var mobile=$(".mobiles").val();
       var city=$(".city").val();
       var country=$(".country").val();
       var nationality=$(".nationality").val();
@@ -1451,26 +1451,86 @@ $http.get(urls)
     else
     {
       var beverage=house.replace(/\s\s+/g, ' | ');
+      var words = beverage.split("|");
+      var temps1="",temps2="",temps3="",temps4="";
+    
+      for (var k = 0; k < words.length ; k++) {
+       
 
+        if(words[k]=="Malt ")
+        {
+          if(voucher_data[i].Malt == "" || typeof voucher_data[i].Malt == "undefined")
+          {
+            temps1="Malt";
+
+          }
+          else
+          {
+            temps1=voucher_data[i].Malt;
+          }
+        }
+        if(words[k]==" Grape ")
+        {
+          if(voucher_data[i].Grape == "" || typeof voucher_data[i].Grape == "undefined")
+          {
+           temps2=" Grape";
+         }
+         else
+         {
+          temps2=" "+voucher_data[i].Grape;
+        }
+      }
+      if(words[k]==" Spirits ")
+      {
+        if(voucher_data[i].Spirits == "" || typeof voucher_data[i].Spirits == "undefined")
+        {
+         temps3=" Spirits";
+       }
+       else
+       {
+        temps3=" "+voucher_data[i].Spirits;
+      }
     }
-  }
-  else
-  {
-    if($scope.vouchers[i].other!="all")
-    { 
-      beverage=$scope.vouchers[i].other;
+    if(words[k]==" Soft drinks")
+    {
+      if(voucher_data[i].SoftDrinks == "" || typeof voucher_data[i].SoftDrinks == "undefined")
+      {
+       temps4=" Soft Drinks";
+     }
+     else
+     {
+      temps4=" "+voucher_data[i].SoftDrinks;
     }
+
   }
-  $scope.vouchers[i].housebeverage=beverage;
-  var day=$scope.vouchers[i].day;
-  var month=$scope.vouchers[i].month-1;
-  var year=$scope.vouchers[i].year;
-  var theBigDay = new Date(year,month,day);
-  var mess=$scope.vouchers[i].validity;
-  var mont= Number(month)+Number(mess);
-  theBigDay.setMonth(mont);
-  var image=voucher_data[i].title;
-  $scope.vouchers[i].image = image.replace(/ /g, '-');
+
+  
+  beverage= temps1+" "+temps2+" "+temps3+" "+temps4;
+  beverage=beverage.replace(/\s\s+/g, ' | ');
+ 
+
+}
+}
+}
+else
+{
+  if($scope.vouchers[i].other!="all")
+  { 
+    beverage=$scope.vouchers[i].other;
+  }
+}
+$scope.vouchers[i].housebeverage=beverage;
+var day=$scope.vouchers[i].day;
+var month=$scope.vouchers[i].month-1;
+var year=$scope.vouchers[i].year;
+var theBigDay = new Date(year,month,day);
+var mess=$scope.vouchers[i].validity;
+var mont= Number(month)+Number(mess);
+theBigDay.setMonth(mont);
+  //change
+  // var image=voucher_data[i].id;
+  
+  $scope.vouchers[i].image =voucher_data[i].id;
 
   var months=theBigDay.getMonth()+1;
   var date=theBigDay.getDate()+"/"+ months +"/"+theBigDay.getFullYear();
