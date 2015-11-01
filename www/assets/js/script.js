@@ -30,21 +30,36 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 {
 
 
- $("body").show();
- $rootScope.homemaintitle = false;
- $(".logo-splash").show();
+  var version ="version2";
+  $http({
+    method: 'GET',
+    url: 'http://getguzzle.com/app-test/version',
 
- $(".step1").on('click', function (){
-  $('#demoBox2').modal("show");
-});
- var myScroll,
- pullDownEl, pullDownOffset,
- pullUpEl, pullUpOffset,
- generatedCount = 0;
+  }).success(function(data){
+
+    if(version!=data[0].title)
+    {
+     $('#version-modal').modal("show");
+     
+   }
+   
+ });
+
+  $("body").show();
+  $rootScope.homemaintitle = false;
+  $(".logo-splash").show();
+
+  $(".step1").on('click', function (){
+    $('#demoBox2').modal("show");
+  });
+  var myScroll,
+  pullDownEl, pullDownOffset,
+  pullUpEl, pullUpOffset,
+  generatedCount = 0;
 
 
 
- $scope.pullDownAction=function () {
+  $scope.pullDownAction=function () {
    // <-- Simulate network congestion, remove setTimeout from production!
    $http({
     method: 'GET',
@@ -727,13 +742,16 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           if(data[i].email==email_id && data[i].device==deviceid)
           {
-            if(typeof data[i].names !="undefined" || data[i].names !="")
-            {
-             $(".name").html(data[i].names);
-           }
-           else{
+           var myname=data[i].names;
+           if(myname == "" || typeof myname == "undefined")
+           {
              $(".name").html(name);
            }
+           else
+           {
+             $(".name").html(myname);
+           }
+           $(".mynames").html(name);
            $(".login").html(user);
            $(".entry").html(data[i].entry);
            var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
@@ -1153,53 +1171,75 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       });
 
 
+      $(".profile-page input[type=text]").focusout(function() {
+       $scope.updateProfile();
+     }).blur(function() {
 
-      $scope.updateProfile=function()
+     });
+     $(".profile-page select").change(function() {
+
+      $scope.updateProfile();
+    });
+     $(".profile-page input[type=radio]").change(function() {
+
+      $scope.updateProfile();
+    });
+
+     $scope.updateProfile=function()
+     {
+
+      $(".sucess").hide();
+      $(".error").hide();
+      var entry_id=$(".entry").html();
+      var url="http://getguzzle.com/app-test/update/"+ entry_id;
+      var name=$(".screen-name").val();
+      var mobile=$(".mobile").val();
+      var city=$(".city").val();
+      var country=$(".country").val();
+      var nationality=$(".nationality").val();
+      var alcohols=$("input[name=alcohol]:checked").val();
+      var gender=$("input[name=cf_gender]:checked").val();
+      if(name == "" || typeof name == "undefined")
       {
-       
-        $(".sucess").hide();
-        $(".error").hide();
-        var entry_id=$(".entry").html();
-        var url="http://getguzzle.com/app-test/update/"+ entry_id;
-        var name=$(".screen-name").val();
-        var mobile=$(".mobile").val();
-        var city=$(".city").val();
-        var country=$(".country").val();
-        var nationality=$(".nationality").val();
-        var alcohols=$("input[name=alcohol]:checked").val();
-        var gender=$("input[name=cf_gender]:checked").val();
+        var names=$(".mynames").html();
+        $(".name").html(names);
+      }
+      else
+      {
+       $(".name").html(name);
+     }
 
-        var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
-        $.ajax({
-          type       : "POST",
-          url        :  url,
-          crossDomain: true,
-          data:{json: JSON.stringify(data)},
-          dataType   : 'json',
-          success    : function(response,status) {
+     var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+     $.ajax({
+      type       : "POST",
+      url        :  url,
+      crossDomain: true,
+      data:{json: JSON.stringify(data)},
+      dataType   : 'json',
+      success    : function(response,status) {
 
-            if(response.status==true)
-            {
+        if(response.status==true)
+        {
 
-              $(".success").show();
+          $(".success").show();
 
-            }
-            else
-            {
-              $(".error").show();
-            }
+        }
+        else
+        {
+          $(".error").show();
+        }
 
-          },
-          error      : function() {
+      },
+      error      : function() {
             //console.error("error");
             $(".error").show();
           }
         });
 
 
-      }
+   }
 
-    });
+ });
 //vouche
 //voucher code
 
@@ -1400,7 +1440,7 @@ $http.get(urls)
  for (i = 0; i < results.length; i++) {
 
   var house=voucher_data[i].housebeverage;
-  
+  var beverage=null;
   if(voucher_data[i].title=="2 for 1 house beverage")
   {
 
