@@ -115,9 +115,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 
 
 
-// angular.element(document).ready(function () {
-//   calls();
-// });
+angular.element(document).ready(function () {
+  calls();
+});
 
 $scope.hideMenu=function()
 {
@@ -895,6 +895,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     var email= $(".user-name").html();
     var status= $(".status").val();
     var value= $(".outfeed").val();
+    var outid= $(".outfeed").val();
 
 
     var data       = {title:email,status:status,feedback:value};
@@ -1158,8 +1159,8 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.country=profile[0].country;
         console.log(profile[0].country);
         $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
-        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
-        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
+        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').attr("selected","true");
+        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').attr("selected","true");
         $scope.alcohol = ['Yes', 'No'];
         $scope.profiles = {
           alcohol: profile[0].alcohol,
@@ -1332,6 +1333,8 @@ $http.get(url)
  }
  var lat=datas[0].latitude;
  var longi=datas[0].longitude;
+  $scope.maplatVal = lat;
+ $scope.maplongVal = longi;
  // var owl = $("#owl-demo"),
  // i = 0,
  // textholder,
@@ -1376,38 +1379,7 @@ $('.owl-carousel').owlCarousel({
 
 //  owl.data('owlCarousel').addItem(content);
 $("#preloader-er").fadeOut();
-$scope.mapClick=function()
-{
-  var val=$(".map-toggle").attr('data-id');
-
-  if(val=="maps")
-  {
-    $(".map-fn").show();
-    
-    google.maps.event.trigger( map, 'resize' );
-    //$(".map-fn").addClass("maps-show");
-
-    $(".map-toggle").addClass("bg-color-a");
-    $(".map-toggle").attr('data-id','list');
-  }
-  else{
-
-   $(".map-fn").hide();
-   
-   // $(".map-fn").removeClass("maps-show");
-    // $(".map-fn").addClass("maps-hide");
-    $(".map-toggle").attr('data-id','maps');
-    $(".map-toggle").removeClass("bg-color-a");
-
-  }
-
-}
-
-$scope.displayMap(lat,longi);
-
-
 });
-
 $scope.offersLength=function(url,i,max)
 {
  $http.get(url)
@@ -1453,11 +1425,11 @@ $http.get(urls)
       var beverage=house.replace(/\s\s+/g, ' | ');
       var words = beverage.split("|");
       var temps1="",temps2="",temps3="",temps4="";
-    
+      var trims=[];
       for (var k = 0; k < words.length ; k++) {
-       
 
-        if(words[k]=="Malt ")
+        trims[k]=$.trim(words[k])
+        if(trims[k]=="Malt")
         {
           if(voucher_data[i].Malt == "" || typeof voucher_data[i].Malt == "undefined")
           {
@@ -1469,7 +1441,7 @@ $http.get(urls)
             temps1=voucher_data[i].Malt;
           }
         }
-        if(words[k]==" Grape ")
+        if(trims[k]=="Grape")
         {
           if(voucher_data[i].Grape == "" || typeof voucher_data[i].Grape == "undefined")
           {
@@ -1480,36 +1452,39 @@ $http.get(urls)
           temps2=" "+voucher_data[i].Grape;
         }
       }
-      if(words[k]==" Spirits ")
+      if(trims[k]=="Spirits")
       {
         if(voucher_data[i].Spirits == "" || typeof voucher_data[i].Spirits == "undefined")
         {
-         temps3=" Spirits";
+          temps3=" Spirits";
+        }
+        else
+        {
+          temps3=" "+voucher_data[i].Spirits;
+        }
+      }
+      if(trims[k]=="Soft drinks")
+      {
+        if(voucher_data[i].SoftDrinks == "" || typeof voucher_data[i].SoftDrinks == "undefined")
+        {
+         temps4=" Soft Drinks";
        }
        else
        {
-        temps3=" "+voucher_data[i].Spirits;
+        temps4=" "+voucher_data[i].SoftDrinks;
       }
+
     }
-    if(words[k]==" Soft drinks")
-    {
-      if(voucher_data[i].SoftDrinks == "" || typeof voucher_data[i].SoftDrinks == "undefined")
-      {
-       temps4=" Soft Drinks";
-     }
-     else
-     {
-      temps4=" "+voucher_data[i].SoftDrinks;
-    }
+
+
+    beverage= temps1+" "+temps2+" "+temps3+" "+temps4;
+
+    beverage=$.trim(beverage);
+    beverage=beverage.replace(/\s\s+/g, ' | ');
+
+    
 
   }
-
-  
-  beverage= temps1+" "+temps2+" "+temps3+" "+temps4;
-  beverage=beverage.replace(/\s\s+/g, ' | ');
- 
-
-}
 }
 }
 else
@@ -1519,6 +1494,7 @@ else
     beverage=$scope.vouchers[i].other;
   }
 }
+var login_id=$(".login").html();
 $scope.vouchers[i].housebeverage=beverage;
 var day=$scope.vouchers[i].day;
 var month=$scope.vouchers[i].month-1;
@@ -1546,7 +1522,7 @@ theBigDay.setMonth(mont);
         }
         else{
           var offer_url ="http://getguzzle.com/app/offer-claim/"+$scope.vouchers[i].urltitle+"/"+login_id+"/"+$routeParams.title;
-          console.log($scope.vouchers[i].urltitle);
+          console.log(offer_url);
 
 
           $scope.offersLength(offer_url,i,max);
@@ -1934,6 +1910,54 @@ function updateOutlet(data,$scope) {
 
 
 }
+function mapinitialize(lat, longi) {
+  var myCenter = new google.maps.LatLng(lat, longi);
+  var image = {
+    url: "assets/images/location.png",
+    scaledSize: new google.maps.Size(50,50)
+  };
+var mapProp = {center:myCenter,zoom:16,scrollwheel:false,draggable:true,mapTypeId:google.maps.MapTypeId.ROADMAP};
+var map = new google.maps.Map(document.getElementById("map-canvas"),mapProp);
+var marker = new google.maps.Marker({position:myCenter,icon:image,});
+marker.setMap(map);
+}
+
+
+function mapClick()
+{
+
+  var val=$(".map-toggle").attr('data-id');
+
+  if(val=="maps")
+  {
+    $(".map-fn").show();
+    
+    /*google.maps.event.trigger( map, 'resize' );*/
+    //$(".map-fn").addClass("maps-show");
+
+    $(".map-toggle").addClass("bg-color-a");
+    $(".map-toggle").attr('data-id','list');
+  }
+  else{
+
+   $(".map-fn").hide();
+   
+   // $(".map-fn").removeClass("maps-show");
+    // $(".map-fn").addClass("maps-hide");
+    $(".map-toggle").attr('data-id','maps');
+    $(".map-toggle").removeClass("bg-color-a");
+
+  }
+
+  var lat = document.getElementById('maplatVal').innerHTML;
+  var longi = document.getElementById('maplongVal').innerHTML;
+
+  mapinitialize(lat,longi);
+
+}
+
+
+
 
 // function inviteLeft() {
 

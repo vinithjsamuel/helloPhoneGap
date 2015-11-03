@@ -26,6 +26,8 @@
 				<div class="row">
 					<div class="reset  maps-hide map-fn" style="display:none;" >
 						<div id="map-canvas"  style="height:250px;" ></div>
+						<div class="hide" id="maplatVal">{{maplatVal}}</div>
+						<div class="hide" id="maplongVal">{{maplongVal}}</div>
 					</div>
 				</div>
 
@@ -70,7 +72,7 @@
 
 						<ul class="share-icons list-inline f-right but" >
 							<li><a class="call" href="tel:{{outlet.phone}}"><i class="fa fa-phone"></i></a></li>
-							<li><a class="btn-map map-toggle" data-id="maps"  ng-click='mapClick()'><i class="fa fa-map-marker"></i></a></li>
+							<li><a class="btn-map map-toggle " data-id="maps"  onclick='mapClick();'><i class="fa fa-map-marker"></i></a></li>
 							<li><a class="share" href="" onclick="window.plugins.socialsharing.share(document.getElementById('message').innerHTML, null, document.getElementById('image').innerHTML, null)"><i class="fa fa-share-alt"></i></a></li>
 						</ul>
 
@@ -165,23 +167,30 @@
 											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
 										</ul>
 									</li>
+									<li class="detail">
+										<div class="cups f-left">
+											<ul>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<li class="plus">+</li>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<li class="expiry clear" style="font-size: 13px;">Expiry: {{voucher.expirydate}}</li>
+											</ul>
+										</div>
 
-									<li class="cups f-left">
-										<ul>
-											<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
-											<li class="plus">+</li>
-											<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
-										</ul>
-									</li>
+										<div class='clearfix'></div>
 
-									<li class="desc f-left">
-										<ul>
-											<li>Expiry: {{voucher.expirydate}}</li>
-										</ul>
-										<ul>
+										<div class="desc f-left">
+											<ul>
+												<li class="desc">
+													<strong>{{voucher.voucherchoice}}</strong>
+												</li>
 
-											<li><strong>{{voucher.voucherchoice}}<span ng-attr-title="cafe" ></span></strong></li>
-										</ul>
+												<li class="descr" >
+													{{voucher.housebeverage}}
+													
+												</li>
+											</ul>
+										</div>
 									</li>
 								</ul>
 							</li>
