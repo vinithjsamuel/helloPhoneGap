@@ -17,7 +17,9 @@
  * under the License.
  */
  var email;
- var app = {
+ var pictureSource;   // picture source
+var destinationType; // sets the format of returned value
+var app = {
     // Application Constructor
     initialize: function() {
 
@@ -80,6 +82,8 @@
 //   $(".user-name").html(accounts);
 
 Insertdata();
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
 //       //alert('account registered on this device:'+accounts);
 
 //   //alert('account registered on this device:', accounts);
@@ -113,3 +117,53 @@ function Insertdata()
   
   
 }
+
+function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI
+      // console.log(imageURI);
+
+      // Get image handle
+      //
+      
+      var largeImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The in-line CSS rules are used to resize the image
+      //
+      largeImage.src = encodeImageUri(imageURI);
+
+      
+      alert(largeImage.src);
+      window.localStorage.setItem("image", largeImage.src);
+      alert(window.localStorage.getItem("profile"));
+
+    }
+
+    function encodeImageUri(imageUri)
+    {
+
+     var c=document.createElement('canvas');
+     var ctx=c.getContext("2d");
+     var img=new Image();
+     img.onload = function(){
+       c.width=this.width;
+       c.height=this.height;
+       ctx.drawImage(img, 0,0);
+     };
+     img.src=imageUri;
+     var dataURL = c.toDataURL("image/jpeg");
+     alert(dataURL);
+     return dataURL;
+   }
+
+   function getPhoto(source) {
+
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }

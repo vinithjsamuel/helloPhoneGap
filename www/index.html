@@ -93,7 +93,7 @@
 
     <nav class="user-menu" id="cd-lateral-nav">
       <div class="container">
-        <span id="email-id" class="user-name" style="display:none;">shravanimmy@gmail.com</span>
+        <span id="email-id" class="user-name" style="display:none;"></span>
         <span class="device-id" style="display:none;" >5000137e9cca5e8</span>
         <span class="login" id="login" style="display:none;"></span>
         <span class="mynames"  style="display:none;"></span>
@@ -103,7 +103,7 @@
 
         <div class="row profile bg-color-b v-align-row">
           <div class="col-xs-4 no-padding-bottom v-align">
-            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
+            <img alt="140x140"  id="smallImage" src="http://lorempixel.com/140/140/" class="img-circle" onclick="getPhoto(pictureSource.PHOTOLIBRARY);" />
           </div>
           <div class="col-xs-8 reset color-c v-align">
             <h4> <span class="name"></span></h4>
@@ -240,32 +240,27 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade"  data-controls-modal="modal-submit"
-data-backdrop="static"
-data-keyboard="false" >
+d
+ >
 <div class="modal-dialog" role="document">
 
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title">Your activation code</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Register now!</h4>
     </div>
     <div class="modal-body activation">
-      <p>Please provide your activation code to start using our services</p>
+      <p> Complete your profile to register and start redeeming offers now.</p>
+      <p> You can redeem location based offers without charge during the launch phase of the guzzle service. After the launch phase you will have the option to upgrade to a paid subscription account in a new app.</p>
 
-      <div>
-        <input type="text" class="emails" placeholder="Email address">
-      </div>
 
-      <div style="margin-top:10px;">
-        <input type="text" class="active-code" placeholder="Activation code">
-      </div>
-
-      <p class="error-profile warning" style="display:none; margin-top:10px;">Oops wrong code, try again!.</p>
+     
 
     </div>
     <div class="modal-footer">
 
-      <button type="button" id="modal-submit" class="btn btn-default" ng-click="addUser()">Submit</button>
+      <a type="button" id="modal-submit" class="btn btn-default"  href="#profile">Complete profile </a>
     </div>
   </div>
 
@@ -344,6 +339,7 @@ data-keyboard="false" >
 </div>
 
 <!-- Modal -->
+<!-- Modal -->
 <div id="version-modal" class="modal fade "  data-controls-modal="modal-submit"
 data-backdrop="static"
 data-keyboard="false">
@@ -363,6 +359,7 @@ data-keyboard="false">
 
 </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="demoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -385,7 +382,6 @@ data-keyboard="false">
   </div>
 </div>
 </div>
-
 
 <div class="modal fade" id="demoBox2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -449,7 +445,7 @@ data-keyboard="false">
               <ul class="list-inline">
                 <li ng-if="car.show!=0"><img alt="80x80" src="assets/images/css/new.png" class="tag img-new" /></li>
                 <!-- <li><img alt="80x80" src="assets/images/css/update.png" class="tag img-update" /></li> -->
-                <li class="caps">{{car.type}}</li>
+                <li class="bar">{{car.type}}<span ng-if="car.location">, {{car.location}}<span></li>
                 <!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
               </ul>
               <ul class="list-inline">
@@ -512,11 +508,11 @@ data-keyboard="false">
  <script src="assets/js/angular-touch.min.js"></script>
  <script src="assets/js/script.js"></script>
 
-
+<!-- 
  <script type="text/javascript" src="cordova.js"></script>
  <script type="text/javascript" src="js/index.js"></script>
 
-
+-->
 
 
 

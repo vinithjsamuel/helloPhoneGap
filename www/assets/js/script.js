@@ -115,9 +115,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 
 
 
-// angular.element(document).ready(function () {
-//   calls();
-// });
+angular.element(document).ready(function () {
+  calls();
+});
 
 $scope.hideMenu=function()
 {
@@ -612,34 +612,43 @@ if(window.localStorage.getItem("outlets") != undefined )
          $scope.infoWindow = new google.maps.InfoWindow();
          var url='#outlet/'+info.urltitle+'/'+info.title;
          var latlng = new google.maps.LatLng(info.latitude,info.longitude);
-         var marker = new google.maps.Marker({
+         if(info.location!="")
+         {
+          locations=', '+info.location;
+        }
+        else
+        {
+          locations="";
+        }
+        var marker = new google.maps.Marker({
           map: $scope.model.myMap,
           position:latlng ,
           title:info.title,
+          location:locations,
           icon:image,
           url:url
         });
-         marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png" style="width:50%!important;height:50%;">' + titles + '</a> </div>';
+        marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png" style="width:50%!important;height:50%;">' + titles + '</a> </div>';
 
-         $scope.myMarkers.push(marker);
+        $scope.myMarkers.push(marker);
 
-         google.maps.event.addListener(marker, 'click', function() {
+        google.maps.event.addListener(marker, 'click', function() {
 
           $scope.$apply();
-          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:25px;margin-right:5px;">' +  this.title+'  </h4></a>');
+          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:25px;margin-right:5px;">' +  this.title+this.location+'  </h4></a>');
 
           $scope.infoWindow.open($scope.model.myMap,this);
         });
-       }
+      }
 
-     }
-
-
+    }
 
 
 
-     $scope.offerValue = function (url,names)
-     {
+
+
+    $scope.offerValue = function (url,names)
+    {
 
       var urls="http://getguzzle.com/app-test/cost/"+url;
 
@@ -765,7 +774,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          else
          {
            flag=1;
-           $("#myModal").modal('show');
+
 
          }
 
@@ -774,7 +783,7 @@ if(window.localStorage.getItem("outlets") != undefined )
      }
      else
      {
-       $("#myModal").modal('show');
+
      }
 
 
@@ -837,7 +846,7 @@ if(window.localStorage.getItem("outlets") != undefined )
      $scope.loginId = function()
      {
       var login_id=$(".login").html();
-      if(login_id == "" || typeof login_id == "undefined" )
+      if(window.localStorage.getItem("profile") == "incomplete" || typeof window.localStorage.getItem("profile") == "undefined" )
       {
         $("#myModal").modal('show');
 
@@ -1116,6 +1125,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
      $(".main").show();
 
      $('body').removeClass("page-detail");
+
      if ($(".maps").css('display') != 'none') {
 
        $('body').addClass("page-map");
@@ -1135,6 +1145,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
     app.controller("profileController", function($scope,$http) {
       $(".main").hide();
+      $("#myModal").modal('hide');
       $('body').removeClass("page-map");
       $('body').removeClass("page-list");
       $('body').addClass("page-detail");
@@ -1152,6 +1163,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         var profile=response;
 
         $scope.namer=profile[0].names;
+        $scope.emails=profile[0].email;
         $scope.gender=['male ', 'female'];
         $scope.mobile=profile[0].mobile;
 
@@ -1166,81 +1178,120 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
           alcohol: profile[0].alcohol,
           gender: profile[0].gender
         };
-
-
-
+        setTimeout(function(){
+          $scope.checkComplete();
+        }, 2000);
       });
 
+     //  $(".emails-id").focusout(function() {
+     //    alert("fdfsf00");
 
-      $(".profile-page input[type=text]").focusout(function() {
-       $scope.updateProfile();
-     }).blur(function() {
+     // }).blur(function() {
 
-     });
-     $(".profile-page select").change(function() {
+     // });
+$(".profile-page input[type=text]").focusout(function() {
+  $scope.checkComplete();
+  $scope.updateProfile();
+}).blur(function() {
 
-      $scope.updateProfile();
-    });
-     $(".profile-page input[type=radio]").change(function() {
+});
+$(".profile-page select").change(function() {
+  $scope.checkComplete();
+  $scope.updateProfile();
+});
+$(".profile-page input[type=radio]").change(function() {
+  $scope.checkComplete();
+  $scope.updateProfile();
+});
 
-      $scope.updateProfile();
-    });
+$scope.checkComplete=function()
+{
+  var cntreq = 0;
+  var cntvals = 0;
+  $('input').each(function(i, val) {
+   if($(this).attr('required') == 'required') {
+    cntreq++;
 
-     $scope.updateProfile=function()
-     {
+    if($(this).val() != '') {
 
-      $(".sucess").hide();
-      $(".error").hide();
-      var entry_id=$(".entry").html();
-      var url="http://getguzzle.com/app-test/update/"+ entry_id;
-      var name=$(".screen-name").val();
-      var mobile=$(".mobiles").val();
-      var city=$(".city").val();
-      var country=$(".country").val();
-      var nationality=$(".nationality").val();
-      var alcohols=$("input[name=alcohol]:checked").val();
-      var gender=$("input[name=cf_gender]:checked").val();
-      if(name == "" || typeof name == "undefined")
-      {
-        var names=$(".mynames").html();
-        $(".name").html(names);
-      }
-      else
-      {
-       $(".name").html(name);
-     }
 
-     var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
-     $.ajax({
-      type       : "POST",
-      url        :  url,
-      crossDomain: true,
-      data:{json: JSON.stringify(data)},
-      dataType   : 'json',
-      success    : function(response,status) {
+      cntvals++;
+      
+    }
+  }
+});
+  
+  $('#percentage').empty();
+  if(cntreq==cntvals)
+  {
+     $('#percentage').empty();
+      window.localStorage.setItem("profile", "completed");
+  }
 
-        if(response.status==true)
-        {
+  else
+  {
+    $('#percentage').append('(Incomplete)');
+    window.localStorage.setItem("profile", "incomplete");
+  }
+  
+}
+$scope.updateProfile=function()
+{
 
-          $(".success").show();
+  $(".sucess").hide();
+  $(".error").hide();
+  var entry_id=$(".entry").html();
+  var url="http://getguzzle.com/app-test/update/"+ entry_id;
+  var name=$(".screen-name").val();
+  var emails_ids=$(".emails-id").val();
 
-        }
-        else
-        {
-          $(".error").show();
-        }
+  var mobile=$(".mobiles").val();
+  var city=$(".city").val();
+  var country=$(".country").val();
+  var nationality=$(".nationality").val();
+  var alcohols=$("input[name=alcohol]:checked").val();
+  var gender=$("input[name=cf_gender]:checked").val();
+  if(name == "" || typeof name == "undefined")
+  {
+    var names=$(".mynames").html();
+    $(".name").html(names);
+  }
+  else
+  {
+   $(".name").html(name);
+ }
 
-      },
-      error      : function() {
+ var data       = {entry:entry_id,name:name,mobile:mobile,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+ $.ajax({
+  type       : "POST",
+  url        :  url,
+  crossDomain: true,
+  data:{json: JSON.stringify(data)},
+  dataType   : 'json',
+  success    : function(response,status) {
+
+    if(response.status==true)
+    {
+
+      $(".success").show();
+
+    }
+    else
+    {
+      $(".error").show();
+    }
+
+  },
+  error      : function() {
             //console.error("error");
             $(".error").show();
           }
         });
 
 
-   }
+}
 
- });
+});
 //vouche
 //voucher code
 
@@ -1330,10 +1381,11 @@ $http.get(url)
    image1:datas[0].image1,
    image2:datas[0].image2,
    lastcall:datas[0].lastcall,
+   location:$scope.datas[0].location
  }
  var lat=datas[0].latitude;
  var longi=datas[0].longitude;
-  $scope.maplatVal = lat;
+ $scope.maplatVal = lat;
  $scope.maplongVal = longi;
  // var owl = $("#owl-demo"),
  // i = 0,
@@ -1561,7 +1613,7 @@ $scope.goBack= function(url) {
     login_id=$(".login").html();
     var user_flag=0;
 
-    if(login_id == "" || typeof login_id == "undefined" )
+    if(window.localStorage.getItem("profile") == "incomplete" || typeof window.localStorage.getItem("profile") == "undefined" )
     {
       $("#myModal").modal('show');
 
@@ -1706,12 +1758,11 @@ $scope.frontLoad = function(url) {
 
 function insertData()
 {
-  var email= $(".emails").val();
+  var email= $(".emails-id").val();
   var deviceid= $(".device-id").html();
-  var code= $(".active-code").val();
   var name = email.split('@')[0];
   var names= name+deviceid;
-  var data       = {title:email,name:names,email:email,device:deviceid,code:code};
+  var data       = {title:email,name:names,email:email,device:deviceid};
   $.ajax({
     type       : "POST",
     url        : "http://getguzzle.com/app-test/account/"+data,
@@ -1916,10 +1967,10 @@ function mapinitialize(lat, longi) {
     url: "assets/images/location.png",
     scaledSize: new google.maps.Size(50,50)
   };
-var mapProp = {center:myCenter,zoom:16,scrollwheel:false,draggable:true,mapTypeId:google.maps.MapTypeId.ROADMAP};
-var map = new google.maps.Map(document.getElementById("map-canvas"),mapProp);
-var marker = new google.maps.Marker({position:myCenter,icon:image,});
-marker.setMap(map);
+  var mapProp = {center:myCenter,zoom:16,scrollwheel:false,draggable:true,mapTypeId:google.maps.MapTypeId.ROADMAP};
+  var map = new google.maps.Map(document.getElementById("map-canvas"),mapProp);
+  var marker = new google.maps.Marker({position:myCenter,icon:image,});
+  marker.setMap(map);
 }
 
 
