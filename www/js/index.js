@@ -17,9 +17,7 @@
  * under the License.
  */
  var email;
- var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
-var app = {
+ var app = {
     // Application Constructor
     initialize: function() {
 
@@ -38,9 +36,9 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-    //  if(navigator.network.connection.type == Connection.NONE) {
-    //   alert("Sorry, without an internet connection we can’t show you any offers.");
-    // }
+     if(navigator.network.connection.type == Connection.NONE) {
+      alert("Sorry, without an internet connection we can’t show you any offers.");
+    }
     if (window.localStorage.getItem("install") == undefined) {
      /* run function */
      setTimeout(function() {
@@ -80,10 +78,8 @@ var app = {
 
 //   //alert(accounts.length);
 //   $(".user-name").html(accounts);
-// pictureSource=navigator.camera.PictureSourceType;
-// destinationType=navigator.camera.DestinationType;
-Insertdata();
 
+Insertdata();
 //       //alert('account registered on this device:'+accounts);
 
 //   //alert('account registered on this device:', accounts);
@@ -103,7 +99,6 @@ receivedElement.setAttribute('style', 'display:block;');
 console.log('Received Event: ' + id);
 
 
-
 }
 };
 
@@ -114,46 +109,7 @@ function Insertdata()
   $(".device-id").html(device.uuid);
   var deviceid= $(".device-id").html();
   calls();
+
+  
   
 }
-
-unction getPhoto(source) {
-
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 10,
-        destinationType: destinationType.DATA_URL, sourceType: source
-      });
-    }
-
-    function onPhotoURISuccess(imageData) {
-      // Uncomment to view the image file URI
-      // console.log(imageURI);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-      window.localStorage.setItem("image", smallImage.src);
-
-    }
-    function onSuccess(imageData) {
-     var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-      window.localStorage.setItem("image", smallImage.src);
-
-    }
-
-    // Called if something bad happens.
-    //
-    function onFail(message) {
-      
-      alert('Failed because: ' + message);
-    }
