@@ -17,6 +17,8 @@
  * under the License.
  */
  var email;
+ var pictureSource;   // picture source
+var destinationType; // sets the format of returned value
  var app = {
     // Application Constructor
     initialize: function() {
@@ -60,7 +62,8 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
-
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
 
     //   window.plugins.googleplus.isAvailable(
     //     function (available) {
