@@ -117,7 +117,7 @@ function Insertdata()
   
 }
 
-function getPhoto(source) {
+unction getPhoto(source) {
 
       // Retrieve image file location from specified source
       navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
