@@ -38,9 +38,9 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-     if(navigator.network.connection.type == Connection.NONE) {
-      alert("Sorry, without an internet connection we can’t show you any offers.");
-    }
+    //  if(navigator.network.connection.type == Connection.NONE) {
+    //   alert("Sorry, without an internet connection we can’t show you any offers.");
+    // }
     if (window.localStorage.getItem("install") == undefined) {
      /* run function */
      setTimeout(function() {
@@ -80,8 +80,8 @@ var app = {
 
 //   //alert(accounts.length);
 //   $(".user-name").html(accounts);
-pictureSource=navigator.camera.PictureSourceType;
-destinationType=navigator.camera.DestinationType;
+// pictureSource=navigator.camera.PictureSourceType;
+// destinationType=navigator.camera.DestinationType;
 Insertdata();
 
 //       //alert('account registered on this device:'+accounts);
