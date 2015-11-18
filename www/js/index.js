@@ -100,6 +100,8 @@ listeningElement.setAttribute('style', 'display:none;');
 receivedElement.setAttribute('style', 'display:block;');
 
 console.log('Received Event: ' + id);
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
 
 
 }
