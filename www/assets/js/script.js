@@ -144,7 +144,12 @@ var image = {
 };
 
 
-var ry=Math.floor(Math.random()*16);
+var ry=Math.floor(Math.random()*16)
+if(ry==0)
+{
+  ry=1;
+}
+var image_src="assets/images/users/"+ry+".png";
 if (window.localStorage.getItem("image") == undefined)
 {
   var picture = localStorage.getItem('image');
@@ -157,12 +162,7 @@ else{
 
   $('.img-circle').attr('src', localStorage.getItem('image'));
 }
-if(ry==0)
-{
-  ry=1;
-}
-var image_src="assets/images/users/"+ry+".png";
-$('.img-circle').attr('src', image_src);
+
 
 $scope.mapOptions =
 {
@@ -1188,7 +1188,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
-        console.log(profile[0].country);
+        
         $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
         $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
         $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
