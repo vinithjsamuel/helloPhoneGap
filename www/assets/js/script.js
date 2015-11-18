@@ -148,13 +148,13 @@ var ry=Math.floor(Math.random()*16);
 if (window.localStorage.getItem("image") == undefined)
 {
   var picture = localStorage.getItem('image');
-  
+
   
   $('.img-circle').attr('src', image_src);
 }
 else{
-  
-  
+
+
   $('.img-circle').attr('src', localStorage.getItem('image'));
 }
 if(ry==0)
@@ -1167,7 +1167,14 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
 
       var user=$(".login").html();
+      if(user != "")
+      {
 
+      }
+      else
+      {
+        user="undefined";
+      };
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
       .success(function (response) {
