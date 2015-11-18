@@ -90,7 +90,8 @@ Insertdata();
 //   alert('Fail to retrieve accounts, details on exception:', error);
 // });
 
-
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
 
 var parentElement = document.getElementById(id);
 var listeningElement = parentElement.querySelector('.listening');
@@ -100,8 +101,7 @@ listeningElement.setAttribute('style', 'display:none;');
 receivedElement.setAttribute('style', 'display:block;');
 
 console.log('Received Event: ' + id);
-pictureSource=navigator.camera.PictureSourceType;
-destinationType=navigator.camera.DestinationType;
+
 
 
 }
