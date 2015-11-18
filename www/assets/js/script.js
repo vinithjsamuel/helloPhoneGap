@@ -152,6 +152,7 @@ if(ry==0)
 var image_src="assets/images/users/"+ry+".png";
 if (window.localStorage.getItem("image") == undefined)
 {
+  alert("here");
   var picture = localStorage.getItem('image');
 
   
@@ -1719,40 +1720,43 @@ $scope.goBack= function(url) {
           $(".result-"+url).show();
           var number=$(".number-"+url).html();
           var values= Number(number)-1;
-
-          if(values==0)
+          if(window.localStorage.getItem("offers") == undefined)
           {
-            $(".pending-"+url).hide();
-            $(".finished-"+url).show();
+            window.localStorage.setItem("offers", 1);
+         }
+         if(values==0)
+         {
+          $(".pending-"+url).hide();
+          $(".finished-"+url).show();
 
 
-
-          }
-          $(".number-"+url).html(values);
-          $(".redem-code-"+url).html(id);
-          $(".price").html(total);
 
         }
-        else
-        {
-          $(".confirm-"+url).hide();
-          $(".error-"+url).show();
-        }
+        $(".number-"+url).html(values);
+        $(".redem-code-"+url).html(id);
+        $(".price").html(total);
 
-      },
-      error      : function() {
+      }
+      else
+      {
+        $(".confirm-"+url).hide();
+        $(".error-"+url).show();
+      }
+
+    },
+    error      : function() {
             //console.error("error");
             $(".confirm-"+url).hide();
             $(".error-"+url).show();
           }
         });
 
-  }
-  else
-  {
-   $(".confirm-"+url).hide();
-   $(".error-"+url).show();
- }
+}
+else
+{
+ $(".confirm-"+url).hide();
+ $(".error-"+url).show();
+}
 
 
 }

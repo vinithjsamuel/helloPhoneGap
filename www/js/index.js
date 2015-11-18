@@ -80,7 +80,8 @@ var app = {
 
 //   //alert(accounts.length);
 //   $(".user-name").html(accounts);
-
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
 Insertdata();
 
 //       //alert('account registered on this device:'+accounts);
@@ -90,8 +91,7 @@ Insertdata();
 //   alert('Fail to retrieve accounts, details on exception:', error);
 // });
 
-pictureSource=navigator.camera.PictureSourceType;
-destinationType=navigator.camera.DestinationType;
+
 
 var parentElement = document.getElementById(id);
 var listeningElement = parentElement.querySelector('.listening');
