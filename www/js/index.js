@@ -116,3 +116,45 @@ function Insertdata()
   
   
 }
+
+
+function getPhoto(source) {
+
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 10,
+        destinationType: destinationType.DATA_URL, sourceType: source
+      });
+    }
+
+    function onPhotoURISuccess(imageData) {
+      // Uncomment to view the image file URI
+      // console.log(imageURI);
+
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+      window.localStorage.setItem("image", smallImage.src);
+
+    }
+    function onSuccess(imageData) {
+     var smallImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+      window.localStorage.setItem("image", smallImage.src);
+
+    }
+
+    // Called if something bad happens.
+    //
+    function onFail(message) {
+      
+      alert('Failed because: ' + message);
+    }
