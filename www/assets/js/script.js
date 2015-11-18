@@ -1175,6 +1175,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       {
         user="undefined";
       };
+      $scope.emails="";
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
       .success(function (response) {
