@@ -115,9 +115,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 
 
 
-angular.element(document).ready(function () {
-  calls();
-});
+// angular.element(document).ready(function () {
+//   calls();
+// });
 
 $scope.hideMenu=function()
 {
@@ -144,7 +144,19 @@ var image = {
 };
 
 
-var ry=Math.floor(Math.random()*16)
+var ry=Math.floor(Math.random()*16);
+if (window.localStorage.getItem("image") == undefined)
+{
+  var picture = localStorage.getItem('image');
+  
+  
+  $('.img-circle').attr('src', image_src);
+}
+else{
+  
+  
+  $('.img-circle').attr('src', localStorage.getItem('image'));
+}
 if(ry==0)
 {
   ry=1;
@@ -1224,16 +1236,16 @@ $scope.checkComplete=function()
   $('#percentage').empty();
   if(cntreq==cntvals)
   {
-     $('#percentage').empty();
-      window.localStorage.setItem("profile", "completed");
-  }
+   $('#percentage').empty();
+   window.localStorage.setItem("profile", "completed");
+ }
 
-  else
-  {
-    $('#percentage').append('(Incomplete)');
-    window.localStorage.setItem("profile", "incomplete");
-  }
-  
+ else
+ {
+  $('#percentage').append('(Incomplete)');
+  window.localStorage.setItem("profile", "incomplete");
+}
+
 }
 $scope.updateProfile=function()
 {
