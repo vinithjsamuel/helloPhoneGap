@@ -182,7 +182,24 @@ header .result{
 	display: block;
 }
 
+.modal-header{
+	background: #732B8E;
+	color: #fff;
+}
 
+.bar{
+	text-transform: capitalize;
+}
+
+.page-profile .ico.feedback{
+	display: none;
+
+}
+
+.location-pin{
+	margin-top: -30px;
+
+}
 
 
 .page-detail .ico.menu{
@@ -617,7 +634,6 @@ input.cmn-toggle-round:checked + label:after {
 	.map, .maps-hide{
 		position: absolute;
 		top: 0;
-		/*transform: translateY(-300px);*/
 		z-index: 199;
 		left: 0;
 		width: 100%;
@@ -778,6 +794,31 @@ img.item-logo {
 	font-size: 11px;
 }
 
+
+
+
+
+@media (max-width: 768px) {
+	.vouchers li.ticket{
+
+		background-size: 486px;
+		background-position: 3px -54px;
+		width: 80px;
+	}
+
+	.pin input{
+		width: 195px;
+	}
+
+	.detail {
+	    margin-left: 90px !important;
+	}
+
+}
+
+
+
+
 .vouchers li.ticket .number{
 	font-size: 28px;
 	position: absolute;
@@ -820,7 +861,7 @@ img.item-logo {
 }
 
 .vouchers li.expiry{
-	margin: 15px 0 0 5px;
+	margin: 15px 0 0 0px;
 }
 .vouchers .cups li{
 	float: left;
@@ -899,42 +940,42 @@ img.item-logo {
 		display: none;
 	}
 
-.modal{
-	z-index: 20000;
-}
+	.modal{
+		z-index: 20000;
+	}
 
-.modal textarea{
-	height: 100px;
-	width: 100%;
-	padding: 10px;
-	border-radius: 0;
-	border: 1px solid #ccc;
-}
+	.modal textarea{
+		height: 100px;
+		width: 100%;
+		padding: 10px;
+		border-radius: 0;
+		border: 1px solid #ccc;
+	}
 
-.form-control {
-	padding: 10px;
-	border-radius: 0;
-	border: 1px solid #ccc;
-}
+	.form-control {
+		padding: 10px;
+		border-radius: 0;
+		border: 1px solid #ccc;
+	}
 
 
-.activation input{
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-}
+	.activation input{
+		width: 100%;
+		height: 40px;
+		padding: 10px;
+	}
 
-.error-profile {
-	color: #D9534F;
-}
+	.error-profile {
+		color: #D9534F;
+	}
 
-.modal-backdrop{
-	z-index: 10000;
-}
+	.modal-backdrop{
+		z-index: 10000;
+	}
 
-.modal-title{
-	font-size: 16px;
-}
+	.modal-title{
+		font-size: 16px;
+	}
 
 	.dynamic{
 		padding: 0 15px;
@@ -996,46 +1037,52 @@ img.item-logo {
 
 
 
-/* -------------- IOS ----------------*/
+	/* -------------- IOS ----------------*/
 
-.safari header {
-	height: 70px;
-	padding-top: 20px;
-}
-
-
-
-.safari .cd-icon {
-	top: 20px !important;
-}
-
-
-.safari .user-menu .profile{
-	padding-top: 20px;
-	height: 140px;
-}
-
-.safari #wrapper{
-	padding-top: 20px;
-}
+	.safari header {
+		height: 70px;
+		padding-top: 20px;
+	}
 
 
 
-.safari .pin input{
-	letter-spacing: 30px;
-	font-size: 20px;
-}
+	.safari .cd-icon {
+		top: 20px !important;
+	}
 
 
+	.safari .user-menu .profile{
+		padding-top: 20px;
+		height: 140px;
+	}
+
+	.safari #wrapper{
+		padding-top: 20px;
+	}
+
+
+
+	.safari .pin input{
+		letter-spacing: 30px;
+		font-size: 20px;
+	}
 
 
 
 
-.safari #outlet-feed input{
-	margin-top: 0;
-}
 
 
+	.safari #outlet-feed input{
+		margin-top: 0;
+	}
+
+	input[type=radio] {
+		margin: 1px -20px 0px !important;
+	}
+
+	.modal.fade .modal-dialog {
+		margin-top: 60px;
+	}
 
 
 
