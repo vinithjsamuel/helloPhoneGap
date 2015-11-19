@@ -226,10 +226,22 @@ header .result{
 }
 
 
+.item-content{
+/*	padding: 10px;
+	float: left;*/
+}
 
-
-
-
+.distance-box{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.page-list .view-list .row{
+	position: relative;
+}
+.page-list .view-list .image{
+	margin-right:10px;
+}
 
 
 .mz-main-content{
@@ -804,9 +816,18 @@ img.item-logo {
 
 
 
+.expiry-box{
+	position: absolute;
+	top: 30%;
+	right: 0;
+}
+
+.vouchers .second{
+	position: relative;
+}
 
 
-@media (max-width: 768px) {
+@media (max-width: 320px) {
 	.vouchers li.ticket{
 
 		background-size: 486px;
@@ -821,6 +842,12 @@ img.item-logo {
 	.detail {
 		margin-left: 90px !important;
 	}
+
+
+.expiry-box{
+	display: none;
+}
+
 
 }
 
@@ -869,7 +896,7 @@ img.item-logo {
 }
 
 .vouchers li.expiry{
-	margin: 15px 0 0 0px;
+	/*margin: 15px 0 0 0px;*/
 }
 .vouchers .cups li{
 	float: left;

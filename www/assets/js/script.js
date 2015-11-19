@@ -52,6 +52,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
   $(".step1").on('click', function (){
     $('#demoBox2').modal("show");
   });
+  $(".steps").on('click', function (){
+    $('#demoBox').modal("show");
+  });
   var myScroll,
   pullDownEl, pullDownOffset,
   pullUpEl, pullUpOffset,
@@ -153,13 +156,13 @@ var image_src="assets/images/users/"+ry+".png";
 if (window.localStorage.getItem("image") == undefined)
 {
   var picture = localStorage.getItem('image');
-   
+
   
   $('.img-circle').attr('src', image_src);
 }
 else{
-  
-  
+
+
   $('.img-circle').attr('src', localStorage.getItem('image'));
 }
 
@@ -459,6 +462,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     }
 
+
     /*License agreement popup*/
     if (window.localStorage.getItem("install") == undefined) {
      /* run function */
@@ -524,7 +528,7 @@ if(window.localStorage.getItem("outlets") != undefined )
               $scope.$apply();
             }
           }
-
+          
 
 
           $scope.filterMakes = function ()
@@ -574,7 +578,10 @@ if(window.localStorage.getItem("outlets") != undefined )
           }
           $scope.getLocation();
           
-
+          var options = { timeout: 30000 };
+          var watchID = null;
+          
+          watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
 
         }).error(function(){
 
@@ -625,7 +632,7 @@ if(window.localStorage.getItem("outlets") != undefined )
          var latlng = new google.maps.LatLng(info.latitude,info.longitude);
          if(info.location!="")
          {
-          locations=', '+info.location;
+          locations=info.location;
         }
         else
         {
@@ -646,7 +653,7 @@ if(window.localStorage.getItem("outlets") != undefined )
         google.maps.event.addListener(marker, 'click', function() {
 
           $scope.$apply();
-          $scope.infoWindow.setContent('<a href="'+url+'"><h4><img src="assets/images/info.png" style="width:25px;margin-right:5px;">' +  this.title+this.location+'  </h4></a>');
+         $scope.infoWindow.setContent('<div> <a href="'+url+'"><h4 style="margin:0px;"><img src="assets/images/info.png" style="width:25px;margin-right:10px;margin-top:10px;">' +  this.title+'  </h4></a></div><div style="margin-left:35px; margin-top:-7px;">'+this.location+'</div>');
 
           $scope.infoWindow.open($scope.model.myMap,this);
         });
@@ -863,13 +870,13 @@ if(window.localStorage.getItem("outlets") != undefined )
      {
       var login_id=$(".login").html();
       
-       if(window.localStorage.getItem("profile") == "completed"  )
+      if(window.localStorage.getItem("profile") == "completed"  )
       {
         $("#acc-activated").modal('show');
 
       }
       else{
-       
+
        $("#myModal").modal('show');
      }
      $(".user-menu").removeClass("menu-open");
@@ -881,178 +888,186 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     var email= $(".user-name").html();
     var value= $(".feedback-text").val();
+    if(email =="" || typeof email != undefined)
+    {
+     email="not-registered@gmail.com";
+   }
 
 
 
 
-    var data       = {title:email,feedback:value};
-    $.ajax({
-      type       : "POST",
-      url        : "http://getguzzle.com/app-test/app-feedback/"+data,
-      crossDomain: true,
-      data:{json: JSON.stringify(data)},
-      dataType   : 'json',
-      success    : function(response,status)
+   var data       = {title:email,feedback:value};
+   $.ajax({
+    type       : "POST",
+    url        : "http://getguzzle.com/app-test/app-feedback/"+data,
+    crossDomain: true,
+    data:{json: JSON.stringify(data)},
+    dataType   : 'json',
+    success    : function(response,status)
+    {
+
+      if(response.status==true)
       {
+       $(".feedback-success").show();
+       $(".feedback-text").val(null);
+       setTimeout(function() {
+        $(".feedback-success").hide();
+        $('#app-feed').modal('hide');
+      }, 2000)
 
-        if(response.status==true)
-        {
-         $(".feedback-success").show();
-         $(".feedback-text").val(null);
-         setTimeout(function() {
-          $(".feedback-success").hide();
-          $('#app-feed').modal('hide');
-        }, 2000)
-
-       }
+     }
 
 
-     },
-     error      : function() {
+   },
+   error      : function() {
                 //console.error("error");
 
               }
             });
 
 
-  }
-  $scope.feedOut = function()
+ }
+ $scope.feedOut = function()
+ {
+
+  var email= $(".user-name").html();
+  var status= $(".status").val();
+  var value= $(".outfeed").val();
+  var outid= $(".outfeed").val();
+  if(email =="" || typeof email != undefined)
+  {
+   email="not-registered@gmail.com";
+ }
+
+
+ var data       = {title:email,status:status,feedback:value};
+ $.ajax({
+  type       : "POST",
+  url        : "http://getguzzle.com/app-test/outlet-feedback/"+data,
+  crossDomain: true,
+  data:{json: JSON.stringify(data)},
+  dataType   : 'json',
+  success    : function(response,status)
   {
 
-    var email= $(".user-name").html();
-    var status= $(".status").val();
-    var value= $(".outfeed").val();
-    var outid= $(".outfeed").val();
+    if(response.status==true)
+    {
+     $(".outlet-success").show();
+
+     setTimeout(function() {
+      $(".outlet-success").hide();
+      $('#outlet-feed').modal('hide');
+    }, 2000)
+
+   }
 
 
-    var data       = {title:email,status:status,feedback:value};
-    $.ajax({
-      type       : "POST",
-      url        : "http://getguzzle.com/app-test/outlet-feedback/"+data,
-      crossDomain: true,
-      data:{json: JSON.stringify(data)},
-      dataType   : 'json',
-      success    : function(response,status)
-      {
-
-        if(response.status==true)
-        {
-         $(".outlet-success").show();
-         
-         setTimeout(function() {
-          $(".outlet-success").hide();
-          $('#outlet-feed').modal('hide');
-        }, 2000)
-
-       }
-
-
-     },
-     error      : function() {
+ },
+ error      : function() {
                 //console.error("error");
 
               }
             });
 
 
-  }
-  $scope.inviteUser = function()
-  {
-    var email= $(".user-name").html();
-    var value= $(".invite-email").val();
-    var login_id=$(".login").html();
-    var entry=$(".entry").html();
-    var entry_left=$(".invite-left").html();
-    var left= 10-Number(entry_left);
-    var id="YW"+entry+left;
+}
+$scope.inviteUser = function()
+{
+  var email= $(".user-name").html();
+  var value= $(".invite-email").val();
+  var login_id=$(".login").html();
+  var entry=$(".entry").html();
+  var entry_left=$(".invite-left").html();
+  var left= 10-Number(entry_left);
+  var id="YW"+entry+left;
 
 
 
-    var data       = {title:value,email:value,code:id,sender:email,validity:3,senderid:login_id};
-    $.ajax({
-      type       : "POST",
-      url        : "http://getguzzle.com/app-test/invite/"+data,
-      crossDomain: true,
-      data:{json: JSON.stringify(data)},
-      dataType   : 'json',
-      success    : function(response,status)
+  var data       = {title:value,email:value,code:id,sender:email,validity:3,senderid:login_id};
+  $.ajax({
+    type       : "POST",
+    url        : "http://getguzzle.com/app-test/invite/"+data,
+    crossDomain: true,
+    data:{json: JSON.stringify(data)},
+    dataType   : 'json',
+    success    : function(response,status)
+    {
+
+      if(response.status==true)
       {
+       $(".invite-success").show();
+       $(".invite-email").val(null);
+       var val=$(".invite-left").html();
+       var invitation=Number(val)-1;
+       $(".invite-left").html(invitation);
 
-        if(response.status==true)
-        {
-         $(".invite-success").show();
-         $(".invite-email").val(null);
-         var val=$(".invite-left").html();
-         var invitation=Number(val)-1;
-         $(".invite-left").html(invitation);
+       setTimeout(function() {
+        $(".invite-success").hide();
+      }, 2000)
 
-         setTimeout(function() {
-          $(".invite-success").hide();
-        }, 2000)
-
-       }
+     }
 
 
-     },
-     error      : function() {
+   },
+   error      : function() {
                 //console.error("error");
 
               }
             });
 
 
-  }
+}
 
 
-  $scope.addUser = function() {
+$scope.addUser = function() {
 
 
-    var email= $(".user-name").html();
-    var deviceid= $(".device-id").html();
-    var code= $(".active-code").val();
-    var name = email.split('@')[0];
-    var names= name+deviceid;
-    var flags=0,flags2=0,flagdone=0,flagdone2=0;
+  var email= $(".user-name").html();
+  var deviceid= $(".device-id").html();
+  var code= $(".active-code").val();
+  var name = email.split('@')[0];
+  var names= name+deviceid;
+  var flags=0,flags2=0,flagdone=0,flagdone2=0;
 
-    var url="http://getguzzle.com/app-test/activation/"+code;
-    $http.get(url)
-    .success(function (response) {
-      datas = response;
-
-
-      if(datas.length==0)
-      {
-
-        $(".error-profile").show();
+  var url="http://getguzzle.com/app-test/activation/"+code;
+  $http.get(url)
+  .success(function (response) {
+    datas = response;
 
 
-      }
-      else
-      {
+    if(datas.length==0)
+    {
 
-        var url="http://getguzzle.com/app-test/user/"+code;
-        $http.get(url)
-        .success(function (response) {
-          datas = response;
-
-          if(datas.length>=1)
-          {
-
-            flags2=1;
-            $(".error-profile").show();
-          }
-          else
-          {
-            $(".error-profile").hide();
-            insertData();
-          }
-        });
-      }
-
-    });
+      $(".error-profile").show();
 
 
-  }
+    }
+    else
+    {
+
+      var url="http://getguzzle.com/app-test/user/"+code;
+      $http.get(url)
+      .success(function (response) {
+        datas = response;
+
+        if(datas.length>=1)
+        {
+
+          flags2=1;
+          $(".error-profile").show();
+        }
+        else
+        {
+          $(".error-profile").hide();
+          insertData();
+        }
+      });
+    }
+
+  });
+
+
+}
 
 
 
@@ -1646,7 +1661,7 @@ $scope.goBack= function(url) {
     login_id=$(".login").html();
     var user_flag=0;
 
-     if(window.localStorage.getItem("profile") == "completed"  )
+    if(window.localStorage.getItem("profile") == "completed"  )
     {
       $(".code-"+url).val(null);
       $(".order-"+url).hide();
@@ -1655,7 +1670,7 @@ $scope.goBack= function(url) {
     }
     else
     {
-      
+
       $("#myModal").modal('show');
 
     }
@@ -1815,47 +1830,38 @@ function insertData()
 
   var gender=$("input[name=cf_gender]:checked").val();
 
- if(name == "" || typeof name == "undefined")
-  {
-    var names=$(".mynames").html();
-    $(".name").html(names);
-  }
-  else
-  {
-   $(".name").html(name);
- }
 
- 
 
- var data       = {title:email,name:data_email,email:email,device:deviceid,mobile:mobile,names:name,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
- $.ajax({
-  type       : "POST",
-  url        : "http://getguzzle.com/app-test/account/"+data,
-  crossDomain: true,
-  data:{json: JSON.stringify(data)},
-  dataType   : 'json',
-  success    : function(response,status) {
 
-    if(response.status==true)
-    {
+  var data       = {title:email,name:data_email,email:email,device:deviceid,mobile:mobile,names:name,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+  $.ajax({
+    type       : "POST",
+    url        : "http://getguzzle.com/app-test/account/"+data,
+    crossDomain: true,
+    data:{json: JSON.stringify(data)},
+    dataType   : 'json',
+    success    : function(response,status) {
 
-      $(".login").html(names);
-      login_id=$(".login").html();
-      window.localStorage.setItem("emails", email);
-      $("#myModal").modal('hide');
-      setTimeout(function(){
-        calls();
-      }, 6000);
+      if(response.status==true)
+      {
 
-    }
-    else
-    {
+        $(".login").html(names);
+        login_id=$(".login").html();
+        window.localStorage.setItem("emails", email);
+        $("#myModal").modal('hide');
+        setTimeout(function(){
+          calls();
+        }, 6000);
 
-     $("#myModal").modal('hide');
-   }
+      }
+      else
+      {
 
- },
- error      : function() {
+       $("#myModal").modal('hide');
+     }
+
+   },
+   error      : function() {
             //console.error("error");
             $("#myModal").modal('hide');
 

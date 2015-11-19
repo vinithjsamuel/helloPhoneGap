@@ -80,7 +80,7 @@
 <div id="preloader">
   <div id="status">
     <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" style="display:none;" /><br>
-    <p class="loading">LOADING...</p>
+    <p class="loading"></p>
   </div>
 </div>
 
@@ -103,10 +103,10 @@
 
         <div class="row profile bg-color-b v-align-row">
           <div class="col-xs-4 no-padding-bottom v-align">
-            <img alt="140x140" src="http://lorempixel.com/140/140/"  id="smallImage" src="http://lorempixel.com/140/140/" class="img-circle" onclick="getPhoto(pictureSource.PHOTOLIBRARY);" />
+            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
           </div>
           <div class="col-xs-8 reset color-c v-align">
-            <h4> <span class="name"></span></h4>
+            <h4> <span class="name">Guzzler</span></h4>
 
             <p>Saved since Dec 2015</p>
             <h3 class="save"><strong><span class="price">0</span></strong><em>AED</em></h3>
@@ -167,7 +167,7 @@
 
   <a class="invite" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
     <div class="f-left">Invite friends <br/>
-      <span class="pos-a light-text"><span class="invite-left"></span> left</span>
+      <span class="pos-a light-text">0<span class="invite-left"></span> left</span>
     </div>
     <i class="f-right fa fa-user"></i></a>
 
@@ -211,7 +211,6 @@
 
 
 </header>
-
 
 
 
@@ -278,7 +277,7 @@
       <p> You can redeem location based offers without charge during the launch phase of the guzzle service. After the launch phase you will have the option to upgrade to a paid subscription account in a new app.</p>
 
 
-     
+
 
     </div>
     <div class="modal-footer">
@@ -419,18 +418,13 @@ data-keyboard="false">
           I am of legal drinking age and not Muslim.
         </div>
         <div class="modal-footer center">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Agree</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Disagree</button>
+          <button type="button" class=" btn btn-default" data-dismiss="modal">Agree</button>
+          <button type="button" class="steps btn btn-default" data-dismiss="modal">Disagree</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
 
 
 
@@ -468,19 +462,24 @@ data-keyboard="false">
 
             </div>
 
-            <div class="col-xs-8 no-padding-bottom" ng-if="cars && homemaintitle">
+            <div class="item-content no-padding-bottom" ng-if="cars && homemaintitle">
               <h4 class="color-a title">{{car.title}}</h4>
               <ul class="list-inline">
                 <li ng-if="car.show!=0"><img alt="80x80" src="assets/images/css/new.png" class="tag img-new" /></li>
                 <!-- <li><img alt="80x80" src="assets/images/css/update.png" class="tag img-update" /></li> -->
-                <li class="bar">{{car.type}}<span ng-if="car.location">, {{car.location}}<span></li>
+                <li class="bar">{{car.type}}<span ng-if="car.location"> | {{car.location}}<span></li>
                 <!-- <li class="color-a rating">Offer Value Total :  <span class="total-value-{{car.urltitle}}"> </span> AED</li> -->
               </ul>
               <ul class="list-inline">
                 <li><i class="fa fa-clock-o"></i>Last Call: <strong>{{car.lastcall}}</strong></li>
-                <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li>
+
                 <!-- <li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li> -->
               </ul>
+            </div>
+            <div>
+            	<ul class="no-list list-inline distance-box">
+            	<li class="f-right"><i class="fa fa-map-marker"></i><strong>{{car.distance}}</strong> km</li>
+            	</ul>
             </div>
           </a>
         </div><!-- /row 1 item -->
