@@ -94,16 +94,16 @@
     <nav class="user-menu" id="cd-lateral-nav">
       <div class="container">
         <span id="email-id" class="user-name" style="display:none;"></span>
-        <span class="device-id" style="display:none;" ></span>
-        <span class="login" id="login" style="display:none;"></span>
-        <span class="mynames"  style="display:none;">undefined</span>
-        <span class="entry" style="display:none">undefined</span>
-        <span class="datap" style=""></span>
+        <span class="device-id" style="display:none;" >5000137e9cca5e8</span>
+        <span class="login" id="login" style="display:none;">undefined</span>
+        <span class="mynames"  style="display:none;"></span>
+        <span class="entry" style="display:none;"></span>
+        <span class="offer-nos" style="display:none;"></span>
 
 
         <div class="row profile bg-color-b v-align-row">
           <div class="col-xs-4 no-padding-bottom v-align">
-            <img alt="140x140"  id="smallImage" src="http://lorempixel.com/140/140/" class="img-circle" onclick="getPhoto(pictureSource.PHOTOLIBRARY);" />
+            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
           </div>
           <div class="col-xs-8 reset color-c v-align">
             <h4> <span class="name"></span></h4>
@@ -235,12 +235,34 @@
   </div>
 </div>
 
+<div id="invite-friends" class="modal fade ">
+  <div class="modal-dialog" role="document">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Invite your friends!</h4>
+      </div>
+
+      <div class="modal-body">
+        <h4 class="modal-title">You can send 10 invites to your best friends to invite them to our guzzle launch. In the process you can gain free subscription months in the upcoming upgrade. For every person that subscribes after your invitation you receive one month free. What are you waiting for?</h4>
+      </div>
+       <div class="modal-footer">
+
+      <a type="button" id="modal-submit" class="btn btn-default" data-dismiss="modal" href="#/">Invite Friends </a>
+    </div>
+
+    </div>
+
+  </div>
+</div>
 
 
 
 <!-- Modal -->
 <div id="myModal" class="modal fade"  data-controls-modal="modal-submit"
-d
+
  >
 <div class="modal-dialog" role="document">
 
@@ -508,7 +530,7 @@ data-keyboard="false">
  <script src="assets/js/angular-touch.min.js"></script>
  <script src="assets/js/script.js"></script>
 
-
+ 
  <script type="text/javascript" src="cordova.js"></script>
  <script type="text/javascript" src="js/index.js"></script>
 
