@@ -1815,6 +1815,15 @@ function insertData()
 
   var gender=$("input[name=cf_gender]:checked").val();
 
+ if(name == "" || typeof name == "undefined")
+  {
+    var names=$(".mynames").html();
+    $(".name").html(names);
+  }
+  else
+  {
+   $(".name").html(name);
+ }
 
  
 
