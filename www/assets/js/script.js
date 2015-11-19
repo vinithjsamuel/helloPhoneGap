@@ -1645,16 +1645,17 @@ $scope.goBack= function(url) {
     login_id=$(".login").html();
     var user_flag=0;
 
-    if(window.localStorage.getItem("profile") == "incomplete" || typeof window.localStorage.getItem("profile") == "undefined" )
-    {
-      $("#myModal").modal('show');
-
-    }
-    else
+     if(window.localStorage.getItem("profile") == "completed"  )
     {
       $(".code-"+url).val(null);
       $(".order-"+url).hide();
       $(".confirm-"+url).show();
+
+    }
+    else
+    {
+      
+      $("#myModal").modal('show');
 
     }
 
