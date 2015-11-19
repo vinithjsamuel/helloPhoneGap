@@ -863,13 +863,14 @@ if(window.localStorage.getItem("outlets") != undefined )
      {
       var login_id=$(".login").html();
       
-      if(window.localStorage.getItem("profile") == "incomplete" || typeof window.localStorage.getItem("profile") == "undefined" )
+       if(window.localStorage.getItem("profile") == "completed"  )
       {
-        $("#myModal").modal('show');
+        $("#acc-activated").modal('show');
 
       }
       else{
-       $("#acc-activated").modal('show');
+       
+       $("#myModal").modal('show');
      }
      $(".user-menu").removeClass("menu-open");
      $("body").removeClass("menu-open");
