@@ -803,6 +803,7 @@ if(window.localStorage.getItem("outlets") != undefined )
    $scope.list = function()
    {
     $('body').removeClass("page-map");
+    $('body').removeClass("page-profile");
     $('body').removeClass("page-detail");
     $('body').addClass("page-list");
     $(".list-show").show();
@@ -819,6 +820,7 @@ if(window.localStorage.getItem("outlets") != undefined )
     var latlng = new google.maps.LatLng(lat,lang);
 
     $('body').removeClass("page-list");
+    $('body').removeClass("page-profile");
     $('body').removeClass("page-detail");
     $('body').addClass("page-map");
     $(".list-show").hide();
@@ -1129,6 +1131,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
      $(".main").show();
 
      $('body').removeClass("page-detail");
+     $('body').removeClass("page-profile");
 
      if ($(".maps").css('display') != 'none') {
 
@@ -1152,7 +1155,8 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       $("#myModal").modal('hide');
       $('body').removeClass("page-map");
       $('body').removeClass("page-list");
-      $('body').addClass("page-detail");
+      $('body').removeClass("page-detail");
+      $('body').addClass("page-profile");
       $(".user-menu").removeClass("menu-open");
       $("body").removeClass("menu-open");
       $(".result").hide();
@@ -1319,6 +1323,7 @@ app.controller("outController", function($scope,$routeParams,$http)
 
   $('body').removeClass("page-list");
   $('body').removeClass("page-map");
+  $('body').removeClass("page-profile");
   $('body').addClass("page-detail");
   $(".result").hide();
 
