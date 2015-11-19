@@ -173,7 +173,7 @@ header .result{
 	display: block;
 }
 
-.page-detail .ico.back{
+.page-detail .ico.back, .page-profile .ico.back{
 	background-position: -120px -215px;
 	display: block;
 }
@@ -192,20 +192,24 @@ header .result{
 }
 
 .page-profile .ico.feedback{
-	display: none;
+	display: none !important;
 
 }
 
 .location-pin{
-	margin-top: -30px;
+	/*margin-top: -30px;*/
 
 }
 
 
-.page-detail .ico.menu{
+.page-detail .ico.menu, .page-profile .ico.menu   ,.page-profile .icon-right{
 	display: none;
 }
 
+
+.page-profile .ico.back{
+	display: block;
+}
 
 
 .cd-icon{
@@ -665,7 +669,7 @@ img.item-logo {
 	color: #fff;
 	height: 80px;
 	width: 100%;
-	padding: 40px 15px 10px 15px;
+	padding: 10px 15px 5px 15px;
 	-webkit-box-shadow: inset 0px -116px 51px -83px rgba(0,0,0,0.6);
 	-moz-box-shadow: inset 0px -116px 51px -83px rgba(0,0,0,0.6);
 	box-shadow: inset 0px -116px 51px -83px rgba(0,0,0,0.6);
@@ -676,6 +680,10 @@ img.item-logo {
 	width: 100%;
 	background-size: cover !important;
 
+}
+
+.slider time h4{
+	margin-bottom: 5px;
 }
 
 
@@ -811,7 +819,7 @@ img.item-logo {
 	}
 
 	.detail {
-	    margin-left: 90px !important;
+		margin-left: 90px !important;
 	}
 
 }
@@ -1084,7 +1092,49 @@ img.item-logo {
 		margin-top: 60px;
 	}
 
+/* ANIMATIONS
+============================================================================= */
 
+/* leaving animations ----------------------------------------- */
+/* rotate and fall */
+@keyframes rotateFall {
+	0%      { transform: rotateZ(0deg); }
+	20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+	40%     { transform: rotateZ(17deg); }
+	60%     { transform: rotateZ(16deg); }
+	100%    { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+	to      { transform: translateX(-100%); }
+}
+
+/* rotate out newspaper */
+@keyframes rotateOutNewspaper {
+	to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* entering animations --------------------------------------- */
+/* scale up */
+@keyframes scaleUp {
+	from    { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+	from    { transform:translateX(100%); }
+	to      { transform: translateX(0); }
+}
+
+/* slide in from the bottom */
+@keyframes slideInUp {
+	from    { transform:translateY(100%); }
+	to      { transform: translateY(0); }
+}
+
+
+.ng-enter           { animation:slideInRight 0.72s both ease-in; }
 
 
 
