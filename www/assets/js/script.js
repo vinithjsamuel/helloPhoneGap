@@ -150,20 +150,7 @@ if(ry==0)
   ry=1;
 }
 var image_src="assets/images/users/"+ry+".png";
-if (window.localStorage.getItem("image") == undefined)
-{
-  alert("here");
-  var picture = localStorage.getItem('image');
-
-  
-  $('.img-circle').attr('src', image_src);
-}
-else{
-
-
-  $('.img-circle').attr('src', localStorage.getItem('image'));
-}
-
+$('.img-circle').attr('src', image_src);
 
 $scope.mapOptions =
 {
@@ -670,7 +657,7 @@ if(window.localStorage.getItem("outlets") != undefined )
         var total_cost=0;
         datas=response;
         var results=datas;
-
+        $(".offer-nos").html(response.length);
         for (i = 0; i < response.length; i++) {
           total_cost=Number(total_cost)+Number(results[i].cost);
         }
@@ -684,7 +671,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     $scope.listItem = function()
     {
-     $scope.getLocations
+     $scope.getLocations();
      $('body').removeClass("page-list");
      $('body').addClass("page-map");
      $(".list-show").show();
@@ -701,7 +688,10 @@ if(window.localStorage.getItem("outlets") != undefined )
       var datas=response;
       price = datas;
       var  total_prices=0;
+
+      $(".offer-nos").html(price.length);
       for (i = 0; i < price.length; i++) {
+
 
         if(price[i].price  !="" || typeof price[i].price != "undefined")
         {
@@ -859,6 +849,7 @@ if(window.localStorage.getItem("outlets") != undefined )
      $scope.loginId = function()
      {
       var login_id=$(".login").html();
+      
       if(window.localStorage.getItem("profile") == "incomplete" || typeof window.localStorage.getItem("profile") == "undefined" )
       {
         $("#myModal").modal('show');
@@ -1148,7 +1139,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
       $('body').addClass("page-list");
     }
-
+    $("#invite-friends").modal("hide");
     $(".result").hide();
     $scope.update=function()
     {
@@ -1174,9 +1165,8 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       }
       else
       {
-        user="undefined";
-      };
-      $scope.emails="";
+        user="undefined"
+      }
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
       .success(function (response) {
@@ -1191,6 +1181,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
         
+        $("input[name=cf_gender][value="+profile[0].gender+"]").attr('checked', true);
         $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
         $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
         $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
@@ -1199,6 +1190,10 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
           alcohol: profile[0].alcohol,
           gender: profile[0].gender
         };
+        if($scope.emails!="")
+        {
+          $(".emails-id").prop('readonly', true);;
+        }
         setTimeout(function(){
           $scope.checkComplete();
         }, 2000);
@@ -1720,31 +1715,38 @@ $scope.goBack= function(url) {
           $(".result-"+url).show();
           var number=$(".number-"+url).html();
           var values= Number(number)-1;
-          if(window.localStorage.getItem("offers") == undefined)
+
+          if(values==0)
           {
-            window.localStorage.setItem("offers", 1);
-         }
-         if(values==0)
-         {
-          $(".pending-"+url).hide();
-          $(".finished-"+url).show();
+            $(".pending-"+url).hide();
+            $(".finished-"+url).show();
 
 
+
+          }
+          $(".number-"+url).html(values);
+          $(".redem-code-"+url).html(id);
+          $(".price").html(total);
+          var offer=$(".offer-nos").html();
+          offer++;
+          if(offer==2)
+          {
+            $("#invite-friends").modal("show");
+          }
+          if(offer % 5 === 0)
+          {
+            $("#invite-friends").modal("show");
+          }
 
         }
-        $(".number-"+url).html(values);
-        $(".redem-code-"+url).html(id);
-        $(".price").html(total);
+        else
+        {
+          $(".confirm-"+url).hide();
+          $(".error-"+url).show();
+        }
 
-      }
-      else
-      {
-        $(".confirm-"+url).hide();
-        $(".error-"+url).show();
-      }
-
-    },
-    error      : function() {
+      },
+      error      : function() {
             //console.error("error");
             $(".confirm-"+url).hide();
             $(".error-"+url).show();
@@ -1784,37 +1786,58 @@ function insertData()
 {
   var email= $(".emails-id").val();
   var deviceid= $(".device-id").html();
-  var name = email.split('@')[0];
-  var names= name+deviceid;
-  var data       = {title:email,name:names,email:email,device:deviceid};
-  $.ajax({
-    type       : "POST",
-    url        : "http://getguzzle.com/app-test/account/"+data,
-    crossDomain: true,
-    data:{json: JSON.stringify(data)},
-    dataType   : 'json',
-    success    : function(response,status) {
+  var data_email = email.split('@')[0];
+  var data_email= data_email+deviceid;
+  var name=$(".screen-name").val();
+  var mobile=$(".mobiles").val();
+  var city=$(".city").val();
+  var country=$(".country").val();
+  var nationality=$(".nationality").val();
+  var alcohols=$("input[name=alcohol]:checked").val();
 
-      if(response.status==true)
-      {
+  var gender=$("input[name=cf_gender]:checked").val();
 
-        $(".login").html(names);
-        login_id=$(".login").html();
-        window.localStorage.setItem("emails", email);
-        $("#myModal").modal('hide');
-        setTimeout(function(){
-          calls();
-        }, 6000);
+  if(name == "" || typeof name == "undefined")
+  {
+    var names=$(".mynames").html();
+    $(".name").html(names);
+  }
+  else
+  {
+   $(".name").html(name);
+ }
 
-      }
-      else
-      {
+ 
 
-       $("#myModal").modal('hide');
-     }
+ var data       = {title:email,name:data_email,email:email,device:deviceid,mobile:mobile,names:name,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+ $.ajax({
+  type       : "POST",
+  url        : "http://getguzzle.com/app-test/account/"+data,
+  crossDomain: true,
+  data:{json: JSON.stringify(data)},
+  dataType   : 'json',
+  success    : function(response,status) {
 
-   },
-   error      : function() {
+    if(response.status==true)
+    {
+
+      $(".login").html(names);
+      login_id=$(".login").html();
+      window.localStorage.setItem("emails", email);
+      $("#myModal").modal('hide');
+      setTimeout(function(){
+        calls();
+      }, 6000);
+
+    }
+    else
+    {
+
+     $("#myModal").modal('hide');
+   }
+
+ },
+ error      : function() {
             //console.error("error");
             $("#myModal").modal('hide');
 
