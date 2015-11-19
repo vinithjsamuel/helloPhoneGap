@@ -103,7 +103,7 @@
 
         <div class="row profile bg-color-b v-align-row">
           <div class="col-xs-4 no-padding-bottom v-align">
-            <img alt="140x140" src="http://lorempixel.com/140/140/" class="img-circle" />
+            <img alt="140x140"  id="smallImage" src="http://lorempixel.com/140/140/" class="img-circle" onclick="getPhoto(pictureSource.PHOTOLIBRARY);" />
           </div>
           <div class="col-xs-8 reset color-c v-align">
             <h4> <span class="name">Guzzler</span></h4>
@@ -167,7 +167,7 @@
 
   <a class="invite" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
     <div class="f-left">Invite friends <br/>
-      <span class="pos-a light-text">0<span class="invite-left"></span> left</span>
+      <span class="pos-a light-text"><span class="invite-left">0</span> left</span>
     </div>
     <i class="f-right fa fa-user"></i></a>
 
@@ -538,8 +538,6 @@ data-keyboard="false">
 
  <script type="text/javascript" src="cordova.js"></script>
  <script type="text/javascript" src="js/index.js"></script>
-
-
 
 
 

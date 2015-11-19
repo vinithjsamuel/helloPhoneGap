@@ -653,7 +653,7 @@ if(window.localStorage.getItem("outlets") != undefined )
         google.maps.event.addListener(marker, 'click', function() {
 
           $scope.$apply();
-         $scope.infoWindow.setContent('<div> <a href="'+url+'"><h4 style="margin:0px;"><img src="assets/images/info.png" style="width:25px;margin-right:10px;margin-top:10px;">' +  this.title+'  </h4></a></div><div style="margin-left:35px; margin-top:-7px;">'+this.location+'</div>');
+          $scope.infoWindow.setContent('<div> <a href="'+url+'"><h4 style="margin:0px;"><img src="assets/images/info.png" style="width:25px;margin-right:10px;">' +  this.title+'  </h4></a></div><div style="margin-left:35px; ">'+this.location+'</div>');
 
           $scope.infoWindow.open($scope.model.myMap,this);
         });
@@ -731,7 +731,7 @@ if(window.localStorage.getItem("outlets") != undefined )
    $scope.updateInvite = function (numbers) {
      $http.get(numbers)
      .success(function (response) {
-
+      $(".zero-invite").hide();
 
       if(response.length <10)
       {
@@ -1198,6 +1198,13 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       {
         user="undefined"
       }
+        $scope.namer="";
+        $scope.emails="";
+        $scope.gender="";
+        $scope.mobile="";
+
+        $scope.city="";
+        $scope.country="";
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
       .success(function (response) {
@@ -1845,7 +1852,7 @@ function insertData()
       if(response.status==true)
       {
 
-        $(".login").html(names);
+        $(".login").html(data_email);
         login_id=$(".login").html();
         window.localStorage.setItem("emails", email);
         $("#myModal").modal('hide');
