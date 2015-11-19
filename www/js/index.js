@@ -41,6 +41,8 @@ var destinationType; // sets the format of returned value
      if(navigator.network.connection.type == Connection.NONE) {
       alert("Sorry, without an internet connection we can’t show you any offers.");
     }
+    document.addEventListener("offline", onOffline, false);
+    
     if (window.localStorage.getItem("install") == undefined) {
      /* run function */
      setTimeout(function() {
@@ -157,4 +159,7 @@ function getPhoto(source) {
     function onFail(message) {
       
       
+    }
+    function onOffline() {
+      $("#offline").modal("show");
     }
