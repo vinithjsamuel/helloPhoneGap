@@ -150,7 +150,18 @@ if(ry==0)
   ry=1;
 }
 var image_src="assets/images/users/"+ry+".png";
-$('.img-circle').attr('src', image_src);
+if (window.localStorage.getItem("image") == undefined)
+{
+  var picture = localStorage.getItem('image');
+   
+  
+  $('.img-circle').attr('src', image_src);
+}
+else{
+  
+  
+  $('.img-circle').attr('src', localStorage.getItem('image'));
+}
 
 $scope.mapOptions =
 {
