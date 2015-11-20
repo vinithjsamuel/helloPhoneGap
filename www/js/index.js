@@ -52,7 +52,7 @@ var destinationType; // sets the format of returned value
    {
      setTimeout(function() {
       navigator.splashscreen.hide();
-    }, 250);
+    }, 300);
    }
    if(navigator.network.connection.type == Connection.NONE) {
       alert("Sorry, without an internet connection we can’t show you any offers.");
