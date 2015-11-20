@@ -1908,15 +1908,16 @@ alert("yes");
     dataType   : 'json',
     success    : function(response,status) {
 
- alert("no");
+
       if(response.status==true)
       {
-
+ alert("no");
+  window.localStorage.setItem("emails", email);
+      window.localStorage.setItem("profile", "completed");
         $(".login").html(data_email);
         login_id=$(".login").html();
-   alert("yes");
-      window.localStorage.setItem("emails", email);
-      window.localStorage.setItem("profile", "completed");
+   alert(login_id);
+     
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
