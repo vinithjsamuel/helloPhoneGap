@@ -1371,7 +1371,7 @@ app.controller("outController", function($scope,$routeParams,$http)
   $('.equal .item').matchHeight();
 
   var  map;
-  checkInternet();
+ 
 
   function initialize(lat,longi) {
 
