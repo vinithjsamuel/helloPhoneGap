@@ -190,7 +190,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.useMakes = [];
   $scope.cars=[];
   $scope.cars=datas,$scope.lat1, $scope.lng1;
-  console.log($scope.cars);
+ 
   var nos= datas.length+ " items";
   $(".result").html(nos);
 
@@ -1368,6 +1368,7 @@ app.controller("outController", function($scope,$routeParams,$http)
   $('.equal .item').matchHeight();
 
   var  map;
+  checkInternet();
 
   function initialize(lat,longi) {
 
@@ -1492,7 +1493,7 @@ $scope.offersLength=function(url,i,max)
  $http.get(url)
  .success(function (response) {
    $scope.values=response.length;
-   console.log(response.length);
+
    $scope.vouchers[i].used=Number(max)-Number($scope.values);
    return response.length;
  }
@@ -1503,7 +1504,7 @@ $scope.offersLength=function(url,i,max)
 
 var str=$scope.urltitle;
 str=str.replace(/-/g, ' ');
-console.log(str);
+
 var voucher_data;
 $scope.outlettitle = $routeParams.title;
 
@@ -1629,7 +1630,7 @@ theBigDay.setMonth(mont);
         }
         else{
           var offer_url ="http://getguzzle.com/app/offer-claim/"+$scope.vouchers[i].urltitle+"/"+login_id+"/"+$routeParams.title;
-          console.log(offer_url);
+          
 
 
           $scope.offersLength(offer_url,i,max);
@@ -1854,7 +1855,9 @@ function insertData()
 
         $(".login").html(data_email);
         login_id=$(".login").html();
-        window.localStorage.setItem("emails", email);
+   
+      window.localStorage.setItem("emails", email);
+      window.localStorage.setItem("profile", "completed");
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
@@ -2085,6 +2088,20 @@ function mapClick()
 
 }
 
+function checkInternet() {
+
+  var networkState = navigator.connection.type;
+
+  if(networkState == Connection.NONE) {
+
+    $("#offline-modal").modal("show");
+    return false;
+
+  } else {
+
+   return true;
+ }
+}
 
 
 
