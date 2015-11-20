@@ -52,10 +52,10 @@ var destinationType; // sets the format of returned value
    {
      setTimeout(function() {
       navigator.splashscreen.hide();
-    }, 300);
+    }, 150);
    }
    if(navigator.network.connection.type == Connection.NONE) {
-      alert("Sorry, without an internet connection we can’t show you any offers.");
+      $("#offline-modal").modal('show');
     }
    app.receivedEvent('deviceready');
 
