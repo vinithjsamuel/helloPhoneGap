@@ -938,7 +938,10 @@ if(window.localStorage.getItem("outlets") != undefined )
   {
    email="not-registered@gmail.com";
  }
-
+  setTimeout(function() {
+      
+      $('#outlet-feed').modal('hide');
+    }, 2000);
 
  var data       = {title:email,status:status,feedback:value};
  $.ajax({
@@ -957,7 +960,7 @@ if(window.localStorage.getItem("outlets") != undefined )
      setTimeout(function() {
       $(".outlet-success").hide();
       $('#outlet-feed').modal('hide');
-    }, 2000)
+    }, 2000);
 
    }
 
