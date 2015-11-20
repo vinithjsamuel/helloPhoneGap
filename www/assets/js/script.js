@@ -181,7 +181,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $rootScope.homemaintitle = true;
   setTimeout(function(){
     $("#status").fadeOut("slow"); $("#preloader").delay(350).fadeOut("slow");
-  }, 7500);
+  }, 8000);
   $rootScope.storage = JSON.parse(window.localStorage['outlets' || '{}']);
 
   var datas=$rootScope.storage;
@@ -938,10 +938,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   {
    email="not-registered@gmail.com";
  }
-  setTimeout(function() {
-      
-      $('#outlet-feed').modal('hide');
-    }, 2000);
+
 
  var data       = {title:email,status:status,feedback:value};
  $.ajax({
@@ -960,7 +957,7 @@ if(window.localStorage.getItem("outlets") != undefined )
      setTimeout(function() {
       $(".outlet-success").hide();
       $('#outlet-feed').modal('hide');
-    }, 2000);
+    }, 2000)
 
    }
 
@@ -1278,16 +1275,16 @@ $scope.checkComplete=function()
   }
 });
   
-  $('#percentage').empty();
+ 
   if(cntreq==cntvals)
   {
-   $('#percentage').empty();
+   
    window.localStorage.setItem("profile", "completed");
  }
 
  else
  {
-  $('#percentage').append('(Incomplete)');
+  
   window.localStorage.setItem("profile", "incomplete");
 }
 
@@ -1371,8 +1368,9 @@ app.controller("outController", function($scope,$routeParams,$http)
   $('.equal .item').matchHeight();
 
   var  map;
+  
+ checkInternet();
  
-
   function initialize(lat,longi) {
 
 
@@ -1858,7 +1856,7 @@ function insertData()
 
         $(".login").html(data_email);
         login_id=$(".login").html();
-   
+   alert("yes");
       window.localStorage.setItem("emails", email);
       window.localStorage.setItem("profile", "completed");
         $("#myModal").modal('hide');
