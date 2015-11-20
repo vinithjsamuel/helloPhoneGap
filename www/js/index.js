@@ -38,10 +38,8 @@ var destinationType; // sets the format of returned value
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-     if(navigator.network.connection.type == Connection.NONE) {
-      alert("Sorry, without an internet connection we can’t show you any offers.");
-    }
-    document.addEventListener("offline", onOffline, false);
+     
+    
     
     if (window.localStorage.getItem("install") == undefined) {
      /* run function */
@@ -56,6 +54,9 @@ var destinationType; // sets the format of returned value
       navigator.splashscreen.hide();
     }, 250);
    }
+   if(navigator.network.connection.type == Connection.NONE) {
+      alert("Sorry, without an internet connection we can’t show you any offers.");
+    }
    app.receivedEvent('deviceready');
 
 
@@ -160,6 +161,4 @@ function getPhoto(source) {
       
       
     }
-    function onOffline() {
-      $("#offline").modal("show");
-    }
+  
