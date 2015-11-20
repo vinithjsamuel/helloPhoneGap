@@ -273,8 +273,13 @@
       <h4 class="modal-title">Register now!</h4>
     </div>
     <div class="modal-body activation">
-      <p> Complete your profile to register and start redeeming offers now.</p>
-      <p> You can redeem location based offers without charge during the launch phase of the guzzle service. After the launch phase you will have the option to upgrade to a paid subscription account in a new app.</p>
+      <div>
+        <input type="text" class="screen-name" placeholder="Name">
+      </div>
+
+      <div style="margin-top:10px;">
+        <input type="text" class="emails-id" placeholder="Email address">
+      </div>
 
 
 
@@ -282,7 +287,7 @@
     </div>
     <div class="modal-footer">
 
-      <a type="button" id="modal-submit" class="btn btn-default"  href="#profile">Complete profile </a>
+      <button type="button" id="modal-submit" class="btn btn-default"  onclick="insertData();">Complete profile </button>
     </div>
   </div>
 
