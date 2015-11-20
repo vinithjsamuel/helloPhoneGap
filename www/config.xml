@@ -44,32 +44,20 @@
 
       <gap:plugin name="org.apache.cordova.battery-status" />
       <gap:plugin name="org.apache.cordova.camera" />
-      <gap:plugin name="org.apache.cordova.media-capture" />
+    
       <gap:plugin name="org.apache.cordova.console" />
-      <gap:plugin name="org.apache.cordova.contacts" />
+     
       <gap:plugin name="org.apache.cordova.device" />
-      <gap:plugin name="org.apache.cordova.device-motion" />
-      <gap:plugin name="org.apache.cordova.device-orientation" />
-      <gap:plugin name="org.apache.cordova.dialogs" />
-      <gap:plugin name="org.apache.cordova.file" />
-      <gap:plugin name="org.apache.cordova.file-transfer" />
-      <gap:plugin name="org.apache.cordova.geolocation" />
-      <gap:plugin name="org.apache.cordova.globalization" />
-      <gap:plugin name="org.apache.cordova.inappbrowser" />
-      <gap:plugin name="org.apache.cordova.media" />
+            <gap:plugin name="org.apache.cordova.geolocation" />
       <gap:plugin name="org.apache.cordova.network-information" />
       <gap:plugin name="org.apache.cordova.splashscreen" />
-      <gap:plugin name="org.apache.cordova.vibration" />
       <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
       <gap:plugin name="hu.dpal.phonegap.plugins.uniquedeviceid" version="1.2.0" />
       <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
    
 
 
-      <gap:plugin name="com.phonegap.plugins.facebookconnect" >
-       <param name="APP_ID" value="756110871177634" />
-       <param name="APP_NAME" value="Guzzle" />
-     </gap:plugin>
+     
      <icon src="icon.png" />
      <gap:splash src="splash.png" />
      <preference name="StatusBarOverlaysWebView" value="true" /> 
