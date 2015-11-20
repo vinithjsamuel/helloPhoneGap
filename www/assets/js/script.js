@@ -1822,23 +1822,21 @@ $scope.frontLoad = function(url) {
 
 //finish
 });
-
-
-function insertData()
+function createData()
 {
-   alert("yes");
+  
   var email= $(".emails-id").val();
   var deviceid= $(".device-id").html();
   var data_email = email.split('@')[0];
   var data_email= data_email+deviceid;
   var name=$(".screen-name").val();
-  var mobile=$(".mobiles").val();
-  var city=$(".city").val();
-  var country=$(".country").val();
-  var nationality=$(".nationality").val();
-  var alcohols=$("input[name=alcohol]:checked").val();
+  var mobile="";
+  var city="";
+  var country="";
+  var nationality="";
+  var alcohols="";
 
-  var gender=$("input[name=cf_gender]:checked").val();
+  var gender="";
 
 
 
@@ -1852,6 +1850,65 @@ function insertData()
     dataType   : 'json',
     success    : function(response,status) {
 
+      if(response.status==true)
+      {
+
+        $(".login").html(data_email);
+        login_id=$(".login").html();
+   alert("yes");
+      window.localStorage.setItem("emails", email);
+      window.localStorage.setItem("profile", "completed");
+        $("#myModal").modal('hide');
+        setTimeout(function(){
+          calls();
+        }, 6000);
+
+      }
+      else
+      {
+
+       $("#myModal").modal('hide');
+     }
+
+   },
+   error      : function() {
+            //console.error("error");
+            $("#myModal").modal('hide');
+
+          }
+        });
+}
+
+
+function insertData()
+{
+  
+  var email= $(".emails-id").val();
+  var deviceid= $(".device-id").html();
+  var data_email = email.split('@')[0];
+  var data_email= data_email+deviceid;
+  var name=$(".screen-name").val();
+  var mobile=$(".mobiles").val();
+  var city=$(".city").val();
+  var country=$(".country").val();
+  var nationality=$(".nationality").val();
+  var alcohols=$("input[name=alcohol]:checked").val();
+
+  var gender=$("input[name=cf_gender]:checked").val();
+alert("yes");
+
+
+
+  var data       = {title:email,name:data_email,email:email,device:deviceid,mobile:mobile,names:name,city:city,country:country,nationality:nationality,alcohol:alcohols,gender:gender};
+  $.ajax({
+    type       : "POST",
+    url        : "http://getguzzle.com/app-test/account/"+data,
+    crossDomain: true,
+    data:{json: JSON.stringify(data)},
+    dataType   : 'json',
+    success    : function(response,status) {
+
+ alert("no");
       if(response.status==true)
       {
 
