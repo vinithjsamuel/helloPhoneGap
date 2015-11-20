@@ -1826,6 +1826,7 @@ $scope.frontLoad = function(url) {
 
 function insertData()
 {
+   alert("yes");
   var email= $(".emails-id").val();
   var deviceid= $(".device-id").html();
   var data_email = email.split('@')[0];
