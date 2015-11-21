@@ -1,34 +1,35 @@
+
 <div ng-controller="profileController">
 
 
-	<!-- <br/> -->
+  <!-- <br/> -->
 
 
-	<!--================ content ================-->
+  <!--================ content ================-->
 
-	<main class="mz-main-content profile-page" id="" >
-		<div class="container" >
-			<div class="dynamic ">
-				<div class="container reset"   >
+  <main class="mz-main-content profile-page" id="" >
+    <div class="container" >
+      <div class="dynamic ">
+        <div class="container reset"   >
 
-					<h3>Profile <span id="percentage"></span></h3>
-
-
+          <h3>Profile </h3>
 
 
-					<form  role="form">
+
+
+          <form  role="form">
             <div class="row">
 
               <div class="form-group col-md-12">
                 <label  for="">
-                  <input type="checkbox"  name="terms" required checked="checked" value="yes">
+                  <input type="checkbox"  name="terms"  checked="checked" value="yes">
                   I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a>
                 </label>
               </div>
               <div class="form-group col-md-12">
                 <label>Email</label>
 
-                <input type="text" name="" value="{{emails}}" class="form-control emails-id" onChange="insertData();" />
+                <input type="text" name="" value="{{emails}}" class="form-control emails-id" onChange="insertData();" required/>
               </div>
             </div>
             <div class="row">
@@ -44,12 +45,12 @@
 
               <label>Gender:</label>
               <label  for="" class="radio-inline">
-                <input type="radio"  name="cf_gender" checked value="male" required>
+                <input type="radio"  name="cf_gender" checked value="male" >
                 Male
               </label>
 
               <label for="" class="radio-inline">
-                <input type="radio"  name="cf_gender" value="female" required>
+                <input type="radio"  name="cf_gender" value="female" >
                 Female
               </label>
 
@@ -59,13 +60,13 @@
           <div class="row">
            <div class="form-group col-md-12">
             <label>Mobile number</label>
-            <input type="text" name="cf_mobile" value="{{mobile}}" class="form-control mobiles" required/>
+            <input type="text" name="cf_mobile" value="{{mobile}}" class="form-control mobiles" />
           </div>
 
           <div class="form-group col-md-12">
             <label>Country</label>
 
-            <select id="selectbasic" name="cf_country" class="form-control  country"  required>
+            <select id="selectbasic" name="cf_country" class="form-control  country"  >
               <option value="">Please select</option>
               <option value="United Arab Emirates">United Arab Emirates</option>
               <option value="Afganistan">Afganistan</option>
@@ -210,7 +211,7 @@
           </div>
           <div class="form-group col-md-12">
             <label>City</label>
-            <input type="text" name="cf_city" value="{{city}}" class="form-control city" required/>
+            <input type="text" name="cf_city" value="{{city}}" class="form-control city" />
           </div>
 
         </div>
@@ -221,7 +222,7 @@
          <div class="form-group col-md-12">
           <label>Nationality</label>
 
-          <select name="cf_nationality"  class="form-control nationality" required>
+          <select name="cf_nationality"  class="form-control nationality" >
            <option value="" >-- Please Select --</option>
            <option value="afghan">Afghan</option>
            <option value="albanian">Albanian</option>
@@ -422,12 +423,12 @@
 
         <label>List Alcoholic Offers:</label>
         <label  for="" class="radio-inline">
-         <input type="radio"  name="alcohol" required checked="checked" value="yes">
+         <input type="radio"  name="alcohol"  checked="checked" value="yes">
          Yes
        </label>
 
        <label for="" class="radio-inline">
-         <input type="radio"  name="alcohol"  required value="no">
+         <input type="radio"  name="alcohol"   value="no">
          No
        </label>
 
