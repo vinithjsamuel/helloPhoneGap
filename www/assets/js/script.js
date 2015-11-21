@@ -1886,6 +1886,7 @@ function calls()
 
  var name = email_id.split('@')[0];
  var user = name+deviceid;
+ alert(user);
  var scope = angular.element(document.getElementById("email-id")).scope();
  var login_id=$(".login").html();
 
