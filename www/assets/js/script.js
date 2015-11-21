@@ -180,8 +180,8 @@ if(window.localStorage.getItem("outlets") != undefined )
 
   $rootScope.homemaintitle = true;
   setTimeout(function(){
-    //$("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
-  }, 10000);
+    $("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
+  }, 7000);
   $rootScope.storage = JSON.parse(window.localStorage['outlets' || '{}']);
 
   var datas=$rootScope.storage;
