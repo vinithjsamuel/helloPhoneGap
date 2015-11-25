@@ -46,7 +46,7 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$lo
  });
 
   $("body").show();
-  $(".dob-modal").modal("show");
+  
   $rootScope.homemaintitle = false;
   $(".logo-splash").show();
   
