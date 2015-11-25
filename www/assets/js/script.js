@@ -367,7 +367,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
               }
 
-              if($('input[type="checkbox"]:checked').length == 0) {
+              if($('.reset input[type="checkbox"]:checked').length == 0) {
                 flag=0;
               }
               if(flag==0 )
@@ -563,7 +563,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
               }
 
-              if($('input[type="checkbox"]:checked').length == 0) {
+              if($('.reset input[type="checkbox"]:checked').length == 0) {
                 flag=0;
               }
               if(flag==0 )
@@ -2235,7 +2235,7 @@ function updateOutlet(data,$scope) {
 
       }
 
-      if($('input[type="checkbox"]:checked').length == 0) {
+      if($('.reset input[type="checkbox"]:checked').length == 0) {
         flag=0;
       }
       if(flag==0 )
