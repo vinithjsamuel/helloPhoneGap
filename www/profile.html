@@ -20,12 +20,7 @@
           <form  role="form">
             <div class="row">
 
-              <div class="form-group col-md-12">
-                <label  for="">
-                  <input type="checkbox"  name="terms"  checked="checked" value="yes">
-                  I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a>
-                </label>
-              </div>
+             
               <div class="form-group col-md-12">
                 <label>Email</label>
 
@@ -45,12 +40,12 @@
 
               <label>Gender:</label>
               <label  for="" class="radio-inline">
-                <input type="radio"  name="cf_gender" checked value="male" >
+                <input type="radio"  name="cf_gender" checked value="male" not-required >
                 Male
               </label>
 
               <label for="" class="radio-inline">
-                <input type="radio"  name="cf_gender" value="female" >
+                <input type="radio"  name="cf_gender" value="female" not-required>
                 Female
               </label>
 
@@ -60,13 +55,13 @@
           <div class="row">
            <div class="form-group col-md-12">
             <label>Mobile number</label>
-            <input type="text" name="cf_mobile" value="{{mobile}}" class="form-control mobiles" />
+            <input type="text" name="cf_mobile" value="{{mobile}}" class="form-control mobiles"  not-required/>
           </div>
 
           <div class="form-group col-md-12">
             <label>Country</label>
 
-            <select id="selectbasic" name="cf_country" class="form-control  country"  >
+            <select id="selectbasic" name="cf_country" class="form-control  country" not-required >
               <option value="">Please select</option>
               <option value="United Arab Emirates">United Arab Emirates</option>
               <option value="Afganistan">Afganistan</option>
@@ -222,7 +217,7 @@
          <div class="form-group col-md-12">
           <label>Nationality</label>
 
-          <select name="cf_nationality"  class="form-control nationality" >
+          <select name="cf_nationality"  class="form-control nationality" not-required>
            <option value="" >-- Please Select --</option>
            <option value="afghan">Afghan</option>
            <option value="albanian">Albanian</option>
@@ -423,12 +418,12 @@
 
         <label>List Alcoholic Offers:</label>
         <label  for="" class="radio-inline">
-         <input type="radio"  name="alcohol"  checked="checked" value="yes">
+         <input type="radio"  name="alcohol"  checked="checked" not-required value="yes">
          Yes
        </label>
 
        <label for="" class="radio-inline">
-         <input type="radio"  name="alcohol"   value="no">
+         <input type="radio"  name="alcohol"  not-required  value="no">
          No
        </label>
 
