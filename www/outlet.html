@@ -105,7 +105,191 @@
 				<div class="row">
 					<div class="col-xs-12 vouchers no-list reset" ng-repeat="voucher in vouchers">
 
-						<ul class="first dummy voucher-click">
+						<!-- Age greater than 18 -->
+						<ul class="first dummy voucher-click" ng-if="age!=1">
+
+
+							<li class="item slide1 order-{{voucher.urltitle}}" ng-if="voucher.used > 0" ng-click="pinVerf(voucher.urltitle);" ng-swipe-left="pinVerf(voucher.urltitle);" ng-swipe-right="pinVerf(voucher.urltitle);">
+
+
+
+								<ul class="second">
+
+
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"> <span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+
+									<li class="detail">
+										<div class="cups f-left">
+											<ul>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<li class="plus">+</li>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<!-- <li class="expiry clear" style="font-size: 13px;">Expiry: {{voucher.expirydate}}</li> -->
+											</ul>
+										</div>
+
+
+										<div class="expiry-box">
+											<ul class="no-list list-inline">
+												<li class="expiry clear" style="font-size: 13px;">Expiry: {{voucher.expirydate}}</li>
+											</ul>
+										</div>
+
+
+
+
+										<div class='clearfix'></div>
+
+										<div>
+											<ul>
+
+												<li class="desc">
+													<strong>{{voucher.voucherchoice}}</strong>
+												</li>
+
+												<li class="descr" >
+													{{voucher.housebeverage}}
+
+												</li>
+
+
+											</ul>
+										</div>
+
+									</li>
+
+								</ul><!--- second -->
+							</li> <!-- slide1 -->
+
+
+							<div class="cost-{{voucher.urltitle}}" style="display:none;margin-left:30px;">{{voucher.cost}}</div>
+
+
+							<!-- Vouchers  Finished -->
+							<li class="item slide1 order-{{voucher.urltitle}}  " ng-if="voucher.used <= 0"  >
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li></li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+									<li class="detail">
+										<div class="cups f-left">
+											<ul>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<li class="plus">+</li>
+												<li class=""><img class="glass" alt="40x40" src="assets/images/drinks/{{voucher.image}}.png"/></li>
+												<!--<li class="expiry clear" style="font-size: 13px;">Expiry: {{voucher.expirydate}}</li> -->
+											</ul>
+										</div>
+										<div class="expiry-box">
+											<ul class="no-list list-inline">
+												<li class="expiry clear" style="font-size: 13px;">Expiry: {{voucher.expirydate}}</li>
+											</ul>
+										</div>
+
+										<div class='clearfix'></div>
+
+										<div class="desc f-left">
+											<ul>
+												<li class="desc">
+													<strong>{{voucher.voucherchoice}}</strong>
+												</li>
+
+												<li class="descr" >
+													{{voucher.housebeverage}}
+
+												</li>
+											</ul>
+										</div>
+									</li>
+								</ul>
+							</li>
+
+							<li class="item slide2 confirm-{{voucher.urltitle}} voucher-code" ng-swipe-left="goBack(voucher.urltitle);" style="display:none;" >
+								<ul class="second">
+									<li class="ticket f-left" ng-click="goBack(voucher.urltitle);">
+										<ul>
+											<li>Order now</li>
+											<li class="number"><span class="number-{{voucher.urltitle}}" > {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+
+									<li class="pin f-left pending-{{voucher.urltitle}}">
+										<ul>
+											<li>Bartender confirmation pin</li>
+											<div class="form-group">
+												<input type="tel" class="form-control code-{{voucher.urltitle}}"  ng-model="confirmed" maxlength="4"  name="psw" ng-change="pageVerf(voucher.urltitle,voucher.voucherchoice)"/>
+											</div>
+										</ul>
+									</li>
+									<li class="pin f-left finished-{{voucher.urltitle}}" style="display:none;">
+										<ul>
+											<li>You already used your vouchers.</li>
+
+
+										</ul>
+									</li>
+								</ul>
+							</li>
+
+							<li class="item slide3 result-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe-right="frontLoad(voucher.urltitle);" ng-swipe-left="frontLoad(voucher.urltitle);">
+								<ul class="second">
+
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+									<li class="feedback f-left">
+										<ul>
+											<li>BOTTOMS UP!</li>
+											<li>Confirmation code</li>
+											<li class="code"><strong><span class="redem-code-{{voucher.urltitle}}"></span></strong></li>
+										</ul>
+									</li>
+									<li class="feedback f-right">
+										<div class="face"></div>
+									</li>
+
+								</ul>
+								<div class="titles" style="display:none;">{{voucher.title}}</div>
+								<div class="vouchertitle" style="display:none;">{{voucher.urltitle}}</div>
+							</li>
+
+							<li class="item slide3 error-{{voucher.urltitle}}" style="display:none;" ng-click="frontLoad(voucher.urltitle);" ng-swipe-right="frontLoad(voucher.urltitle);" ng-swipe-left="frontLoad(voucher.urltitle);">
+								<ul class="second">
+									<li class="ticket f-left">
+										<ul>
+											<li>Order now</li>
+											<li class="number"> <span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
+										</ul>
+									</li>
+
+									<li class="feedback f-left pin">
+										<ul>
+											<li>Oops, that didn't work! <br>Try again later.</li>
+										</ul>
+									</li>
+									<li class="feedback f-right">
+										<div class="face"></div>
+									</li>
+								</ul>
+							</li>
+
+						</ul><!--- first -->
+
+
+						<!--- Age Less than 18 -->
+
+						<ul class="first dummy voucher-click" ng-if="age==1 && voucher.alcohol==1">
 
 
 							<li class="item slide1 order-{{voucher.urltitle}}" ng-if="voucher.used!=0" ng-click="pinVerf(voucher.urltitle);" ng-swipe-left="pinVerf(voucher.urltitle);" ng-swipe-right="pinVerf(voucher.urltitle);">
@@ -263,7 +447,7 @@
 									<li class="ticket f-left">
 										<ul>
 											<li>Order now</li>
-											<li class="number">{{voucher.used}}<small>Left</small></li>
+											<li class="number"><span class="number-{{voucher.urltitle}}"> {{voucher.used}}</span><small>Left</small></li>
 										</ul>
 									</li>
 
