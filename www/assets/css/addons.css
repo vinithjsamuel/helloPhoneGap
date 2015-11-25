@@ -73,7 +73,8 @@ p img{
 #preloader {
 	position: fixed;
 	top: 0; left: 0; right: 0; bottom: 0;
-	background: url(../images/guzzle-intro.gif) no-repeat center center fixed;
+	/*background: url(../images/guzzle-intro.gif) no-repeat center center fixed;*/
+	background: #732B8E;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

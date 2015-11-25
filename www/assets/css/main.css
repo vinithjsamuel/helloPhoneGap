@@ -1000,6 +1000,19 @@ img.item-logo {
 		padding: 10px;
 	}
 
+
+
+	.activation input[type=checkbox]{
+		width: auto;
+		height: auto;
+		padding: inherit;
+	}
+
+
+
+
+
+
 	.error-profile {
 		color: #D9534F;
 	}
@@ -1098,7 +1111,7 @@ img.item-logo {
 
 
 	.safari .pin input{
-		letter-spacing: 40px;
+		letter-spacing: 30px;
 		font-size: 20px;
 	}
 
@@ -1118,6 +1131,29 @@ img.item-logo {
 	.modal.fade .modal-dialog {
 		margin-top: 60px;
 	}
+
+
+
+.dob-body{
+	padding: 30px 20px;
+}
+
+.dob-body input{
+    padding: 10px;
+    text-align: center;
+}
+
+
+.modal-top{
+	border-top: 0;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.btn-default:hover{
+    background-color: #5E1F75;
+    border-color: #5E1F75;
+}
+
 
 /* ANIMATIONS
 ============================================================================= */
