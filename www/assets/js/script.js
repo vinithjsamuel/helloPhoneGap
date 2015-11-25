@@ -1,7 +1,7 @@
 
 
 var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();var markersArray = [];var markers = new Array();
-var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;
+var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;var flag_offers=0;
 
 var app = angular.module("geo", ['angular-gestures','ngRoute',"ui.map", "ui.event","readMore",'ngTouch'])
 app .config(['$routeProvider',
@@ -26,9 +26,9 @@ app .config(['$routeProvider',
 
 
   }]);
-app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
+app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location)
 {
-
+ $("#date").mask("99   |   99   |   9999",{placeholder:"MM   ǀ   DD   ǀ   YYYY"});
 
   var version ="version2";
   $http({
@@ -46,23 +46,36 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
  });
 
   $("body").show();
+  $(".dob-modal").modal("show");
   $rootScope.homemaintitle = false;
   $(".logo-splash").show();
+  
+  $(".dob-modal").on('click', function (){
+   var dob=$(".dob").val();
 
-  $(".step1").on('click', function (){
-    $('#demoBox2').modal("show");
+    dob=dob.replace(/\s+/g, "");
+    
+    if(dob.length==10)
+    {
+      window.localStorage.setItem("date", dob);
+      $("#demoBox").modal("hide");
+    }
   });
-  $(".steps").on('click', function (){
-    $('#demoBox').modal("show");
-  });
-  var myScroll,
-  pullDownEl, pullDownOffset,
-  pullUpEl, pullUpOffset,
-  generatedCount = 0;
+
+  // $(".step1").on('click', function (){
+  //   $('#demoBox2').modal("show");
+  // });
+  // $(".steps").on('click', function (){
+  //   $('#demoBox').modal("show");
+  // });
+var myScroll,
+pullDownEl, pullDownOffset,
+pullUpEl, pullUpOffset,
+generatedCount = 0;
 
 
 
-  $scope.pullDownAction=function () {
+$scope.pullDownAction=function () {
    // <-- Simulate network congestion, remove setTimeout from production!
    $http({
     method: 'GET',
@@ -122,6 +135,8 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope)
 //   calls();
 // });
 
+
+
 $scope.hideMenu=function()
 {
  $(".user-menu").removeClass("menu-open");
@@ -179,9 +194,8 @@ if(window.localStorage.getItem("outlets") != undefined )
 {
 
   $rootScope.homemaintitle = true;
-  setTimeout(function(){
-    $("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
-  }, 7000);
+
+  $("#status").fadeOut("slow"); $("#preloader").delay(350).fadeOut("slow");
   $rootScope.storage = JSON.parse(window.localStorage['outlets' || '{}']);
 
   var datas=$rootScope.storage;
@@ -190,7 +204,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.useMakes = [];
   $scope.cars=[];
   $scope.cars=datas,$scope.lat1, $scope.lng1;
- 
+
   var nos= datas.length+ " items";
   $(".result").html(nos);
 
@@ -386,7 +400,7 @@ if(window.localStorage.getItem("outlets") != undefined )
         }).success(function(data){
 
           $rootScope.homemaintitle = true;
-          $("#status").fadeOut(); $("#preloader").delay(350).fadeOut("slow");
+          $("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
           window.localStorage['outlets'] = JSON.stringify(data);
           var datas=data;
           var result=data;
@@ -699,154 +713,177 @@ if(window.localStorage.getItem("outlets") != undefined )
 
    }
 
-   $scope.updateOffer = function (offer) {
-     $http.get(offer)
-     .success(function (response) {
+   $scope.checkinternet = function(urls)
+   {
 
-      var datas=response;
-      price = datas;
-      var  total_prices=0;
+     var url= $('#pages-'+urls).attr('data');
+     
+     var networkState = navigator.connection.type;
 
-      $(".offer-nos").html(price.length);
-      for (i = 0; i < price.length; i++) {
+     if(networkState == Connection.NONE) {
+
+      $("#offline-modal").modal("show");
+      $("#preloader-er").fadeOut();
+      $location.path( "/" );
+      return false;
+
+    } 
+    else {
+
+     location.href=url;
+     return true;
+   }
+
+ }
+
+ $scope.updateOffer = function (offer) {
+   $http.get(offer)
+   .success(function (response) {
+
+    var datas=response;
+    price = datas;
+    var  total_prices=0;
+
+    $(".offer-nos").html(price.length);
+    for (i = 0; i < price.length; i++) {
 
 
-        if(price[i].price  !="" || typeof price[i].price != "undefined")
-        {
-
-          total_prices=Number(total_prices)+Number(price[i].price);
-        }
-      }
-
-
-      $(".price").html(total_prices);
-
-
-    });
-
-   };
-
-
-
-   $scope.updateInvite = function (numbers) {
-     $http.get(numbers)
-     .success(function (response) {
-      $(".zero-invite").hide();
-
-      if(response.length <10)
+      if(price[i].price  !="" || typeof price[i].price != "undefined")
       {
-       var value=response.length;
-       var nos= 10-Number(value);
-       $(".invite-left").html(nos);
-     }
-     else
-     {
-      $("invites").hide();
-      $(".invite-left").html(0);
+
+        total_prices=Number(total_prices)+Number(price[i].price);
+      }
     }
+
+
+    $(".price").html(total_prices);
 
 
   });
 
-   };
+ };
 
-   $scope.loginCheck = function (logins) {
 
-     var email_id= $(".user-name").html();
-     var deviceid= $(".device-id").html();
 
-     var name = email_id.split('@')[0];
-     var user = name+deviceid;var flag=0;
+ $scope.updateInvite = function (numbers) {
+   $http.get(numbers)
+   .success(function (response) {
+    $(".zero-invite").hide();
 
-     var login="http://getguzzle.com/app-test/login/"+user;
-     $http.get(login)
-     .success(function (response) {
+    if(response.length <10)
+    {
+     var value=response.length;
+     var nos= 10-Number(value);
+     $(".invite-left").html(nos);
+   }
+   else
+   {
+    $("invites").hide();
+    $(".invite-left").html(0);
+  }
 
-      var data=response;
 
-      if(data.length !=0)
+});
+
+ };
+
+ $scope.loginCheck = function (logins) {
+
+   var email_id= $(".user-name").html();
+   var deviceid= $(".device-id").html();
+
+   var name = email_id.split('@')[0];
+   var user = name+deviceid;var flag=0;
+
+   var login="http://getguzzle.com/app-test/login/"+user;
+   $http.get(login)
+   .success(function (response) {
+
+    var data=response;
+
+    if(data.length !=0)
+    {
+
+      for(i=0;i<data.length;i++)
       {
 
-        for(i=0;i<data.length;i++)
+        if(data[i].email==email_id && data[i].device==deviceid)
         {
-
-          if(data[i].email==email_id && data[i].device==deviceid)
-          {
-           var myname=data[i].names;
-           if(myname == "" || typeof myname == "undefined")
-           {
-             $(".name").html(name);
-           }
-           else
-           {
-             $(".name").html(myname);
-           }
-           $(".mynames").html(name);
-           $(".login").html(user);
-           $(".entry").html(data[i].entry);
-           var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
-           var offer="http://getguzzle.com/app-test/offer-used/"+user;
-           $scope.updateInvite(numbers);
-           $scope.updateOffer(offer);
-
-
-
+         var myname=data[i].names;
+         if(myname == "" || typeof myname == "undefined")
+         {
+           $(".name").html(name);
          }
          else
          {
-           flag=1;
-
-
+           $(".name").html(myname);
          }
+         $(".mynames").html(name);
+         $(".login").html(user);
+         $(".entry").html(data[i].entry);
+         var numbers="http://getguzzle.com/app-test/invite-nos/"+user;
+         var offer="http://getguzzle.com/app-test/offer-used/"+user;
+         $scope.updateInvite(numbers);
+         $scope.updateOffer(offer);
+
+
+
+       }
+       else
+       {
+         flag=1;
+
 
        }
 
      }
-     else
-     {
 
-     }
-
-
-   });
-
-   };
-
-
-
-
-
-
-
-   $scope.list = function()
+   }
+   else
    {
-    $('body').removeClass("page-map");
-    $('body').removeClass("page-profile");
-    $('body').removeClass("page-detail");
-    $('body').addClass("page-list");
-    $(".list-show").show();
-    $(".maps").hide();
-    $(".result").hide();
-    $(".items-show").hide();
 
-    flag=1;
-  }
+   }
+
+
+ });
+
+ };
 
 
 
-  $scope.Mapsfn = function(lat,lang) {
-    var latlng = new google.maps.LatLng(lat,lang);
 
-    $('body').removeClass("page-list");
-    $('body').removeClass("page-profile");
-    $('body').removeClass("page-detail");
-    $('body').addClass("page-map");
-    $(".list-show").hide();
-    $(".items-show").hide();
-    $(".result").show();
-    $(".maps").show();
-    var bounds = new google.maps.LatLngBounds();
-    bounds.extend( latlng );
+
+
+
+ $scope.list = function()
+ {
+  $('body').removeClass("page-map");
+  $('body').removeClass("page-profile");
+  $('body').removeClass("page-detail");
+  $('body').addClass("page-list");
+  $(".list-show").show();
+  $(".maps").hide();
+  $(".result").hide();
+  $(".items-show").hide();
+
+  flag=1;
+}
+
+
+
+$scope.Mapsfn = function(lat,lang) {
+  var latlng = new google.maps.LatLng(lat,lang);
+
+  $('body').removeClass("page-list");
+  $('body').removeClass("page-profile");
+  $('body').removeClass("page-detail");
+  $('body').addClass("page-map");
+  $(".list-show").hide();
+  $(".items-show").hide();
+  $(".result").show();
+  $(".maps").show();
+  var bounds = new google.maps.LatLngBounds();
+  bounds.extend( latlng );
 
         // $scope.model.myMap.setCenter(latlng);
         google.maps.event.trigger($scope.model.myMap, 'resize' );
@@ -1180,6 +1217,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
     app.controller("profileController", function($scope,$http) {
       $(".main").hide();
       $("#myModal").modal('hide');
+      $("#profile-complete").modal('hide');
       $('body').removeClass("page-map");
       $('body').removeClass("page-list");
       $('body').removeClass("page-detail");
@@ -1198,13 +1236,13 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       {
         user="undefined"
       }
-        $scope.namer="";
-        $scope.emails="";
-        $scope.gender="";
-        $scope.mobile="";
+      $scope.namer="";
+      $scope.emails="";
+      $scope.gender="";
+      $scope.mobile="";
 
-        $scope.city="";
-        $scope.country="";
+      $scope.city="";
+      $scope.country="";
       var logins="http://getguzzle.com/app-test/login/"+user;
       $http.get(logins)
       .success(function (response) {
@@ -1275,17 +1313,50 @@ $scope.checkComplete=function()
   }
 });
   
- 
+
   if(cntreq==cntvals)
   {
-   
+
    window.localStorage.setItem("profile", "completed");
  }
 
  else
  {
-  
+
   window.localStorage.setItem("profile", "incomplete");
+}
+$scope.Complete();
+}
+
+$scope.Complete=function()
+{
+  var cntreqs = 0;
+  var centvals = 0;
+  $('input').each(function(i, val) {
+   if($(this).attr('not-required') == 'not-required') {
+    cntreqs++;
+
+    if($(this).val() != '') {
+
+
+      centvals++;
+      
+    }
+  }
+});
+
+  
+  
+  if(cntreqs==centvals)
+  {
+
+   window.localStorage.setItem("showprofile", "completed");
+ }
+
+ else
+ {
+
+  window.localStorage.setItem("showprofile", "incomplete");
 }
 
 }
@@ -1369,7 +1440,7 @@ app.controller("outController", function($scope,$routeParams,$http)
 
   var  map;
   
- checkInternet();
+  checkInternet();
 
   function initialize(lat,longi) {
 
@@ -1516,85 +1587,104 @@ $http.get(urls)
  voucher_data=response;
  var results=voucher_data;
 
+  $(".dob-nos").html(window.localStorage.getItem("date"));
+ var date= $(".dob-nos").html();
+ var day = date.substr(0, 2);
+ var month = date.substr(3, 2);
+ var year = date.substr(6, 4);
+ var age = 18;
+ var mydate = new Date();
+ mydate.setFullYear(year, month-1, day);
+
+ var currdate = new Date();
+ var setDate = new Date();        
+ setDate.setFullYear(mydate.getFullYear() + age,month-1, day);
+
+ if ((currdate - setDate) > 0){
+    // you are above 18
+    $scope.age=0;
+  }else{
+    $scope.age=1;
+  }
 
 
- for (i = 0; i < results.length; i++) {
+  for (i = 0; i < results.length; i++) {
 
-  var house=voucher_data[i].housebeverage;
-  var beverage=null;
-  if(voucher_data[i].title=="2 for 1 house beverage")
-  {
-
-    if(house == "" || typeof house == "undefined" )
+    var house=voucher_data[i].housebeverage;
+    var beverage=null;
+    if(voucher_data[i].title=="2 for 1 house beverage")
     {
-      var beverage=voucher_data[i].housebeverage
-    }
-    else
-    {
-      var beverage=house.replace(/\s\s+/g, ' | ');
-      var words = beverage.split("|");
-      var temps1="",temps2="",temps3="",temps4="";
-      var trims=[];
-      for (var k = 0; k < words.length ; k++) {
 
-        trims[k]=$.trim(words[k])
-        if(trims[k]=="Malt")
-        {
-          if(voucher_data[i].Malt == "" || typeof voucher_data[i].Malt == "undefined")
+      if(house == "" || typeof house == "undefined" )
+      {
+        var beverage=voucher_data[i].housebeverage
+      }
+      else
+      {
+        var beverage=house.replace(/\s\s+/g, ' | ');
+        var words = beverage.split("|");
+        var temps1="",temps2="",temps3="",temps4="";
+        var trims=[];
+        for (var k = 0; k < words.length ; k++) {
+
+          trims[k]=$.trim(words[k])
+          if(trims[k]=="Malt")
           {
-            temps1="Malt";
+            if(voucher_data[i].Malt == "" || typeof voucher_data[i].Malt == "undefined")
+            {
+              temps1="Malt";
 
+            }
+            else
+            {
+              temps1=voucher_data[i].Malt;
+            }
+          }
+          if(trims[k]=="Grape")
+          {
+            if(voucher_data[i].Grape == "" || typeof voucher_data[i].Grape == "undefined")
+            {
+             temps2=" Grape";
+           }
+           else
+           {
+            temps2=" "+voucher_data[i].Grape;
+          }
+        }
+        if(trims[k]=="Spirits")
+        {
+          if(voucher_data[i].Spirits == "" || typeof voucher_data[i].Spirits == "undefined")
+          {
+            temps3=" Spirits";
           }
           else
           {
-            temps1=voucher_data[i].Malt;
+            temps3=" "+voucher_data[i].Spirits;
           }
         }
-        if(trims[k]=="Grape")
+        if(trims[k]=="Soft drinks")
         {
-          if(voucher_data[i].Grape == "" || typeof voucher_data[i].Grape == "undefined")
+          if(voucher_data[i].SoftDrinks == "" || typeof voucher_data[i].SoftDrinks == "undefined")
           {
-           temps2=" Grape";
+           temps4=" Soft Drinks";
          }
          else
          {
-          temps2=" "+voucher_data[i].Grape;
+          temps4=" "+voucher_data[i].SoftDrinks;
         }
+
       }
-      if(trims[k]=="Spirits")
-      {
-        if(voucher_data[i].Spirits == "" || typeof voucher_data[i].Spirits == "undefined")
-        {
-          temps3=" Spirits";
-        }
-        else
-        {
-          temps3=" "+voucher_data[i].Spirits;
-        }
-      }
-      if(trims[k]=="Soft drinks")
-      {
-        if(voucher_data[i].SoftDrinks == "" || typeof voucher_data[i].SoftDrinks == "undefined")
-        {
-         temps4=" Soft Drinks";
-       }
-       else
-       {
-        temps4=" "+voucher_data[i].SoftDrinks;
-      }
+
+
+      beverage= temps1+" "+temps2+" "+temps3+" "+temps4;
+
+      beverage=$.trim(beverage);
+      beverage=beverage.replace(/\s\s+/g, ' | ');
+
+
 
     }
-
-
-    beverage= temps1+" "+temps2+" "+temps3+" "+temps4;
-
-    beverage=$.trim(beverage);
-    beverage=beverage.replace(/\s\s+/g, ' | ');
-
-    
-
   }
-}
 }
 else
 {
@@ -1605,6 +1695,12 @@ else
 }
 var login_id=$(".login").html();
 $scope.vouchers[i].housebeverage=beverage;
+if(voucher_data[i].id==130 ||voucher_data[i].id==135||voucher_data[i].id==133  )
+{
+
+  $scope.vouchers[i].alcohol=1;
+  
+}
 var day=$scope.vouchers[i].day;
 var month=$scope.vouchers[i].month-1;
 var year=$scope.vouchers[i].year;
@@ -1665,6 +1761,7 @@ $scope.goBack= function(url) {
 
    $scope.pinVerf = function(url) {
     var user;var profiles;
+    $(".code-"+url).show();
     var email_id= $(".user-name").html();
     var deviceid= $(".device-id").html();
     login_id=$(".login").html();
@@ -1688,6 +1785,7 @@ $scope.goBack= function(url) {
 
 
   $scope.pageVerf = function(url,voucher1) {
+
     var code=$(".code-"+url).val();
     var empcode=$(".code1").html();
     var empdata=$(".code1").attr("data-id");
@@ -1699,8 +1797,10 @@ $scope.goBack= function(url) {
     var flag=0; var final_code=0;var users="";
 
     if(code.length > 3){
-      if(code== empcode)
-      {
+     checkInternet();
+     $(".code-"+url).hide();
+     if(code== empcode)
+     {
        flag=1;
        users =empdata
        final_code= empcode;
@@ -1738,6 +1838,7 @@ $scope.goBack= function(url) {
     var newId = Date.now().toString().substr(7);
     var strings= outlet_name.substr(0, 2);
     var id=strings+" "+newId;
+
     $(".code-"+url).val(null);
 
     var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id};
@@ -1753,12 +1854,13 @@ $scope.goBack= function(url) {
         if(response.status==true)
         {
 
+          $(".code-"+url).show();
           $(".confirm-"+url).hide();
           $(".result-"+url).show();
           var number=$(".number-"+url).html();
           var values= Number(number)-1;
 
-          if(values==0)
+          if(values<=0)
           {
             $(".pending-"+url).hide();
             $(".finished-"+url).show();
@@ -1769,26 +1871,45 @@ $scope.goBack= function(url) {
           $(".number-"+url).html(values);
           $(".redem-code-"+url).html(id);
           $(".price").html(total);
-          var offer=$(".offer-nos").html();
-          offer++;
-          if(offer==2)
+
+          flag_offers=flag_offers+1;
+
+
+
+          if(flag_offers % 2 === 0)
           {
-            $("#invite-friends").modal("show");
+
+            var left=$(".invite-left").html();
+            if(left > 0)
+            {
+              $("#invite-friends").modal("show");
+            }
           }
-          if(offer % 5 === 0)
+          else
           {
-            $("#invite-friends").modal("show");
+
+
+           if(window.localStorage.getItem("showprofile") == "completed"  )
+           {
+
+
+           }
+           else
+           {
+            $("#profile-complete").modal("show");
           }
 
         }
-        else
-        {
-          $(".confirm-"+url).hide();
-          $(".error-"+url).show();
-        }
+      }
+      else
+      {
+        $(".code-"+url).show();
+        $(".confirm-"+url).hide();
+        $(".error-"+url).show();
+      }
 
-      },
-      error      : function() {
+    },
+    error      : function() {
             //console.error("error");
             $(".confirm-"+url).hide();
             $(".error-"+url).show();
@@ -1850,16 +1971,16 @@ function insertData()
     data:{json: JSON.stringify(data)},
     dataType   : 'json',
     success    : function(response,status) {
-       
+
 
       if(response.status==true)
       {
- 
+
         $(".login").html(data_email);
         login_id=$(".login").html();
-  
-      window.localStorage.setItem("emails", email);
-      window.localStorage.setItem("profile", "completed");
+
+        window.localStorage.setItem("emails", email);
+        window.localStorage.setItem("profile", "completed");
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
@@ -1870,21 +1991,48 @@ function insertData()
       {
 
        $("#myModal").modal('hide');
-      
+
 
 
      }
 
    },
    error      : function() {
-             console.error(status +response );
+     console.error(status +response );
 
-            $("#myModal").modal('hide');
+     $("#myModal").modal('hide');
 
-          }
-        });
+   }
+ });
 }
+
+
 function createData()
+{
+  var terms=0;
+  var email= $(".modals-id").val();
+  var name=$(".modal-screen").val();
+  
+  if($(".terms").prop('checked') == true){
+    terms=1;
+
+  }
+  if(email.length>0 && name.length>0 && terms==1)
+  {
+   RegisterCheck();
+ }
+ else
+ {
+   $(".register-error").show();
+   setTimeout(function(){
+    $(".register-error").hide();
+  }, 2000);
+ }
+
+
+}
+
+function RegisterCheck()
 {
   var email= $(".modals-id").val();
   var deviceid= $(".device-id").html();
@@ -1910,16 +2058,16 @@ function createData()
     data:{json: JSON.stringify(data)},
     dataType   : 'json',
     success    : function(response,status) {
-       
+
 
       if(response.status==true)
       {
- 
+
         $(".login").html(data_email);
         login_id=$(".login").html();
-  
-      window.localStorage.setItem("emails", email);
-      window.localStorage.setItem("profile", "completed");
+
+        window.localStorage.setItem("emails", email);
+        window.localStorage.setItem("profile", "completed");
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
@@ -1937,12 +2085,12 @@ function createData()
 
    },
    error      : function() {
-             console.error(status +response );
+     console.error(status +response );
 
-            $("#myModal").modal('hide');
+     $("#myModal").modal('hide');
 
-          }
-        });
+   }
+ });
 }
 
 
@@ -2155,17 +2303,23 @@ function mapClick()
 
 }
 
-function checkInternet() {
+function checkInternet(url) {
+
 
   var networkState = navigator.connection.type;
 
   if(networkState == Connection.NONE) {
 
+
     $("#offline-modal").modal("show");
+    $("#preloader-er").fadeOut();
+    //$location.path( "/" );
     return false;
 
-  } else {
+  } 
+  else {
 
+   //$location.path(url);
    return true;
  }
 }
