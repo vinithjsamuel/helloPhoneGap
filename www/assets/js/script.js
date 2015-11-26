@@ -1054,7 +1054,7 @@ $scope.Mapsfn = function(lat,lang) {
     if(response.status==true)
     {
     
-      $('#outlet-feed').modal('hide');
+      $('#outlet-feed').modal("hide");
  
 
    }
