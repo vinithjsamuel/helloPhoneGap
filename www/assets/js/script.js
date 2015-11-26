@@ -407,10 +407,7 @@ if(window.localStorage.getItem("outlets") != undefined )
             }
           }
 
-          var options = { timeout: 30000 };
-          var watchID = null;
-          
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors, options);
+         
 
 
           $scope.filterMakes = function ()
@@ -656,10 +653,9 @@ if(window.localStorage.getItem("outlets") != undefined )
           }
           $scope.getLocation();
           
-          var options = { timeout: 30000 };
-          var watchID = null;
+         
           
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
+         
 
         }).error(function(){
 
