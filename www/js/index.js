@@ -52,7 +52,7 @@ var destinationType; // sets the format of returned value
    {
      setTimeout(function() {
       navigator.splashscreen.hide();
-    }, 150);
+    }, 550);
    }
    if(navigator.network.connection.type == Connection.NONE) {
       $("#offline-modal").modal('show');
