@@ -77,12 +77,12 @@
 
 
 </head>
- 
+
 <div id="preloader">
-  <div id="status">
+ <!--  <div id="status">
     <img alt="logo-splash" src="assets/images/logo-white.png" class="logo-splash" width="180" style="display:none;" /><br>
     <p class="loading"></p>
-  </div>
+  </div> -->
 </div>
 
 <body ng-app="geo" class="page-list" style="display:none;">
@@ -149,7 +149,7 @@
             <ul class="reset"  ng-init="group = (cars | groupBy:'type')">
               <li ng-repeat="m in group" >
                 <div class="switch f-right"  >
-                  <input id=" {{m}}" class="cmn-toggle cmn-toggle-round" type="checkbox"   ng-model="useMakes[$index]">
+                  <input id=" {{m}}" class="cmn-toggle cmn-toggle-round outlets-type" type="checkbox"   ng-model="useMakes[$index]">
                   <label for="{{m}}"></label>
                 </div>
                 {{m}}
@@ -287,7 +287,7 @@
         <input type="checkbox"  name="terms" class="modals-id terms"  checked="checked" value="yes">
         I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a>
       </div>
-       <p class="register-error" style="display:none;">All fields are mandatory.</p>
+      <p class="register-error" style="display:none;">All fields are mandatory.</p>
     </div>
 
     <div class="modal-footer">
@@ -428,8 +428,10 @@ data-keyboard="false">
     <div class="modal-body centered dob-body">
      <!-- <p>Welcome to the guzzle app. </p> -->
      <p>Please enter your date of birth</p>
-     <input id="date" type="text" class="dob" class="modal-screen" placeholder="MM   ǀ   DD   ǀ   YYYY">
+     <input id="date" type="tel" class="dob" class="modal-screen" placeholder="DD   ǀ   MM   ǀ   YYYY">
+
      <button type="button" class=" btn btn-default dob-modal" >Enter</button>
+     <p class="date-error" style="display:none;">Invalid Date</p>
    </div>
 
  </div>
@@ -588,9 +590,9 @@ data-keyboard="false">
   <script src="assets/js/angular-touch.min.js"></script>
   <script src="assets/js/script.js"></script>
 
- 
- <script type="text/javascript" src="cordova.js"></script>
- <script type="text/javascript" src="js/index.js"></script>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 
 
 </div><!-- end js -->
