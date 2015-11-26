@@ -636,7 +636,7 @@ if(window.localStorage.getItem("outlets") != undefined )
           $scope.getLocation = function () {
             if (navigator.geolocation) {
 
-              //navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+              navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
             }
             else {
               $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
