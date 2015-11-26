@@ -1053,12 +1053,9 @@ $scope.Mapsfn = function(lat,lang) {
 
     if(response.status==true)
     {
-     $(".outlet-success").show();
-
-     setTimeout(function() {
-      $(".outlet-success").hide();
+    
       $('#outlet-feed').modal('hide');
-    }, 2000)
+ 
 
    }
 
