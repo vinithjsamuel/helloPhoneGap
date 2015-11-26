@@ -28,6 +28,7 @@ app .config(['$routeProvider',
   }]);
 app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location)
 {
+
  $("#date").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
 
  var version ="version2";
@@ -280,7 +281,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.showPositions = function (position)
   {
 
-    
+
     $scope.$apply();
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     var images = {
@@ -342,11 +343,12 @@ if(window.localStorage.getItem("outlets") != undefined )
     }
 
     /*License agreement popup*/
-    if (window.localStorage.getItem("install") == undefined) {
+    if (window.localStorage.getItem("date") == undefined) {
      /* run function */
-     $('#demoBox').modal("show");
-     var val=window.localStorage.getItem("install");
      window.localStorage.setItem("install", true);
+     $('#demoBox').modal("show");
+
+
    }
 
 
@@ -542,11 +544,12 @@ if(window.localStorage.getItem("outlets") != undefined )
 
 
     /*License agreement popup*/
-    if (window.localStorage.getItem("install") == undefined) {
+    if (window.localStorage.getItem("date") == undefined) {
      /* run function */
-     $('#demoBox').modal("show");
-     var val=window.localStorage.getItem("install");
      window.localStorage.setItem("install", true);
+     $('#demoBox').modal("show");
+     
+
    }
 
 
@@ -1301,66 +1304,66 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
   });
 
     app.controller("profileController", function($scope,$http) {
-       $("#dates").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
-      $(".main").hide();
-      $("#myModal").modal('hide');
-      $("#profile-complete").modal('hide');
-      $('body').removeClass("page-map");
-      $('body').removeClass("page-list");
-      $('body').removeClass("page-detail");
-      $('body').addClass("page-profile");
-      $(".user-menu").removeClass("menu-open");
-      $("body").removeClass("menu-open");
-      $(".result").hide();
+     $("#dates").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
+     $(".main").hide();
+     $("#myModal").modal('hide');
+     $("#profile-complete").modal('hide');
+     $('body').removeClass("page-map");
+     $('body').removeClass("page-list");
+     $('body').removeClass("page-detail");
+     $('body').addClass("page-profile");
+     $(".user-menu").removeClass("menu-open");
+     $("body").removeClass("menu-open");
+     $(".result").hide();
 
 
-      var user=$(".login").html();
-      if(user != "")
+     var user=$(".login").html();
+     if(user != "")
+     {
+
+     }
+     else
+     {
+      user="undefined"
+    }
+    $scope.namer="";
+    $scope.emails="";
+    $scope.gender="";
+    $scope.mobile="";
+
+    $scope.city="";
+    $scope.country="";
+    var logins="http://getguzzle.com/app-test/login/"+user;
+    $http.get(logins)
+    .success(function (response) {
+
+      var profile=response;
+
+      $scope.namer=profile[0].names;
+      $scope.emails=profile[0].email;
+      $scope.gender=['male ', 'female'];
+      $scope.mobile=profile[0].mobile;
+      $(".birthday").val(window.localStorage.getItem("date"));
+      $scope.city=profile[0].city;
+      $scope.country=profile[0].country;
+
+      $("input[name=cf_gender][value="+profile[0].gender+"]").attr('checked', true);
+      $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
+      $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
+      $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
+      $scope.alcohol = ['Yes', 'No'];
+      $scope.profiles = {
+        alcohol: profile[0].alcohol,
+        gender: profile[0].gender
+      };
+      if($scope.emails!="")
       {
-
+        $(".emails-id").prop('readonly', true);;
       }
-      else
-      {
-        user="undefined"
-      }
-      $scope.namer="";
-      $scope.emails="";
-      $scope.gender="";
-      $scope.mobile="";
-
-      $scope.city="";
-      $scope.country="";
-      var logins="http://getguzzle.com/app-test/login/"+user;
-      $http.get(logins)
-      .success(function (response) {
-
-        var profile=response;
-
-        $scope.namer=profile[0].names;
-        $scope.emails=profile[0].email;
-        $scope.gender=['male ', 'female'];
-        $scope.mobile=profile[0].mobile;
-        $(".birthday").val(window.localStorage.getItem("date"));
-        $scope.city=profile[0].city;
-        $scope.country=profile[0].country;
-        
-        $("input[name=cf_gender][value="+profile[0].gender+"]").attr('checked', true);
-        $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
-        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
-        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
-        $scope.alcohol = ['Yes', 'No'];
-        $scope.profiles = {
-          alcohol: profile[0].alcohol,
-          gender: profile[0].gender
-        };
-        if($scope.emails!="")
-        {
-          $(".emails-id").prop('readonly', true);;
-        }
-        setTimeout(function(){
-          $scope.checkComplete();
-        }, 2000);
-      });
+      setTimeout(function(){
+        $scope.checkComplete();
+      }, 2000);
+    });
 
      //  $(".emails-id").focusout(function() {
      //    alert("fdfsf00");
@@ -1369,6 +1372,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
 
      // });
 $(".profile-page input[type=text]").focusout(function() {
+  $scope.Complete();
   $scope.checkComplete();
   var dob=$(".birthday").val();
 
@@ -1446,7 +1450,9 @@ else
 dob=dob.replace(/\s+/g, "");
 if(dob.length==10)
 {
+
   window.localStorage.setItem("date", dob);
+
   $scope.updateProfile();
 }
 
@@ -1455,10 +1461,12 @@ if(dob.length==10)
 
 });
 $(".profile-page select").change(function() {
+  $scope.Complete();
   $scope.checkComplete();
   $scope.updateProfile();
 });
 $(".profile-page input[type=radio]").change(function() {
+  $scope.Complete();
   $scope.checkComplete();
   $scope.updateProfile();
 });
@@ -1468,7 +1476,7 @@ $scope.checkComplete=function()
   var cntreq = 0;
   var cntvals = 0;
   $('input').each(function(i, val) {
-   if($(this).attr('required') == 'required') {
+   if($(this).attr('data-id') == 'required') {
     cntreq++;
 
     if($(this).val() != '') {
@@ -1492,7 +1500,7 @@ $scope.checkComplete=function()
 
   window.localStorage.setItem("profile", "incomplete");
 }
-$scope.Complete();
+
 }
 
 $scope.Complete=function()
@@ -1500,7 +1508,7 @@ $scope.Complete=function()
   var cntreqs = 0;
   var centvals = 0;
   $('input').each(function(i, val) {
-   if($(this).attr('not-required') == 'not-required') {
+   if($(this).attr('data-id') == 'manadatory') {
     cntreqs++;
 
     if($(this).val() != '') {
@@ -1965,7 +1973,8 @@ $scope.goBack= function(url) {
 
     if(code.length > 3){
      checkInternet();
-     $(".code-"+url).hide();
+     $(".order-"+url).attr("disable");
+     $(".code-"+url).attr("disable");
      if(code== empcode)
      {
        flag=1;
@@ -2021,62 +2030,61 @@ $scope.goBack= function(url) {
         if(response.status==true)
         {
 
-          $(".code-"+url).show();
-          $(".confirm-"+url).hide();
-          $(".result-"+url).show();
-          var number=$(".number-"+url).html();
-          var values= Number(number)-1;
+         $(".confirm-"+url).hide();
+         $(".result-"+url).show();
+         var number=$(".number-"+url).html();
+         var values= Number(number)-1;
 
-          if(values<=0)
-          {
-            $(".pending-"+url).hide();
-            $(".finished-"+url).show();
-
-
-
-          }
-          $(".number-"+url).html(values);
-          $(".redem-code-"+url).html(id);
-          $(".price").html(total);
-
-          flag_offers=flag_offers+1;
-
-
-
-          if(flag_offers % 2 === 0)
-          {
-
-            var left=$(".invite-left").html();
-            if(left > 0)
-            {
-              $("#invite-friends").modal("show");
-            }
-          }
-          else
-          {
-
-
-           if(window.localStorage.getItem("showprofile") == "completed"  )
-           {
-
-
-           }
-           else
-           {
-            $("#profile-complete").modal("show");
-          }
-
+         if(values<=0)
+         {
+          $(".pending-"+url).hide();
+          $(".finished-"+url).show();
         }
-      }
-      else
-      {
-        $(".code-"+url).show();
-        $(".confirm-"+url).hide();
-        $(".error-"+url).show();
-      }
+        $(".number-"+url).html(values);
+        $(".redem-code-"+url).html(id);
+        $(".price").html(total);
+        $(".order-"+url).removeAttr("disable");
+        $(".code-"+url).removeAttr("disable");
+        flag_offers=flag_offers+1;
 
-    },
-    error      : function() {
+
+
+        if(flag_offers % 2 === 0)
+        {
+
+          var left=$(".invite-left").html();
+          if(left > 0)
+          {
+            $("#invite-friends").modal("show");
+          }
+        }
+        else
+        {
+
+
+         if(window.localStorage.getItem("showprofile") == "completed"  )
+         {
+
+
+         }
+         else
+         {
+          $("#profile-complete").modal("show");
+        }
+
+      }
+    }
+    else
+    {
+
+     $(".confirm-"+url).hide();
+     $(".error-"+url).show();
+     $(".order-"+url).removeAttr("disable");
+     $(".code-"+url).removeAttr("disable");
+   }
+
+ },
+ error      : function() {
             //console.error("error");
             $(".confirm-"+url).hide();
             $(".error-"+url).show();
@@ -2179,15 +2187,16 @@ function createData()
   var terms=0;
   var email= $(".modals-id").val();
   var name=$(".modal-screen").val();
-  
+  var email_valid=$(".emails-error").html();
+
   if($(".terms").prop('checked') == true){
     terms=1;
-
   }
-  if(email.length>0 && name.length>0 && terms==1)
+  if(name.length>0 && terms==1 && email_valid == "true")
   {
    RegisterCheck();
  }
+
  else
  {
    $(".register-error").show();
@@ -2198,7 +2207,6 @@ function createData()
 
 
 }
-
 function RegisterCheck()
 {
   var email= $(".modals-id").val();
