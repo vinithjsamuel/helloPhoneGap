@@ -28,39 +28,103 @@ app .config(['$routeProvider',
   }]);
 app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location)
 {
- $("#date").mask("99   |   99   |   9999",{placeholder:"MM   ǀ   DD   ǀ   YYYY"});
+ $("#date").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
 
-  var version ="version2";
-  $http({
-    method: 'GET',
-    url: 'http://getguzzle.com/app-test/version',
+ var version ="version2";
+ $http({
+  method: 'GET',
+  url: 'http://getguzzle.com/app-test/version',
 
-  }).success(function(data){
+}).success(function(data){
 
-    if(version!=data[0].title)
+  if(version!=data[0].title)
+  {
+   $('#version-modal').modal("show");
+
+ }
+
+});
+
+$("body").show();
+
+$rootScope.homemaintitle = false;
+$(".logo-splash").show();
+
+$(".dob-modal").on('click', function (){
+ var dob=$(".dob").val();
+ var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\|](0?[1-9]|1[012])[\|]\d{4}$/;
+ var Val_date=dob.replace(/\s+/g, "");
+
+ if(Val_date.match(dateformat)){
+
+  var splitdate = Val_date.split('|');
+
+
+  var dd = parseInt(splitdate[0]);
+
+  var mm  = parseInt(splitdate[1]);
+  var yy = parseInt(splitdate[2]);
+  var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+  if (mm==1 || mm>2)
+  {
+    if (dd>ListofDays[mm-1])
     {
-     $('#version-modal').modal("show");
-     
-   }
-   
- });
+      $(".date-error").show();
+      $(".dob").val(null);
+      setTimeout(function() {
+        $(".date-error").hide();
 
-  $("body").show();
-  
-  $rootScope.homemaintitle = false;
-  $(".logo-splash").show();
-  
-  $(".dob-modal").on('click', function (){
-   var dob=$(".dob").val();
-
-    dob=dob.replace(/\s+/g, "");
-    
-    if(dob.length==10)
-    {
-      window.localStorage.setItem("date", dob);
-      $("#demoBox").modal("hide");
+      }, 1000)
+      return false;
     }
-  });
+  }
+  if (mm==2)
+  {
+    var lyear = false;
+    if ( (!(yy % 4) && yy % 100) || !(yy % 400))
+    {
+      lyear = true;
+    }
+    if ((lyear==false) && (dd>=29))
+    {
+     $(".date-error").show();
+     $(".dob").val(null);
+     setTimeout(function() {
+      $(".date-error").hide();
+
+    }, 1000)
+     return false;
+   }
+   if ((lyear==true) && (dd>29))
+   {
+    $(".date-error").show();
+    $(".dob").val(null);
+    setTimeout(function() {
+      $(".date-error").hide();
+
+    }, 1000)
+    return false;
+  }
+}
+}
+else
+{
+ $(".date-error").show();
+ $(".dob").val(null);
+ setTimeout(function() {
+  $(".date-error").hide();
+  
+}, 1000)
+
+ return false;
+}
+dob=dob.replace(/\s+/g, "");
+if(dob.length==10)
+{
+  window.localStorage.setItem("date", dob);
+  $("#demoBox").modal("hide");
+}
+});
 
   // $(".step1").on('click', function (){
   //   $('#demoBox2').modal("show");
@@ -216,7 +280,7 @@ if(window.localStorage.getItem("outlets") != undefined )
   $scope.showPositions = function (position)
   {
 
-
+    
     $scope.$apply();
     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     var images = {
@@ -703,7 +767,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     $scope.listItem = function()
     {
-     $scope.getLocations();
+     $scope.getLocation();
      $('body').removeClass("page-list");
      $('body').addClass("page-map");
      $(".list-show").show();
@@ -1106,9 +1170,31 @@ $scope.addUser = function() {
 
 }
 
+$scope.changeDistance=function(position)
+{
+  $scope.lat1=position.coords.latitude;
+  $scope.lng1=position.coords.longitude;
+
+  for (i = 0; i < $scope.cars.length; i++) 
+  {
+    var lat=$scope.cars[i].latitude;
+    var longi=$scope.cars[i].longitude;var infobox;
+    var latlng = new google.maps.LatLng($scope.lat1,$scope.lng1);
+    var dist=distance($scope.lat1,$scope.lng1,lat,longi,"K",i);
+      //update distance on move
+      $scope.cars[i].distance=dist;
+    }
+    $scope.$apply(); 
+  }
 
 
+  
+  var options = { maximumAge: 30000 };
+  var watchNavi = null;
+  watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
 
+
+//END main controller
 });
 
 
@@ -1215,6 +1301,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
   });
 
     app.controller("profileController", function($scope,$http) {
+       $("#dates").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
       $(".main").hide();
       $("#myModal").modal('hide');
       $("#profile-complete").modal('hide');
@@ -1253,7 +1340,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.emails=profile[0].email;
         $scope.gender=['male ', 'female'];
         $scope.mobile=profile[0].mobile;
-
+        $(".birthday").val(window.localStorage.getItem("date"));
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
         
@@ -1283,7 +1370,87 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
      // });
 $(".profile-page input[type=text]").focusout(function() {
   $scope.checkComplete();
+  var dob=$(".birthday").val();
+
+  var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\|](0?[1-9]|1[012])[\|]\d{4}$/;
+  var Val_date=dob.replace(/\s+/g, "");
+
+  if(Val_date.match(dateformat)){
+
+
+    var splitdate = Val_date.split('|');
+
+
+    var dd = parseInt(splitdate[0]);
+
+    var mm  = parseInt(splitdate[1]);
+    var yy = parseInt(splitdate[2]);
+    var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if (mm==1 || mm>2)
+    {
+      if (dd>ListofDays[mm-1])
+      {
+
+        $(".date-errors").show();
+        $(".birthday").val(null);
+        setTimeout(function() {
+          $(".date-errors").hide();
+
+        }, 1000)
+        return false;
+      }
+    }
+    if (mm==2)
+    {
+      var lyear = false;
+      if ( (!(yy % 4) && yy % 100) || !(yy % 400))
+      {
+        lyear = true;
+      }
+      if ((lyear==false) && (dd>=29))
+      {
+
+       $(".date-errors").show();
+       $(".birthday").val(null);
+       setTimeout(function() {
+        $(".date-errors").hide();
+
+      }, 1000)
+       return false;
+     }
+     if ((lyear==true) && (dd>29))
+     {
+
+      $(".date-errors").show();
+      $(".birthday").val(null);
+      setTimeout(function() {
+        $(".date-errors").hide();
+
+      }, 1000)
+      return false;
+    }
+  }
+}
+else
+{
+
+ $(".date-errors").show();
+ $(".birthday").val(null);
+ setTimeout(function() {
+  $(".date-errors").hide();
+  
+}, 1000)
+
+ return false;
+}
+dob=dob.replace(/\s+/g, "");
+if(dob.length==10)
+{
+  window.localStorage.setItem("date", dob);
   $scope.updateProfile();
+}
+
+
 }).blur(function() {
 
 });
@@ -1587,7 +1754,7 @@ $http.get(urls)
  voucher_data=response;
  var results=voucher_data;
 
-  $(".dob-nos").html(window.localStorage.getItem("date"));
+ $(".dob-nos").html(window.localStorage.getItem("date"));
  var date= $(".dob-nos").html();
  var day = date.substr(0, 2);
  var month = date.substr(3, 2);
