@@ -296,15 +296,6 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     GeoMarker.setMarkerOptions({icon: images});
     GeoMarker.setCircleOptions({visible: false});
-    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-      // alert("FDsf");
-      $scope.model.myMap.setCenter(this.getPosition());
-      $scope.model.myMap.fitBounds(this.getBounds());
-    });
-
-    google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-
-    });
 
     GeoMarker.setMap($scope.model.myMap);
 
@@ -645,7 +636,7 @@ if(window.localStorage.getItem("outlets") != undefined )
           $scope.getLocation = function () {
             if (navigator.geolocation) {
 
-              navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+              //navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
             }
             else {
               $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
