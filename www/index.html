@@ -277,23 +277,26 @@
       <h4 class="modal-title">Register now!</h4>
     </div>
     <div class="modal-body activation">
-      <div>
-        <input type="text" class="modal-screen" placeholder="Name">
-      </div>
-      <div style="margin-top:10px;">
-        <input type="text" class="modals-id" placeholder="Email address">
-      </div>
-      <div style="margin-top:10px;">
-        <input type="checkbox"  name="terms" class="modals-id terms"  checked="checked" value="yes">
-        I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a>
-      </div>
-      <p class="register-error" style="display:none;">All fields are mandatory.</p>
-    </div>
+      <form name="myForm" >
+        <div>
+          <input type="text" class="modal-screen" placeholder="Name">
+        </div>
+        <div style="margin-top:10px;">
+          <input type="email" name="myemail" class="modals-id" ng-model="email.text" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required placeholder="Email address">
+        </div>
+        <div style="margin-top:10px;">
+         <input type="checkbox"  name="terms" class="modals-id terms"   value="yes">
+         I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a> 
+       </div> 
+       <div class="emails-error" style="display:none;">{{myForm.myemail.$valid}}</div>
+       <p class="register-error" style="display:none;">All fields are mandatory.</p>
+     </form>
+   </div>
 
-    <div class="modal-footer">
-      <button type="button" id="modal-submit" class="btn btn-default"   onclick="createData();">Register </button>
-    </div>
+   <div class="modal-footer">
+    <button type="button" id="modal-submit" class="btn btn-default"   onclick="createData();">Register </button>
   </div>
+</div>
 </div>
 </div>
 
@@ -310,7 +313,9 @@
       </div>
 
       <div class="modal-body">
-        <h4 class="modal-title">Complete your profile and start redeeming offers now.</h4>
+        <h4 class="modal-title">The more we know about our guzzle users the better we can adjust our offers. So please complete your profile. When your profile is complete we will also stop reminding you ;-)
+          What are you waiting for? Use the settings button in the menu.
+        </h4>
       </div>
       <div class="modal-footer">
 
