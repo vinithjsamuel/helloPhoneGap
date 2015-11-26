@@ -1054,7 +1054,7 @@ img.item-logo {
 
 
 	/*-------------Style for password verification--------------*/
-	input[type="tel"]
+	.page-detail input[type="tel"]
 	{
 		-webkit-text-security: disc !important;
 	}
@@ -1111,7 +1111,7 @@ img.item-logo {
 
 
 	.safari .pin input{
-		letter-spacing: 30px;
+		letter-spacing: 45px;
 		font-size: 20px;
 	}
 
