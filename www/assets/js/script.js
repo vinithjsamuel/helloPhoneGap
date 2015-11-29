@@ -29,7 +29,7 @@ app .config(['$routeProvider',
 app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location)
 {
 
- $("#date").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
+
 
  var version ="version2";
  $http({
@@ -53,75 +53,9 @@ $(".logo-splash").show();
 
 $(".dob-modal").on('click', function (){
  var dob=$(".dob").val();
- var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\|](0?[1-9]|1[012])[\|]\d{4}$/;
- var Val_date=dob.replace(/\s+/g, "");
-
- if(Val_date.match(dateformat)){
-
-  var splitdate = Val_date.split('|');
-
-
-  var dd = parseInt(splitdate[0]);
-
-  var mm  = parseInt(splitdate[1]);
-  var yy = parseInt(splitdate[2]);
-  var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
-  if (mm==1 || mm>2)
-  {
-    if (dd>ListofDays[mm-1])
-    {
-      $(".date-error").show();
-      $(".dob").val(null);
-      setTimeout(function() {
-        $(".date-error").hide();
-
-      }, 1000)
-      return false;
-    }
-  }
-  if (mm==2)
-  {
-    var lyear = false;
-    if ( (!(yy % 4) && yy % 100) || !(yy % 400))
-    {
-      lyear = true;
-    }
-    if ((lyear==false) && (dd>=29))
-    {
-     $(".date-error").show();
-     $(".dob").val(null);
-     setTimeout(function() {
-      $(".date-error").hide();
-
-    }, 1000)
-     return false;
-   }
-   if ((lyear==true) && (dd>29))
-   {
-    $(".date-error").show();
-    $(".dob").val(null);
-    setTimeout(function() {
-      $(".date-error").hide();
-
-    }, 1000)
-    return false;
-  }
-}
-}
-else
-{
- $(".date-error").show();
- $(".dob").val(null);
- setTimeout(function() {
-  $(".date-error").hide();
-  
-}, 1000)
-
- return false;
-}
-dob=dob.replace(/\s+/g, "");
-if(dob.length==10)
-{
+ 
+ if(dob.length==4)
+ {
   window.localStorage.setItem("date", dob);
   $("#demoBox").modal("hide");
 }
@@ -1304,7 +1238,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
   });
 
     app.controller("profileController", function($scope,$http) {
-     $("#dates").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
+
      $(".main").hide();
      $("#myModal").modal('hide');
      $("#profile-complete").modal('hide');
@@ -1376,79 +1310,7 @@ $(".profile-page input[type=text]").focusout(function() {
   $scope.checkComplete();
   var dob=$(".birthday").val();
 
-  var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\|](0?[1-9]|1[012])[\|]\d{4}$/;
-  var Val_date=dob.replace(/\s+/g, "");
-
-  if(Val_date.match(dateformat)){
-
-
-    var splitdate = Val_date.split('|');
-
-
-    var dd = parseInt(splitdate[0]);
-
-    var mm  = parseInt(splitdate[1]);
-    var yy = parseInt(splitdate[2]);
-    var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
-    if (mm==1 || mm>2)
-    {
-      if (dd>ListofDays[mm-1])
-      {
-
-        $(".date-errors").show();
-        $(".birthday").val(null);
-        setTimeout(function() {
-          $(".date-errors").hide();
-
-        }, 1000)
-        return false;
-      }
-    }
-    if (mm==2)
-    {
-      var lyear = false;
-      if ( (!(yy % 4) && yy % 100) || !(yy % 400))
-      {
-        lyear = true;
-      }
-      if ((lyear==false) && (dd>=29))
-      {
-
-       $(".date-errors").show();
-       $(".birthday").val(null);
-       setTimeout(function() {
-        $(".date-errors").hide();
-
-      }, 1000)
-       return false;
-     }
-     if ((lyear==true) && (dd>29))
-     {
-
-      $(".date-errors").show();
-      $(".birthday").val(null);
-      setTimeout(function() {
-        $(".date-errors").hide();
-
-      }, 1000)
-      return false;
-    }
-  }
-}
-else
-{
-
- $(".date-errors").show();
- $(".birthday").val(null);
- setTimeout(function() {
-  $(".date-errors").hide();
-  
-}, 1000)
-
- return false;
-}
-dob=dob.replace(/\s+/g, "");
-if(dob.length==10)
+if(dob.length==4)
 {
 
   window.localStorage.setItem("date", dob);
@@ -1764,9 +1626,9 @@ $http.get(urls)
 
  $(".dob-nos").html(window.localStorage.getItem("date"));
  var date= $(".dob-nos").html();
- var day = date.substr(0, 2);
- var month = date.substr(3, 2);
- var year = date.substr(6, 4);
+ var day = 01;
+ var month = 01;
+ var year = date;
  var age = 18;
  var mydate = new Date();
  mydate.setFullYear(year, month-1, day);
