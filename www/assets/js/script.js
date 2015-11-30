@@ -2203,8 +2203,9 @@ function RegisterCheck()
 
         window.localStorage.setItem("emails", email);
         window.localStorage.setItem("profile", "completed");
-        calls();
-
+        setTimeout(function(){
+          calls();
+        }, 1000);
 
       }
       else
