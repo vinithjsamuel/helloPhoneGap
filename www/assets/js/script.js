@@ -1,7 +1,7 @@
 
 
 var marker = null,i=0;var datas=[];var flag;var price;var total_prices=0;var number = new Array();var markersArray = [];var markers = new Array();
-var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;var flag_offers=0;
+var url="http://getguzzle.com/app/markers";  var locations = [];  var pinCircle = null;var flag_offers=0;var flag_pop=0;
 
 var app = angular.module("geo", ['angular-gestures','ngRoute',"ui.map", "ui.event","readMore",'ngTouch'])
 app .config(['$routeProvider',
@@ -26,39 +26,39 @@ app .config(['$routeProvider',
 
 
   }]);
-app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location)
+app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$location,$route)
 {
 
 
 
- var version ="version2";
- $http({
-  method: 'GET',
-  url: 'http://getguzzle.com/app-test/version',
+  var version ="version2";
+  $http({
+    method: 'GET',
+    url: 'http://getguzzle.com/app-test/version',
 
-}).success(function(data){
+  }).success(function(data){
 
-  if(version!=data[0].title)
-  {
-   $('#version-modal').modal("show");
+    if(version!=data[0].title)
+    {
+     $('#version-modal').modal("show");
 
- }
+   }
 
-});
+ });
 
-$("body").show();
+  $("body").show();
 
-$rootScope.homemaintitle = false;
-$(".logo-splash").show();
+  $rootScope.homemaintitle = false;
+  $(".logo-splash").show();
 
-$(".dob-modal").on('click', function (){
- var dob=$(".dob").val();
- 
- if(dob.length==4)
- {
-  window.localStorage.setItem("date", dob);
-  $("#demoBox").modal("hide");
-}
+  $(".dob-modal").on('click', function (){
+   var dob=$(".dob").val();
+
+   if(dob.length==4)
+   {
+    window.localStorage.setItem("date", dob);
+    $("#demoBox").modal("hide");
+  }
 });
 
   // $(".step1").on('click', function (){
@@ -1107,6 +1107,16 @@ $scope.addUser = function() {
 
 }
 
+$scope.registerUser = function()
+{
+  createData();
+  setTimeout(function(){
+    $route.reload();
+    $("#myModal").modal('hide');
+  }, 2000);
+}
+
+
 $scope.changeDistance=function(position)
 {
   $scope.lat1=position.coords.latitude;
@@ -1238,66 +1248,72 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
   });
 
     app.controller("profileController", function($scope,$http) {
+      $("#dates").mask("99   |   99   |   9999",{placeholder:"DD   ǀ   MM   ǀ   YYYY"});
+      $(".main").hide();
+      $("#myModal").modal('hide');
+      $("#profile-complete").modal('hide');
+      $('body').removeClass("page-map");
+      $('body').removeClass("page-list");
+      $('body').removeClass("page-detail");
+      $('body').addClass("page-profile");
+      $(".user-menu").removeClass("menu-open");
+      $("body").removeClass("menu-open");
+      $(".result").hide();
 
-     $(".main").hide();
-     $("#myModal").modal('hide');
-     $("#profile-complete").modal('hide');
-     $('body').removeClass("page-map");
-     $('body').removeClass("page-list");
-     $('body').removeClass("page-detail");
-     $('body').addClass("page-profile");
-     $(".user-menu").removeClass("menu-open");
-     $("body").removeClass("menu-open");
-     $(".result").hide();
 
-
-     var user=$(".login").html();
-     if(user != "")
-     {
-
-     }
-     else
-     {
-      user="undefined"
-    }
-    $scope.namer="";
-    $scope.emails="";
-    $scope.gender="";
-    $scope.mobile="";
-
-    $scope.city="";
-    $scope.country="";
-    var logins="http://getguzzle.com/app-test/login/"+user;
-    $http.get(logins)
-    .success(function (response) {
-
-      var profile=response;
-
-      $scope.namer=profile[0].names;
-      $scope.emails=profile[0].email;
-      $scope.gender=['male ', 'female'];
-      $scope.mobile=profile[0].mobile;
-      $(".birthday").val(window.localStorage.getItem("date"));
-      $scope.city=profile[0].city;
-      $scope.country=profile[0].country;
-
-      $("input[name=cf_gender][value="+profile[0].gender+"]").attr('checked', true);
-      $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
-      $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
-      $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
-      $scope.alcohol = ['Yes', 'No'];
-      $scope.profiles = {
-        alcohol: profile[0].alcohol,
-        gender: profile[0].gender
-      };
-      if($scope.emails!="")
+      var user=$(".login").html();
+      if(user != "")
       {
-        $(".emails-id").prop('readonly', true);;
+
       }
-      setTimeout(function(){
-        $scope.checkComplete();
-      }, 2000);
-    });
+      else
+      {
+        user="undefined"
+      }
+      $scope.namer="";
+      $scope.emails="";
+      $scope.gender="";
+      $scope.mobile="";
+
+      $scope.city="";
+      $scope.country="";
+      var logins="http://getguzzle.com/app-test/login/"+user;
+      $http.get(logins)
+      .success(function (response) {
+
+        var profile=response;
+        $(".dob-year").html(window.localStorage.getItem("date"))
+        var year=$(".dob-year").html().length;
+        if(year==10)
+        {
+          $(".birthday").val(window.localStorage.getItem("date"));
+        }
+        $scope.namer=profile[0].names;
+        $scope.emails=profile[0].email;
+        $scope.gender=['male ', 'female'];
+        $scope.mobile=profile[0].mobile;
+
+        $(".birthday").val(window.localStorage.getItem("date"));
+        $scope.city=profile[0].city;
+        $scope.country=profile[0].country;
+
+        $("input[name=cf_gender][value="+profile[0].gender+"]").attr('checked', true);
+        $("input[name=alcohol][value="+profile[0].alcohol+"]").attr('checked', true);
+        $('select[name^="cf_country"] option[value="'+profile[0].country+'"]').prop("selected",true);
+        $('select[name^="cf_nationality"] option[value="'+profile[0].nationality+'"]').prop("selected",true);
+        $scope.alcohol = ['Yes', 'No'];
+        $scope.profiles = {
+          alcohol: profile[0].alcohol,
+          gender: profile[0].gender
+        };
+        if($scope.emails!="")
+        {
+          $(".emails-id").prop('readonly', true);;
+        }
+        setTimeout(function(){
+          $scope.checkComplete();
+        }, 2000);
+      });
 
      //  $(".emails-id").focusout(function() {
      //    alert("fdfsf00");
@@ -1310,7 +1326,80 @@ $(".profile-page input[type=text]").focusout(function() {
   $scope.checkComplete();
   var dob=$(".birthday").val();
 
-if(dob.length==4)
+  var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\|](0?[1-9]|1[012])[\|]\d{4}$/;
+  var Val_date=dob.replace(/\s+/g, "");
+
+  if(Val_date.match(dateformat)){
+
+
+    var splitdate = Val_date.split('|');
+
+
+    var dd = parseInt(splitdate[0]);
+
+    var mm  = parseInt(splitdate[1]);
+    var yy = parseInt(splitdate[2]);
+    var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if (mm==1 || mm>2)
+    {
+      if (dd>ListofDays[mm-1])
+      {
+
+        $(".date-errors").show();
+        $(".birthday").val(null);
+        setTimeout(function() {
+          $(".date-errors").hide();
+
+        }, 1000)
+        return false;
+      }
+    }
+    if (mm==2)
+    {
+      var lyear = false;
+      if ( (!(yy % 4) && yy % 100) || !(yy % 400))
+      {
+        lyear = true;
+      }
+      if ((lyear==false) && (dd>=29))
+      {
+
+       $(".date-errors").show();
+       $(".birthday").val(null);
+       setTimeout(function() {
+        $(".date-errors").hide();
+
+      }, 1000)
+       return false;
+     }
+     if ((lyear==true) && (dd>29))
+     {
+
+      $(".date-errors").show();
+      $(".birthday").val(null);
+      setTimeout(function() {
+        $(".date-errors").hide();
+
+      }, 1000)
+      return false;
+    }
+  }
+}
+else
+{
+
+ $(".date-errors").show();
+ $(".birthday").val(null);
+ setTimeout(function() {
+  $(".date-errors").hide();
+  
+}, 1000)
+
+ return false;
+}
+dob=dob.replace(/\s+/g, "");
+
+if(dob.length==10)
 {
 
   window.localStorage.setItem("date", dob);
@@ -1625,19 +1714,29 @@ $http.get(urls)
  var results=voucher_data;
 
  $(".dob-nos").html(window.localStorage.getItem("date"));
+ var year=$(".dob-nos").html().length;
  var date= $(".dob-nos").html();
- var day = 01;
- var month = 01;
- var year = date;
- var age = 18;
- var mydate = new Date();
- mydate.setFullYear(year, month-1, day);
+ if(year==4)
+ {
+   var day = 01;
+   var month = 01;
+   var year = date;
+ }
+ else
+ {
+  var day = date.substr(0, 2);
+  var month = date.substr(3, 2);
+  var year = date.substr(6, 4);
+}
+var age = 18;
+var mydate = new Date();
+mydate.setFullYear(year, month-1, day);
 
- var currdate = new Date();
- var setDate = new Date();        
- setDate.setFullYear(mydate.getFullYear() + age,month-1, day);
+var currdate = new Date();
+var setDate = new Date();        
+setDate.setFullYear(mydate.getFullYear() + age,month-1, day);
 
- if ((currdate - setDate) > 0){
+if ((currdate - setDate) > 0){
     // you are above 18
     $scope.age=0;
   }else{
@@ -1907,33 +2006,31 @@ $scope.goBack= function(url) {
         $(".price").html(total);
         $(".order-"+url).removeAttr("disable");
         $(".code-"+url).removeAttr("disable");
-        flag_offers=flag_offers+1;
 
-
-
-        if(flag_offers % 2 === 0)
+        flag_pop=flag_pop+1;
+        if(flag_pop % 2 === 0)
         {
-
-          var left=$(".invite-left").html();
-          if(left > 0)
+          flag_offers=flag_offers+1;
+          if(flag_offers % 2 === 0)
           {
-            $("#invite-friends").modal("show");
+            var left=$(".invite-left").html();
+            if(left > 0)
+            {
+              $("#invite-friends").modal("show");
+            }
           }
+          else
+          {
+
+           if(window.localStorage.getItem("showprofile") == "completed"  )
+           {
+           }
+           else
+           {
+            $("#profile-complete").modal("show");
+          }
+
         }
-        else
-        {
-
-
-         if(window.localStorage.getItem("showprofile") == "completed"  )
-         {
-
-
-         }
-         else
-         {
-          $("#profile-complete").modal("show");
-        }
-
       }
     }
     else
@@ -2021,6 +2118,7 @@ function insertData()
         $("#myModal").modal('hide');
         setTimeout(function(){
           calls();
+
         }, 6000);
 
       }
@@ -2046,6 +2144,7 @@ function insertData()
 
 function createData()
 {
+
   var terms=0;
   var email= $(".modals-id").val();
   var name=$(".modal-screen").val();
@@ -2071,6 +2170,7 @@ function createData()
 }
 function RegisterCheck()
 {
+
   var email= $(".modals-id").val();
   var deviceid= $(".device-id").html();
   var data_email = email.split('@')[0];
@@ -2105,24 +2205,22 @@ function RegisterCheck()
 
         window.localStorage.setItem("emails", email);
         window.localStorage.setItem("profile", "completed");
-        $("#myModal").modal('hide');
-        setTimeout(function(){
-          calls();
-        }, 6000);
+        calls();
+
 
       }
       else
       {
 
        $("#myModal").modal('hide');
-       console.error(response.status);
+       
 
 
      }
 
    },
    error      : function() {
-     console.error(status +response );
+
 
      $("#myModal").modal('hide');
 
