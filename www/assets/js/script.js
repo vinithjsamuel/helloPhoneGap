@@ -1109,11 +1109,34 @@ $scope.addUser = function() {
 
 $scope.registerUser = function()
 {
-  createData();
-  setTimeout(function(){
+  $(".register").hide();
+  var terms=0;
+  var email= $(".modals-id").val();
+  var name=$(".modal-screen").val();
+  var email_valid=$(".emails-error").html();
+
+  if($(".terms").prop('checked') == true)
+  {
+    terms=1;
+  }
+  if(name.length>0 && terms==1 && email_valid == "true")
+  {
+   RegisterCheck();
+   setTimeout(function(){
     $route.reload();
     $("#myModal").modal('hide');
   }, 2000);
+ }
+
+ else
+ {
+   $(".register").show();
+   $(".register-error").show();
+   setTimeout(function(){
+    $(".register-error").hide();
+  }, 2000);
+ }
+
 }
 
 
@@ -2143,26 +2166,7 @@ function insertData()
 function createData()
 {
 
-  var terms=0;
-  var email= $(".modals-id").val();
-  var name=$(".modal-screen").val();
-  var email_valid=$(".emails-error").html();
 
-  if($(".terms").prop('checked') == true){
-    terms=1;
-  }
-  if(name.length>0 && terms==1 && email_valid == "true")
-  {
-   RegisterCheck();
- }
-
- else
- {
-   $(".register-error").show();
-   setTimeout(function(){
-    $(".register-error").hide();
-  }, 2000);
- }
 
 
 }
