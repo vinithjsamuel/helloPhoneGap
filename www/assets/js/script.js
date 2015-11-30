@@ -1282,7 +1282,7 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
       .success(function (response) {
 
         var profile=response;
-        $(".dob-year").html(window.localStorage.getItem("date"))
+        $(".dob-year").html(window.localStorage.getItem("date"));
         var year=$(".dob-year").html().length;
         if(year==10)
         {
@@ -1292,8 +1292,6 @@ function distance(lat1, lon1, lat2, lon2, unit,i) {
         $scope.emails=profile[0].email;
         $scope.gender=['male ', 'female'];
         $scope.mobile=profile[0].mobile;
-
-        $(".birthday").val(window.localStorage.getItem("date"));
         $scope.city=profile[0].city;
         $scope.country=profile[0].country;
 
