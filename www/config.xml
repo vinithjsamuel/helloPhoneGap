@@ -61,6 +61,9 @@
       <string>NSLocationAlwaysUsageDescription</string>
     </array>
 </gap:config-file>
+<feature name="Geolocation">
+     <param name="ios-package" value="CDVLocation" />
+</feature>
      
      <icon src="icon.png" />
      <gap:splash src="splash.png" />
