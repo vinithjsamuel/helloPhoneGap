@@ -230,14 +230,12 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     GeoMarker.setMarkerOptions({icon: images});
     GeoMarker.setCircleOptions({visible: false});
-    if (navigator.geolocation != undefined) {
-      google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
       // alert("FDsf");
       $scope.model.myMap.setCenter(this.getPosition());
       $scope.model.myMap.fitBounds(this.getBounds());
     });
 
-    }
     google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
 
     });
@@ -345,7 +343,7 @@ if(window.localStorage.getItem("outlets") != undefined )
             }
           }
 
-          $scope.getLocations = function () {
+         $scope.getLocations = function () {
             if (navigator.geolocation) {
 
               navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors);
@@ -444,13 +442,12 @@ if(window.localStorage.getItem("outlets") != undefined )
 
             GeoMarker.setMarkerOptions({icon: images});
             GeoMarker.setCircleOptions({visible: false});
-            if (navigator.geolocation != undefined) {
-              google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+            google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
 
-                $scope.model.myMap.setCenter(this.getPosition());
-                $scope.model.myMap.fitBounds(this.getBounds());
-              });
-            }
+              $scope.model.myMap.setCenter(this.getPosition());
+              $scope.model.myMap.fitBounds(this.getBounds());
+            });
+
             google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
               alert('There was an error obtaining your position. Message: ' + e.message);
             });
@@ -1172,9 +1169,8 @@ $scope.changeDistance=function(position)
   
   var options = { maximumAge: 30000 };
   var watchNavi = null;
-  if (navigator.geolocation != undefined) {
-    watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
-  }
+  watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
+
 
 //END main controller
 });
