@@ -598,9 +598,9 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-         
-            $scope.getLocation();
-         
+          
+          $scope.getLocation();
+          
           
           
 
@@ -1167,8 +1167,9 @@ $scope.changeDistance=function(position)
   
   var options = { maximumAge: 30000 };
   var watchNavi = null;
-  watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
-
+  if (navigator.geolocation != undefined) {
+    watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
+  }
 
 //END main controller
 });
