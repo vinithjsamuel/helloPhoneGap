@@ -352,9 +352,9 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          
-          $scope.getLocations();
-
+          if (navigator.geolocation != undefined) {
+            $scope.getLocations();
+          }
 
 
           $scope.filterMakes = function ()
@@ -598,9 +598,10 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          
-          $scope.getLocation();
-          
+          if (navigator.geolocation != undefined) {
+            $scope.getLocation();
+          }
+
           
           
 
