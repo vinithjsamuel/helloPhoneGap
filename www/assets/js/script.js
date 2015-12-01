@@ -230,15 +230,14 @@ if(window.localStorage.getItem("outlets") != undefined )
 
     GeoMarker.setMarkerOptions({icon: images});
     GeoMarker.setCircleOptions({visible: false});
-    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+    if (navigator.geolocation != undefined) {
+      google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
       // alert("FDsf");
       $scope.model.myMap.setCenter(this.getPosition());
       $scope.model.myMap.fitBounds(this.getBounds());
     });
-
-    google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-
-    });
+    }
+    
 
     GeoMarker.setMap($scope.model.myMap);
 
@@ -343,7 +342,7 @@ if(window.localStorage.getItem("outlets") != undefined )
             }
           }
 
-         $scope.getLocations = function () {
+          $scope.getLocations = function () {
             if (navigator.geolocation) {
 
               navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors);
@@ -353,9 +352,9 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          if (navigator.geolocation != undefined) {
-            $scope.getLocations();
-          }
+          
+          $scope.getLocations();
+
 
 
           $scope.filterMakes = function ()
@@ -442,15 +441,14 @@ if(window.localStorage.getItem("outlets") != undefined )
 
             GeoMarker.setMarkerOptions({icon: images});
             GeoMarker.setCircleOptions({visible: false});
-            google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+            if (navigator.geolocation != undefined) {
+              google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
 
-              $scope.model.myMap.setCenter(this.getPosition());
-              $scope.model.myMap.fitBounds(this.getBounds());
-            });
+                $scope.model.myMap.setCenter(this.getPosition());
+                $scope.model.myMap.fitBounds(this.getBounds());
+              });
+            }
 
-            google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-              alert('There was an error obtaining your position. Message: ' + e.message);
-            });
 
             GeoMarker.setMap($scope.model.myMap);
 
@@ -600,9 +598,9 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          if (navigator.geolocation != undefined) {
+         
             $scope.getLocation();
-          }
+         
           
           
 
