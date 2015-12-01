@@ -30,9 +30,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$lo
 {
 
 
+
   var version ="version2";
-  $http
-  ({
+  $http({
     method: 'GET',
     url: 'http://getguzzle.com/app-test/version',
 
@@ -51,10 +51,9 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$lo
   $rootScope.homemaintitle = false;
   $(".logo-splash").show();
 
-
-  $(".dob-modal").on('click', function()
-  {
+  $(".dob-modal").on('click', function (){
    var dob=$(".dob").val();
+
    if(dob.length==4)
    {
     window.localStorage.setItem("date", dob);
@@ -62,15 +61,20 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$lo
   }
 });
 
-  var myScroll,
-  pullDownEl, pullDownOffset,
-  pullUpEl, pullUpOffset,
-  generatedCount = 0;
+  // $(".step1").on('click', function (){
+  //   $('#demoBox2').modal("show");
+  // });
+  // $(".steps").on('click', function (){
+  //   $('#demoBox').modal("show");
+  // });
+var myScroll,
+pullDownEl, pullDownOffset,
+pullUpEl, pullUpOffset,
+generatedCount = 0;
 
 
 
-  $scope.pullDownAction=function () 
-  {
+$scope.pullDownAction=function () {
    // <-- Simulate network congestion, remove setTimeout from production!
    $http({
     method: 'GET',
@@ -88,9 +92,48 @@ app.controller("mainController", function($scope,$http,$filter,$q,$rootScope,$lo
 }
 
 
+
+
+// pullDownEl = document.getElementById('pullDown');
+// pullDownOffset = pullDownEl.offsetHeight;
+
+
+
+// myScroll = new iScroll('wrapper', {
+//   useTransition: true,
+//   topOffset: pullDownOffset,
+//   onRefresh: function () {
+//    pullDownEl.className = '';
+
+//  },
+//  onScrollMove: function () {
+//   if (this.y > 5 && !pullDownEl.className.match('flip')) {
+//     pullDownEl.className = 'flip';
+//     pullDownEl.querySelector('.pullDownLabel').innerHTML = '';
+//     this.minScrollY = 0;
+//   }
+// },
+// onScrollEnd: function () {
+//   if (pullDownEl.className.match('flip')) {
+//     pullDownEl.className = 'loading';
+//     pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';        
+//           // Execute custom function (ajax call?)
+//           $scope.pullDownAction();
+//         } 
+//       }
+//     });
+
+// setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+
+
+
+
+
+
 // angular.element(document).ready(function () {
 //   calls();
 // });
+
 
 
 $scope.hideMenu=function()
@@ -127,9 +170,12 @@ var image_src="assets/images/users/"+ry+".png";
 if (window.localStorage.getItem("image") == undefined)
 {
   var picture = localStorage.getItem('image');
+
+  
   $('.img-circle').attr('src', image_src);
 }
 else{
+
 
   $('.img-circle').attr('src', localStorage.getItem('image'));
 }
@@ -141,6 +187,8 @@ $scope.mapOptions =
 };
 
 
+
+
 if(window.localStorage.getItem("outlets") != undefined )
 {
 
@@ -149,115 +197,14 @@ if(window.localStorage.getItem("outlets") != undefined )
   $("#status").fadeOut("slow"); $("#preloader").delay(350).fadeOut("slow");
   $rootScope.storage = JSON.parse(window.localStorage['outlets' || '{}']);
 
+  var datas=$rootScope.storage;
   var result=$rootScope.storage;
 
   $scope.useMakes = [];
   $scope.cars=[];
-  $scope.cars=result,$scope.lat1, $scope.lng1;
+  $scope.cars=datas,$scope.lat1, $scope.lng1;
 
-  var nos= result.length+ " items";
-  $(".result").html(nos);
-
-  $scope.showResult = function () {
-    return $scope.error == "";
-  }
-
-  $scope.lat1 = $(".current-lat").html();
-  $scope.lng1 = $(".current-long").html();
-
-  var latlng = new google.maps.LatLng($scope.lat1,$scope.lng1);
-  var images = {
-    url: "assets/images/my-location.png",
-    scaledSize: new google.maps.Size(55,55)
-  };
-  
-  var GeoMarker = new GeolocationMarker($scope.model.myMap);
-
-  GeoMarker.setMarkerOptions({icon: images});
-  GeoMarker.setCircleOptions({visible: false});
-
- //  google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
- //   $scope.model.myMap.setCenter(this.getPosition());
- //   $scope.model.myMap.fitBounds(this.getBounds());
- // });
-
-GeoMarker.setMap($scope.model.myMap);
-
-$scope.map = {
-  latitude:$scope.lat1,
-  longitude:$scope.lng1
-}
-
-
-for (i = 0; i < result.length; i++) {
-
-
-  if(i > 3){
-    result[i].show=0;
-
-  }
-  var lat=result[i].latitude;
-  var longi=result[i].longitude;var infobox;
-  var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-  var dist=distance($scope.lat,$scope.lng,lat,longi,"K",i);
-  var encoded=result[i].title;
-  var titles=encoded.replace(/&amp;/g, '&');
-  var url=result[i].urltitle;
-  $scope.cars[i].title=titles;
-  $scope.cars[i].distance=dist;;
-
-
-}
-
-/*License agreement popup*/
-if (window.localStorage.getItem("date") == undefined) {
- /* run function */
- window.localStorage.setItem("install", true);
- $('#demoBox').modal("show");
-
-}
-
-$scope.filterMakes = function ()
-{
-
-  return function (p) {
-    flag=0;
-    for (var i in $scope.useMakes) {
-      flag =1;
-      if (p.type == number[i] && $scope.useMakes[i]) {
-        return true;
-      }
-    }
-
-    if($('.reset input[type="checkbox"]:checked').length == 0) {
-      flag=0;
-    }
-    if(flag==0 )
-    {
-      return true;
-    }
-  };
-  var count=$("#mylist li").length;
-};
-}
-
-else
-{
-
- $http({
-  method: 'GET',
-  url: 'http://getguzzle.com/app/markers',
-
-}).success(function(data){
-
-  $rootScope.homemaintitle = true;
-  $("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
-  window.localStorage['outlets'] = JSON.stringify(data);
-  var result=data;
-  $scope.useMakes = [];
-  $scope.cars=result,$scope.lat1, $scope.lng1;
-
-  var nos= result.length+ " items";
+  var nos= datas.length+ " items";
   $(".result").html(nos);
 
 
@@ -265,220 +212,513 @@ else
     return $scope.error == "";
   }
 
-
-  $scope.lat1 = $(".current-lat").html();
-  $scope.lng1 = $(".current-long").html();
-
-  var latlng = new google.maps.LatLng($scope.lat1,$scope.lng1);
-  var images = {
-    url: "assets/images/my-location.png",
-    scaledSize: new google.maps.Size(55,55)
-  };
-  
-  var GeoMarker = new GeolocationMarker($scope.model.myMap);
-
-  GeoMarker.setMarkerOptions({icon: images});
-  GeoMarker.setCircleOptions({visible: false});
-
-  google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-   $scope.model.myMap.setCenter(this.getPosition());
-   $scope.model.myMap.fitBounds(this.getBounds());
- });
-
-GeoMarker.setMap($scope.model.myMap);
-
-$scope.map = {
-  latitude:$scope.lat1,
-  longitude:$scope.lng1
-}
-
-
-for (i = 0; i < result.length; i++) {
-
-
-  if(i > 3){
-    result[i].show=0;
-
-  }
-  var lat=result[i].latitude;
-  var longi=result[i].longitude;var infobox;
-  var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-  var dist=distance($scope.lat,$scope.lng,lat,longi,"K",i);
-  var encoded=result[i].title;
-  var titles=encoded.replace(/&amp;/g, '&');
-  var url=result[i].urltitle;
-  $scope.cars[i].title=titles;
-  $scope.cars[i].distance=dist;;
-  
-
-}
-
-/*License agreement popup*/
-if (window.localStorage.getItem("date") == undefined) {
- /* run function */
- window.localStorage.setItem("install", true);
- $('#demoBox').modal("show");
-
-}
-
-
-
-$scope.filterMakes = function ()
-{
-
-
-  return function (p) {
-    flag=0;
-
-    for (var i in $scope.useMakes) {
-      flag =1;
-
-
-      if (p.type == number[i] && $scope.useMakes[i]) {
-
-        return true;
-      }
-
-    }
-
-    if($('.reset input[type="checkbox"]:checked').length == 0) {
-      flag=0;
-    }
-    if(flag==0 )
-    {
-
-      return true;
-    }
-  };
-  var count=$("#mylist li").length;
-
-
-
-};
-
-
-
-
-
-}).error(function(){
-
-});
-}
-
-$scope.$watch('nas',
-
-  function (newValue, oldValue) {
-
-
-    for (jdx in $scope.myMarkers) {
-
-      if(jdx != 0)
-      {
-
-       $scope.myMarkers[jdx].setMap(null);
-     }
-   }
-   $scope.myMarkers = [];
-
-
-   for (idx in $scope.nas) {
-
-    createMarker($scope.nas[idx]);
-
-
-  }
-},
-true);
-
-var createMarker = function (info)
-{
-
-
-  if(info !="" || typeof info !="undefined")
+  $scope.showPositions = function (position)
   {
 
-
-
-   var encoded=info.title;
-   var titles=encoded.replace(/&amp;/g, '&');
-   var url=info.urltitle;
-   $scope.infoWindow = new google.maps.InfoWindow();
-   var url='#outlet/'+info.urltitle+'/'+info.title;
-   var latlng = new google.maps.LatLng(info.latitude,info.longitude);
-   if(info.location!="")
-   {
-    locations=info.location;
-  }
-  else
-  {
-    locations="";
-  }
-  var marker = new google.maps.Marker({
-    map: $scope.model.myMap,
-    position:latlng ,
-    title:info.title,
-    location:locations,
-    icon:image,
-    url:url
-  });
-  marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png" style="width:50%!important;height:50%;">' + titles + '</a> </div>';
-
-  $scope.myMarkers.push(marker);
-
-  google.maps.event.addListener(marker, 'click', function() {
 
     $scope.$apply();
-    $scope.infoWindow.setContent('<div> <a href="'+url+'"><h4 style="margin:0px;"><img src="assets/images/info.png" style="width:25px;margin-right:10px;">' +  this.title+'  </h4></a></div><div style="margin-left:35px; ">'+this.location+'</div>');
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var images = {
+      url: "assets/images/my-location.png",
+      scaledSize: new google.maps.Size(55,55)
+    };
+    $scope.lat1 = position.coords.latitude;
+    $scope.lng1 = position.coords.longitude;
+    $scope.accuracy = position.coords.accuracy;
 
-    $scope.infoWindow.open($scope.model.myMap,this);
-  });
-}
+    var GeoMarker = new GeolocationMarker($scope.model.myMap);
 
-}
+    GeoMarker.setMarkerOptions({icon: images});
+    GeoMarker.setCircleOptions({visible: false});
+    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+      // alert("FDsf");
+      $scope.model.myMap.setCenter(this.getPosition());
+      $scope.model.myMap.fitBounds(this.getBounds());
+    });
+
+    google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+
+    });
+
+    GeoMarker.setMap($scope.model.myMap);
 
 
 
-
-
-$scope.offerValue = function (url,names)
-{
-
-  var urls="http://getguzzle.com/app-test/cost/"+url;
-
-  $http.get(urls)
-  .success(function (response) {
-    var total_cost=0;
-    datas=response;
-    var results=datas;
-    $(".offer-nos").html(response.length);
-    for (i = 0; i < response.length; i++) {
-      total_cost=Number(total_cost)+Number(results[i].cost);
+    $scope.map = {
+      latitude:position.coords.latitude,
+      longitude:position.coords.longitude
     }
-    $(".total-value-"+names).html(total_cost);
-  });
-}
 
 
-$scope.login=$(".email").html();
+    for (i = 0; i < result.length; i++) {
 
 
-$scope.listItem = function()
-{
- $scope.getLocation();
- $('body').removeClass("page-list");
- $('body').addClass("page-map");
- $(".list-show").show();
- $(".maps").hide();
- $(".items-show").hide();
- flag=1;
+      if(i > 3){
+        result[i].show=0;
 
-}
+      }
+      
 
-$scope.checkinternet = function(urls)
-{
+      var lat=result[i].latitude;
+      var longi=result[i].longitude;var infobox;
+      var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+      var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+      var encoded=datas[i].title;
+      var titles=encoded.replace(/&amp;/g, '&');
+      var url=datas[i].urltitle;
+      datas[i].title=titles;
+      datas[i].distance=dist;
+      // offer value
+      // var urltit=data[i].title;
+      // var names=data[i].urltitle;
+      // $scope.offerValue(urltit,names);
+      $scope.$apply();
 
- var url= $('#pages-'+urls).attr('data');
+    }
 
+    /*License agreement popup*/
+    if (window.localStorage.getItem("date") == undefined) {
+     /* run function */
+     window.localStorage.setItem("install", true);
+     $('#demoBox').modal("show");
+
+
+   }
+
+
+
+ }
+
+
+
+ $scope.showErrors = function (error)
+ {
+
+  switch (error.code)
+  {
+    case error.PERMISSION_DENIED:
+    $scope.error = "User denied the request for Geolocation."
+    break;
+    case error.POSITION_UNAVAILABLE:
+    $scope.error = "Location information is unavailable."
+    break;
+    case error.TIMEOUT:
+    $scope.error = "The request to get user location timed out."
+    break;
+    case error.UNKNOWN_ERROR:
+    $scope.error = "An unknown error occurred."
+    break;
+  }
+
+  var latlng = new google.maps.LatLng(25.08135,55.144075);
+
+  for (i = 0; i < result.length; i++)
+  {
+    if(i==0)
+    {
+      $scope.lat =25.08135;
+      $scope.lng = 55.144075;
+                //$scope.accuracy = position.coords.accuracy;
+                $scope.$apply();
+
+                var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
+
+                $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
+              }
+              $scope.lat = result[i].latitude;
+              $scope.lng =  result[i].longitude;
+              var lat=result[i].latitude;
+              var longi=result[i].longitude;
+
+              var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+              var dist=distance(25.08135, 55.144075,lat,longi,"K",i);
+              datas[i].distance=dist;
+
+              $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
+
+              var urltit=data[i].title;
+              var names=data[i].urltitle;
+              $scope.offerValue(urltit,names);
+              $scope.$apply();
+            }
+          }
+
+          var options = { timeout: 30000 };
+          var watchID = null;
+          
+          watchID = navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors, options);
+
+
+          $scope.filterMakes = function ()
+          {
+
+
+            return function (p) {
+              flag=0;
+
+              for (var i in $scope.useMakes) {
+                flag =1;
+
+
+                if (p.type == number[i] && $scope.useMakes[i]) {
+
+                  return true;
+                }
+
+              }
+
+              if($('.reset input[type="checkbox"]:checked').length == 0) {
+                flag=0;
+              }
+              if(flag==0 )
+              {
+
+                return true;
+              }
+            };
+            var count=$("#mylist li").length;
+
+
+
+          };
+
+
+
+
+
+
+          
+        }
+
+        else
+        {
+
+         $http({
+          method: 'GET',
+          url: 'http://getguzzle.com/app/markers',
+
+        }).success(function(data){
+
+          $rootScope.homemaintitle = true;
+          $("#status").fadeOut("slow"); $("#preloader").delay(250).fadeOut("slow");
+          window.localStorage['outlets'] = JSON.stringify(data);
+          var datas=data;
+          var result=data;
+          $scope.useMakes = [];
+          $scope.cars=result,$scope.lat1, $scope.lng1;
+
+          var nos= datas.length+ " items";
+          $(".result").html(nos);
+
+
+          $scope.showResult = function () {
+            return $scope.error == "";
+          }
+
+          $scope.showPosition = function (position)
+          {
+
+
+            $scope.$apply();
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var images = {
+              url: "assets/images/my-location.png",
+              scaledSize: new google.maps.Size(55,55)
+            };
+            $scope.lat1 = position.coords.latitude;
+            $scope.lng1 = position.coords.longitude;
+            $scope.accuracy = position.coords.accuracy;
+
+            var GeoMarker = new GeolocationMarker($scope.model.myMap);
+
+            GeoMarker.setMarkerOptions({icon: images});
+            GeoMarker.setCircleOptions({visible: false});
+            google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+
+              $scope.model.myMap.setCenter(this.getPosition());
+              $scope.model.myMap.fitBounds(this.getBounds());
+            });
+
+            google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+              alert('There was an error obtaining your position. Message: ' + e.message);
+            });
+
+            GeoMarker.setMap($scope.model.myMap);
+
+
+
+            $scope.map = {
+              latitude:position.coords.latitude,
+              longitude:position.coords.longitude
+            }
+
+
+            for (i = 0; i < result.length; i++) {
+
+             if(i > 3){
+              result[i].show=0;
+            }
+            
+            var lat=result[i].latitude;
+            var longi=result[i].longitude;var infobox;
+            var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+            var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+            var encoded=data[i].title;
+            var titles=encoded.replace(/&amp;/g, '&');
+            var url=data[i].urltitle;
+            data[i].title=titles;
+            datas[i].distance=dist;
+      // offer value
+      // var urltit=data[i].title;
+      // var names=data[i].urltitle;
+      // $scope.offerValue(urltit,names);
+      $scope.$apply();
+
+    }
+
+
+    /*License agreement popup*/
+    if (window.localStorage.getItem("date") == undefined) {
+     /* run function */
+     window.localStorage.setItem("install", true);
+     $('#demoBox').modal("show");
+     
+
+   }
+
+
+
+ }
+
+
+
+ $scope.showError = function (error)
+ {
+
+  switch (error.code)
+  {
+    case error.PERMISSION_DENIED:
+    $scope.error = "User denied the request for Geolocation."
+    break;
+    case error.POSITION_UNAVAILABLE:
+    $scope.error = "Location information is unavailable."
+    break;
+    case error.TIMEOUT:
+    $scope.error = "The request to get user location timed out."
+    break;
+    case error.UNKNOWN_ERROR:
+    $scope.error = "An unknown error occurred."
+    break;
+  }
+
+  var latlng = new google.maps.LatLng(25.08135,55.144075);
+
+  for (i = 0; i < result.length; i++)
+  {
+    if(i==0)
+    {
+      $scope.lat =25.08135;
+      $scope.lng = 55.144075;
+                //$scope.accuracy = position.coords.accuracy;
+                $scope.$apply();
+
+                var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
+
+                $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
+              }
+              $scope.lat = result[i].latitude;
+              $scope.lng =  result[i].longitude;
+              var lat=result[i].latitude;
+              var longi=result[i].longitude;
+
+              var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+              var dist=distance(25.08135, 55.144075,lat,longi,"K",i);
+              datas[i].distance=dist;
+
+              $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
+
+              var urltit=data[i].title;
+              var names=data[i].urltitle;
+              $scope.offerValue(urltit,names);
+              $scope.$apply();
+            }
+          }
+          
+
+
+          $scope.filterMakes = function ()
+          {
+
+
+            return function (p) {
+              flag=0;
+
+              for (var i in $scope.useMakes) {
+                flag =1;
+
+
+                if (p.type == number[i] && $scope.useMakes[i]) {
+
+                  return true;
+                }
+
+              }
+
+              if($('.reset input[type="checkbox"]:checked').length == 0) {
+                flag=0;
+              }
+              if(flag==0 )
+              {
+
+                return true;
+              }
+            };
+            var count=$("#mylist li").length;
+
+
+
+          };
+
+
+
+          $scope.getLocation = function () {
+            if (navigator.geolocation) {
+
+              navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+            }
+            else {
+              $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
+              alert($scope.error);
+            }
+          }
+          $scope.getLocation();
+          
+          var options = { timeout: 30000 };
+          var watchID = null;
+          
+          watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
+
+        }).error(function(){
+
+        });
+      }
+
+      $scope.$watch('nas',
+
+        function (newValue, oldValue) {
+
+
+          for (jdx in $scope.myMarkers) {
+
+            if(jdx != 0)
+            {
+
+             $scope.myMarkers[jdx].setMap(null);
+           }
+         }
+         $scope.myMarkers = [];
+
+
+         for (idx in $scope.nas) {
+
+          createMarker($scope.nas[idx]);
+
+
+        }
+      },
+      true);
+
+      var createMarker = function (info)
+      {
+
+
+        if(info !="" || typeof info !="undefined")
+        {
+
+
+
+
+
+         var encoded=info.title;
+         var titles=encoded.replace(/&amp;/g, '&');
+         var url=info.urltitle;
+         $scope.infoWindow = new google.maps.InfoWindow();
+         var url='#outlet/'+info.urltitle+'/'+info.title;
+         var latlng = new google.maps.LatLng(info.latitude,info.longitude);
+         if(info.location!="")
+         {
+          locations=info.location;
+        }
+        else
+        {
+          locations="";
+        }
+        var marker = new google.maps.Marker({
+          map: $scope.model.myMap,
+          position:latlng ,
+          title:info.title,
+          location:locations,
+          icon:image,
+          url:url
+        });
+        marker.content = '<div><a href="#outlet/"> <img src="assets/images/info.png" style="width:50%!important;height:50%;">' + titles + '</a> </div>';
+
+        $scope.myMarkers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+
+          $scope.$apply();
+          $scope.infoWindow.setContent('<div> <a href="'+url+'"><h4 style="margin:0px;"><img src="assets/images/info.png" style="width:25px;margin-right:10px;">' +  this.title+'  </h4></a></div><div style="margin-left:35px; ">'+this.location+'</div>');
+
+          $scope.infoWindow.open($scope.model.myMap,this);
+        });
+      }
+
+    }
+
+
+
+
+
+    $scope.offerValue = function (url,names)
+    {
+
+      var urls="http://getguzzle.com/app-test/cost/"+url;
+
+      $http.get(urls)
+      .success(function (response) {
+        var total_cost=0;
+        datas=response;
+        var results=datas;
+        $(".offer-nos").html(response.length);
+        for (i = 0; i < response.length; i++) {
+          total_cost=Number(total_cost)+Number(results[i].cost);
+        }
+        $(".total-value-"+names).html(total_cost);
+      });
+    }
+
+
+    $scope.login=$(".email").html();
+
+
+    $scope.listItem = function()
+    {
+     $scope.getLocation();
+     $('body').removeClass("page-list");
+     $('body').addClass("page-map");
+     $(".list-show").show();
+     $(".maps").hide();
+     $(".items-show").hide();
+     flag=1;
+
+   }
+
+   $scope.checkinternet = function(urls)
+   {
+
+     var url= $('#pages-'+urls).attr('data');
+     
      var networkState = navigator.connection.type;
 
      if(networkState == Connection.NONE) {
@@ -600,7 +840,12 @@ $scope.checkinternet = function(urls)
      }
 
    }
-   
+   else
+   {
+
+   }
+
+
  });
 
  };
