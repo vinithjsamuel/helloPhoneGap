@@ -345,9 +345,9 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           var options = { timeout: 30000 };
           var watchID = null;
-          
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors, options);
-
+          if (navigator.geolocation != undefined) {
+            watchID = navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors, options);
+          }
 
           $scope.filterMakes = function ()
           {
@@ -591,13 +591,15 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          $scope.getLocation();
+          if (navigator.geolocation != undefined) {
+            $scope.getLocation();
+          }
           
           var options = { timeout: 30000 };
           var watchID = null;
-          
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
-
+          if (navigator.geolocation != undefined) {
+            watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
+          }
         }).error(function(){
 
         });
@@ -1161,9 +1163,10 @@ $scope.changeDistance=function(position)
   
   var options = { maximumAge: 30000 };
   var watchNavi = null;
-  watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
+  if (navigator.geolocation != undefined) {
+    watchNavi = navigator.geolocation.watchPosition($scope.changeDistance,$scope.showErrors, options);
 
-
+  }
 //END main controller
 });
 
