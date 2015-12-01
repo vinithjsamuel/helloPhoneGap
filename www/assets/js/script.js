@@ -343,10 +343,19 @@ if(window.localStorage.getItem("outlets") != undefined )
             }
           }
 
-          var options = { timeout: 30000 };
-          var watchID = null;
-          
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors, options);
+         $scope.getLocations = function () {
+            if (navigator.geolocation) {
+
+              navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors);
+            }
+            else {
+              $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
+              alert($scope.error);
+            }
+          }
+          if (navigator.geolocation != undefined) {
+            $scope.getLocations();
+          }
 
 
           $scope.filterMakes = function ()
@@ -591,12 +600,11 @@ if(window.localStorage.getItem("outlets") != undefined )
               alert($scope.error);
             }
           }
-          $scope.getLocation();
+          if (navigator.geolocation != undefined) {
+            $scope.getLocation();
+          }
           
-          var options = { timeout: 30000 };
-          var watchID = null;
           
-          watchID = navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError, options);
 
         }).error(function(){
 
