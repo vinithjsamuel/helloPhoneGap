@@ -290,6 +290,7 @@
          I agree to the <a href="http://www.getguzzle.com/page/terms-and-use" class=""> <u>terms of use </u></a> 
        </div> 
        <div class="emails-error" style="display:none;">{{myForm.myemail.$valid}}</div>
+       <p class="reg-error" style="display:none;">Invalid Email.</p>
        <p class="register-error" style="display:none;">All fields are mandatory.</p>
      </form>
    </div>
@@ -375,7 +376,7 @@
           <!-- <p>Did the voucher worked for you?</p> -->
 
           <div class="radio">
-            <label><input type="radio"  name="status" class="status" checked="checked" value="declined">The offer was declined.</label>
+            <label><input type="radio"  name="status" class="status vouchers-status" checked="checked" value="declined">The offer was declined.</label>
           </div>
 
           <div class="radio">
@@ -488,6 +489,27 @@ data-keyboard="false">
   </div>
 </div>
 
+<div id="navigation-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        Location Not Available
+      </div>
+      <div class="modal-body">
+        <p>Please enable location services in settings.</p>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 
 
 
@@ -519,7 +541,7 @@ data-keyboard="false">
         <div class="row list-show" ng-repeat="car in nas=(cars|filter:test|filter:filterMakes()|orderBy:'+ distance' )">
 
 
-          <a id="pages-{{car.urltitle}}" class="" data="#outlet/{{car.urltitle}}/{{car.title}}" ng-click="checkinternet(car.urltitle);"  >
+          <a id="pages-{{car.urltitle}}" class="" data="#outlet/{{car.entry}}/{{car.title}}" ng-click="checkinternet(car.urltitle);"  >
             <div class="col-xs-4 centered no-padding-bottom reset image" style="background:url({{(car.logo) || 'assets/images/logo.png'}})">
 
             </div>
