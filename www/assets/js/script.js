@@ -206,89 +206,84 @@ if(window.localStorage.getItem("outlets") != undefined )
 
   var nos= datas.length+ " items";
   $(".result").html(nos);
-
-
-  $scope.showResult = function () {
-    return $scope.error == "";
-  }
-
-  $scope.showPositions = function (position)
+  /*License agreement popup*/
+  if (window.localStorage.getItem("date") == undefined) 
   {
+   /* run function */
+   window.localStorage.setItem("install", true);
+   $('#demoBox').modal("show");
+ }
+
+ $scope.showResult = function () {
+  return $scope.error == "";
+}
+
+$scope.showPositions = function (position)
+{
 
 
-    $scope.$apply();
-    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    var images = {
-      url: "assets/images/my-location.png",
-      scaledSize: new google.maps.Size(55,55)
-    };
-    $scope.lat1 = position.coords.latitude;
-    $scope.lng1 = position.coords.longitude;
-    $scope.accuracy = position.coords.accuracy;
+  $scope.$apply();
+  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  var images = {
+    url: "assets/images/my-location.png",
+    scaledSize: new google.maps.Size(55,55)
+  };
+  $scope.lat1 = position.coords.latitude;
+  $scope.lng1 = position.coords.longitude;
+  $scope.accuracy = position.coords.accuracy;
 
-    var GeoMarker = new GeolocationMarker($scope.model.myMap);
+  var GeoMarker = new GeolocationMarker($scope.model.myMap);
 
-    GeoMarker.setMarkerOptions({icon: images});
-    GeoMarker.setCircleOptions({visible: false});
-    if (navigator.geolocation != undefined) {
-      google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+  GeoMarker.setMarkerOptions({icon: images});
+  GeoMarker.setCircleOptions({visible: false});
+  if (navigator.geolocation != undefined) {
+    google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
       // alert("FDsf");
       $scope.model.myMap.setCenter(this.getPosition());
       $scope.model.myMap.fitBounds(this.getBounds());
     });
-    }
-    
-
-    GeoMarker.setMap($scope.model.myMap);
+  }
 
 
-
-    $scope.map = {
-      latitude:position.coords.latitude,
-      longitude:position.coords.longitude
-    }
+  GeoMarker.setMap($scope.model.myMap);
 
 
-    for (i = 0; i < result.length; i++) {
+
+  $scope.map = {
+    latitude:position.coords.latitude,
+    longitude:position.coords.longitude
+  }
 
 
-      if(i > 3){
-        result[i].show=0;
+  for (i = 0; i < result.length; i++) {
 
-      }
-      
 
-      var lat=result[i].latitude;
-      var longi=result[i].longitude;var infobox;
-      var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-      var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
-      var encoded=datas[i].title;
-      var titles=encoded.replace(/&amp;/g, '&');
-      var url=datas[i].urltitle;
-      datas[i].title=titles;
-      datas[i].distance=dist;
-
-      $scope.$apply();
+    if(i > 3){
+      result[i].show=0;
 
     }
 
-    /*License agreement popup*/
-    if (window.localStorage.getItem("date") == undefined) {
-     /* run function */
-     window.localStorage.setItem("install", true);
-     $('#demoBox').modal("show");
+
+    var lat=result[i].latitude;
+    var longi=result[i].longitude;var infobox;
+    var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+    var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+    var encoded=datas[i].title;
+    var titles=encoded.replace(/&amp;/g, '&');
+    var url=datas[i].urltitle;
+    datas[i].title=titles;
+    datas[i].distance=dist;
+
+    $scope.$apply();
+
+  }
+
+}
 
 
-   }
 
-
-
- }
-
-
-
- $scope.showErrors = function (error)
- {
+$scope.showErrors = function (error)
+{
 
 
   $("#navigation-modal").modal("show");
@@ -333,7 +328,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           $scope.getLocations = function () {
             if (navigator.geolocation) {
-              var options = { timeout: 1000, enableHighAccuracy: true };
+              var options = { timeout: 6000, enableHighAccuracy: true };
               navigator.geolocation.getCurrentPosition($scope.showPositions,$scope.showErrors,options);
             }
             else {
@@ -406,64 +401,70 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           var nos= datas.length+ " items";
           $(".result").html(nos);
+          /*License agreement popup*/
+          if (window.localStorage.getItem("date") == undefined) 
+          {
+           /* run function */
+           window.localStorage.setItem("install", true);
+           $('#demoBox').modal("show");
+         }
+
+         $scope.showResult = function () {
+          return $scope.error == "";
+        }
+
+        $scope.showPosition = function (position)
+        {
 
 
-          $scope.showResult = function () {
-            return $scope.error == "";
+          $scope.$apply();
+          var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          var images = {
+            url: "assets/images/my-location.png",
+            scaledSize: new google.maps.Size(55,55)
+          };
+          $scope.lat1 = position.coords.latitude;
+          $scope.lng1 = position.coords.longitude;
+          $scope.accuracy = position.coords.accuracy;
+
+          var GeoMarker = new GeolocationMarker($scope.model.myMap);
+
+          GeoMarker.setMarkerOptions({icon: images});
+          GeoMarker.setCircleOptions({visible: false});
+          if (navigator.geolocation != undefined) {
+            google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+
+              $scope.model.myMap.setCenter(this.getPosition());
+              $scope.model.myMap.fitBounds(this.getBounds());
+            });
           }
 
-          $scope.showPosition = function (position)
-          {
 
-
-            $scope.$apply();
-            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            var images = {
-              url: "assets/images/my-location.png",
-              scaledSize: new google.maps.Size(55,55)
-            };
-            $scope.lat1 = position.coords.latitude;
-            $scope.lng1 = position.coords.longitude;
-            $scope.accuracy = position.coords.accuracy;
-
-            var GeoMarker = new GeolocationMarker($scope.model.myMap);
-
-            GeoMarker.setMarkerOptions({icon: images});
-            GeoMarker.setCircleOptions({visible: false});
-            if (navigator.geolocation != undefined) {
-              google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-
-                $scope.model.myMap.setCenter(this.getPosition());
-                $scope.model.myMap.fitBounds(this.getBounds());
-              });
-            }
-
-
-            GeoMarker.setMap($scope.model.myMap);
+          GeoMarker.setMap($scope.model.myMap);
 
 
 
-            $scope.map = {
-              latitude:position.coords.latitude,
-              longitude:position.coords.longitude
-            }
+          $scope.map = {
+            latitude:position.coords.latitude,
+            longitude:position.coords.longitude
+          }
 
 
-            for (i = 0; i < result.length; i++) {
+          for (i = 0; i < result.length; i++) {
 
-             if(i > 3){
-              result[i].show=0;
-            }
+           if(i > 3){
+            result[i].show=0;
+          }
 
-            var lat=result[i].latitude;
-            var longi=result[i].longitude;var infobox;
-            var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
-            var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
-            var encoded=data[i].title;
-            var titles=encoded.replace(/&amp;/g, '&');
-            var url=data[i].urltitle;
-            data[i].title=titles;
-            datas[i].distance=dist;
+          var lat=result[i].latitude;
+          var longi=result[i].longitude;var infobox;
+          var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
+          var dist=distance(position.coords.latitude,position.coords.longitude,lat,longi,"K",i);
+          var encoded=data[i].title;
+          var titles=encoded.replace(/&amp;/g, '&');
+          var url=data[i].urltitle;
+          data[i].title=titles;
+          datas[i].distance=dist;
       // offer value
       // var urltit=data[i].title;
       // var names=data[i].urltitle;
@@ -473,23 +474,19 @@ if(window.localStorage.getItem("outlets") != undefined )
     }
 
 
-    /*License agreement popup*/
-    if (window.localStorage.getItem("date") == undefined) {
-     /* run function */
-     window.localStorage.setItem("install", true);
-     $('#demoBox').modal("show");
-     
-
-   }
 
 
 
- }
+  }
 
 
 
- $scope.showError = function (error)
- {
+
+
+
+
+$scope.showError = function (error)
+{
 
   $("#navigation-modal").modal("show");
 
@@ -573,7 +570,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           $scope.getLocation = function () {
             if (navigator.geolocation) {
-              var options = { timeout: 1000, enableHighAccuracy: true };
+              var options = { timeout: 6000, enableHighAccuracy: true };
               navigator.geolocation.getCurrentPosition($scope.showPosition,$scope.showError,options);
             }
             else {
