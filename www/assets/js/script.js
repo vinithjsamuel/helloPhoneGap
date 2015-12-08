@@ -267,10 +267,7 @@ if(window.localStorage.getItem("outlets") != undefined )
       var url=datas[i].urltitle;
       datas[i].title=titles;
       datas[i].distance=dist;
-      // offer value
-      // var urltit=data[i].title;
-      // var names=data[i].urltitle;
-      // $scope.offerValue(urltit,names);
+
       $scope.$apply();
 
     }
@@ -293,32 +290,22 @@ if(window.localStorage.getItem("outlets") != undefined )
  $scope.showErrors = function (error)
  {
 
-  switch (error.code)
-  {
-    case error.PERMISSION_DENIED:
-    $scope.error = "User denied the request for Geolocation."
-    break;
-    case error.POSITION_UNAVAILABLE:
-    $scope.error = "Location information is unavailable."
-    break;
-    case error.TIMEOUT:
-    $scope.error = "The request to get user location timed out."
-    break;
-    case error.UNKNOWN_ERROR:
-    $scope.error = "An unknown error occurred."
-    break;
-  }
 
+  $("#navigation-modal").modal("show");
   var latlng = new google.maps.LatLng(25.08135,55.144075);
 
   for (i = 0; i < result.length; i++)
   {
+    if(i > 3){
+      result[i].show=0;
+    }
     if(i==0)
     {
+
       $scope.lat =25.08135;
       $scope.lng = 55.144075;
                 //$scope.accuracy = position.coords.accuracy;
-                $scope.$apply();
+
 
                 var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
 
@@ -331,21 +318,23 @@ if(window.localStorage.getItem("outlets") != undefined )
 
               var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
               var dist=distance(25.08135, 55.144075,lat,longi,"K",i);
+              var encoded=datas[i].title;
+              var titles=encoded.replace(/&amp;/g, '&');
+              var url=datas[i].urltitle;
+              datas[i].title=titles;
               datas[i].distance=dist;
 
               $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
 
-              var urltit=data[i].title;
-              var names=data[i].urltitle;
-              $scope.offerValue(urltit,names);
+
               $scope.$apply();
             }
           }
 
           $scope.getLocations = function () {
             if (navigator.geolocation) {
-
-              navigator.geolocation.getCurrentPosition($scope.showPositions, $scope.showErrors);
+              var options = { timeout: 1000, enableHighAccuracy: true };
+              navigator.geolocation.getCurrentPosition($scope.showPositions,$scope.showErrors,options);
             }
             else {
               $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
@@ -395,7 +384,7 @@ if(window.localStorage.getItem("outlets") != undefined )
 
 
 
-          
+
         }
 
         else
@@ -465,7 +454,7 @@ if(window.localStorage.getItem("outlets") != undefined )
              if(i > 3){
               result[i].show=0;
             }
-            
+
             var lat=result[i].latitude;
             var longi=result[i].longitude;var infobox;
             var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
@@ -502,30 +491,20 @@ if(window.localStorage.getItem("outlets") != undefined )
  $scope.showError = function (error)
  {
 
-  switch (error.code)
-  {
-    case error.PERMISSION_DENIED:
-    $scope.error = "User denied the request for Geolocation."
-    break;
-    case error.POSITION_UNAVAILABLE:
-    $scope.error = "Location information is unavailable."
-    break;
-    case error.TIMEOUT:
-    $scope.error = "The request to get user location timed out."
-    break;
-    case error.UNKNOWN_ERROR:
-    $scope.error = "An unknown error occurred."
-    break;
-  }
+  $("#navigation-modal").modal("show");
 
   var latlng = new google.maps.LatLng(25.08135,55.144075);
 
   for (i = 0; i < result.length; i++)
   {
-    if(i==0)
-    {
-      $scope.lat =25.08135;
-      $scope.lng = 55.144075;
+   if(i > 3){
+    result[i].show=0;
+  }
+  if(i==0)
+  {
+
+    $scope.lat =25.08135;
+    $scope.lng = 55.144075;
                 //$scope.accuracy = position.coords.accuracy;
                 $scope.$apply();
 
@@ -540,17 +519,21 @@ if(window.localStorage.getItem("outlets") != undefined )
 
               var latlng = new google.maps.LatLng($scope.lat,$scope.lng);
               var dist=distance(25.08135, 55.144075,lat,longi,"K",i);
+              var encoded=data[i].title;
+              var titles=encoded.replace(/&amp;/g, '&');
+              var url=data[i].urltitle;
+              data[i].title=titles;
               datas[i].distance=dist;
 
               $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
 
-              var urltit=data[i].title;
-              var names=data[i].urltitle;
-              $scope.offerValue(urltit,names);
+              // var urltit=data[i].title;
+              // var names=data[i].urltitle;
+              // $scope.offerValue(urltit,names);
               $scope.$apply();
             }
           }
-          
+
 
 
           $scope.filterMakes = function ()
@@ -590,8 +573,8 @@ if(window.localStorage.getItem("outlets") != undefined )
 
           $scope.getLocation = function () {
             if (navigator.geolocation) {
-
-              navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+              var options = { timeout: 1000, enableHighAccuracy: true };
+              navigator.geolocation.getCurrentPosition($scope.showPosition,$scope.showError,options);
             }
             else {
               $scope.error = "Geolocation is not supported. Please enable geolocation in your settings.";
@@ -602,55 +585,62 @@ if(window.localStorage.getItem("outlets") != undefined )
             $scope.getLocation();
           }
 
-          
-          
+
+
 
         }).error(function(){
 
         });
       }
 
-      $scope.$watch('nas',
+      $scope.$watchCollection('nas',
 
         function (newValue, oldValue) {
+          if(oldValue==undefined)
+          {
+            oldValue=0;
+          }
+          if(newValue==undefined)
+          {
+            newValue=0;
+          }
+          if (newValue.length !=oldValue.length) {
+
+            for (jdx in $scope.myMarkers) {
+
+              if(jdx != 0)
+              {
+                $scope.myMarkers[jdx].setMap(null);
+              }
+
+            }
+            $scope.myMarkers = [];
 
 
-          for (jdx in $scope.myMarkers) {
 
-            if(jdx != 0)
-            {
+            for (idx in $scope.nas) {
 
-             $scope.myMarkers[jdx].setMap(null);
-           }
-         }
-         $scope.myMarkers = [];
+              createMarker($scope.nas[idx]);
 
 
-         for (idx in $scope.nas) {
+            }
+          }
 
-          createMarker($scope.nas[idx]);
-
-
-        }
-      },
-      true);
+        },
+        true);
 
       var createMarker = function (info)
       {
 
-
         if(info !="" || typeof info !="undefined")
         {
 
-
-
-
-
          var encoded=info.title;
+
          var titles=encoded.replace(/&amp;/g, '&');
          var url=info.urltitle;
          $scope.infoWindow = new google.maps.InfoWindow();
-         var url='#outlet/'+info.urltitle+'/'+info.title;
+         var url='#outlet/'+info.entry+'/'+info.title;
          var latlng = new google.maps.LatLng(info.latitude,info.longitude);
          if(info.location!="")
          {
@@ -725,7 +715,7 @@ if(window.localStorage.getItem("outlets") != undefined )
    {
 
      var url= $('#pages-'+urls).attr('data');
-     
+
      var networkState = navigator.connection.type;
 
      if(networkState == Connection.NONE) {
@@ -976,16 +966,17 @@ $scope.Mapsfn = function(lat,lang) {
  {
 
   var email= $(".user-name").html();
-  var status= $(".status").val();
-  var value= $(".outfeed").val();
-  var outid= $(".outfeed").val();
+  var status= $("input[name=status]:checked").val();
+  var comment= $(".outfeed").val();
+  var outid= $(".outlet-idz").html();
+  outletname=$(".outlet-name").html();
   if(email =="" || typeof email != undefined)
   {
    email="not-registered@gmail.com";
  }
 
 
- var data       = {title:email,status:status,feedback:value};
+ var data       = {title:email,status:status,feedback:comment,outlet_id:outid,outlet:outletname};
  $.ajax({
   type       : "POST",
   url        : "http://getguzzle.com/app-test/outlet-feedback/"+data,
@@ -1138,11 +1129,20 @@ $scope.registerUser = function()
  else
  {
    $(".register").show();
+   if(email_valid == "false")
+   {
+    $(".reg-error").show();
+  }
+  else
+  {
+
    $(".register-error").show();
-   setTimeout(function(){
-    $(".register-error").hide();
-  }, 2000);
  }
+ setTimeout(function(){
+  $(".reg-error").hide();
+  $(".register-error").hide();
+}, 2000);
+}
 
 }
 
@@ -1595,7 +1595,7 @@ app.controller("outController", function($scope,$routeParams,$http)
 
   var  map;
   
-  checkInternet();
+  //checkInternet();
 
   function initialize(lat,longi) {
 
@@ -1645,7 +1645,7 @@ $scope.urltitle = $routeParams.url;
 $scope.datas=$scope.cars;
 
 
-var url="http://getguzzle.com/app/outlets/"+$scope.urltitle;
+var url="http://getguzzle.com/app/out-data/"+$scope.urltitle;
 $http.get(url)
 .success(function (response) {
 
@@ -1661,6 +1661,7 @@ $http.get(url)
  $scope.outlet={
    title:titles,
    phone:datas[0].phonenumber,
+   entry:datas[0].entry,
    image1:datas[0].image1,
    image2:datas[0].image2,
    lastcall:datas[0].lastcall,
@@ -1733,9 +1734,9 @@ var str=$scope.urltitle;
 str=str.replace(/-/g, ' ');
 
 var voucher_data;
-$scope.outlettitle = $routeParams.title;
+$scope.outlettitle = $routeParams.url;
 
-var urls="http://getguzzle.com/app-test/voucher-list/"+$routeParams.title;
+var urls="http://getguzzle.com/app/voucher-data/"+$routeParams.url;
 $http.get(urls)
 .success(function (response) {
  $scope.vouchers=response
@@ -1962,11 +1963,11 @@ $scope.goBack= function(url) {
     var flag=0; var final_code=0;var users="";
 
     if(code.length > 3){
-     checkInternet();
-     $(".order-"+url).attr("disable");
-     $(".code-"+url).attr("disable");
-     if(code== empcode)
-     {
+      checkInternet();
+      $(".order-"+url).attr("disable");
+      $(".code-"+url).attr("disable");
+      if(code== empcode)
+      {
        flag=1;
        users =empdata
        final_code= empcode;
@@ -1997,6 +1998,7 @@ $scope.goBack= function(url) {
 
     var outlet_name=$(".outlet-name").html();
     var device_user =$(".user-name").html();
+
     var voucher2= voucher1;
     var cost=$(".cost-"+url).html();
     var total_now= $(".price").html();
@@ -2004,10 +2006,11 @@ $scope.goBack= function(url) {
     var newId = Date.now().toString().substr(7);
     var strings= outlet_name.substr(0, 2);
     var id=strings+" "+newId;
+    var vouchersid=$(".id-"+url).html();
 
     $(".code-"+url).val(null);
 
-    var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id};
+    var data       = {title:title,voucher:title,outlet:outlet_name,employee:users,code:final_code,user:login_id,price:cost,redeemcode:id,voucher_id:vouchersid};
 
     $.ajax({
       type       : "POST",
